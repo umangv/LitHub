@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+<!--
+    Copyright 2010, 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+-->
+{% block nav_search %}selected{% endblock %}
+{% block title %}{{book.title}}{% endblock %}
+{% block content %}
+<h2>Book details:</h2>
+<table>
+    <tr>
+        <td>Title &nbsp;&nbsp;&nbsp;</td><td>{{book.title}}</td>
+    </tr>
+    <tr>
+        <td>Authors &nbsp;&nbsp;&nbsp;</td><td>{{book.author}}</td>
+    </tr>
+    <tr>
+        <td>ISBN &nbsp;&nbsp;&nbsp;</td><td>{{book.isbn}}</td>
+    </tr>
+    <tr>
+        <td>Edition </td><td>{{book.edition}}{% if book.copyrightYear %}; (Copyright {{book.copyrightYear}}) {% endif %}</td>
+    </tr>
+</table>
+<p>Own a copy of this book? <a href="{% url bookswap.views.sell_existing book.id %}">Sell it!</a></p>
+<h2>Copies on sale:</h2>
+<table class="highlight_row">
+    <thead>
+        <th>Owner &nbsp;&nbsp;&nbsp;</th><th>Condition&nbsp;&nbsp;&nbsp;</th><th>Price&nbsp;&nbsp;&nbsp;</th><th>Comments&nbsp;&nbsp;&nbsp;</th>
+    </thead>
+{% for copy in copies %}
+<tr>
+    <td><a href="{% url bookswap.views.view_profile copy.owner.username %}">{{copy.owner.username}}</a></td> 
+    <td>{{copy.condition}}</td>
+    <td>${{copy.price|floatformat:2}}</td>
+    <td>{{copy.comments}}</td>
+</tr>
+{% endfor %}
+{% endblock %}

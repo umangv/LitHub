@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+<!--
+    Copyright © 2010, 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+-->
+{% block nav_profile %}selected{% endblock %}
+{% block title %}Mark a book as sold{% endblock %}
+{% block content %}
+<p>Click submit to mark the following copy as sold:</p>
+<table>
+    <tr>
+        <td>Title </td><td>{{copy.book.title}}</td>
+    </tr>
+    <tr>
+        <td>Author </td><td>{{copy.book.author}}</td>
+    </tr>
+    <tr>
+        <td>Price </td><td>${{copy.price|floatformat:2}}</td>
+    </tr>
+    <tr>
+        <td>Condition </td><td>{{copy.condition}}</td>
+    </tr>
+</table>
+<div id="form">
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Mark as sold"/>
+</form>
+{% endblock %}

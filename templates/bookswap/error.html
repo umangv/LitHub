@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+<!--
+    Copyright © 2010, 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+-->
+{% block title %}Error!{% endblock %}
+{% block content %}
+<h1>Error!</h1>
+<p>Error! There is something wrong. </p>
+<p style="color:red;">{% if error %}{{error}}{% else %}No error message was passed. Please contact the K College Bookswap Team and provide as many details about how you reached this error as possible. Thanks!{% endif %}</p>
+{% endblock %}

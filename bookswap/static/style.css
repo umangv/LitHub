@@ -1,0 +1,145 @@
+/*
+    Copyright © 2010, 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+*/
+body
+{
+	font-family:Verdana, Arial, sans-serif;
+}
+a
+{
+	color:#ff7400;
+	text-decoration:none;
+	border-bottom:1px dotted #ff7400;
+}
+div#body a:hover
+{
+	background-color:#eee;
+	/*border-bottom:1px solid #000;
+	color:#000;*/
+}
+div#sidebar
+{
+	width:300px;
+	float:left;
+	padding:20px 0;
+}
+div#header
+{
+	color:#ff7400;
+	font-size:25px;
+	text-align:center;
+}
+div#navbar a
+{
+	color:#000;
+	border:0;
+}
+div#navbar ul
+{
+	margin:0px;
+	padding:0 0 0 50px;
+	width:242px;
+	font-size:22px;
+}
+div#navbar ul li
+{
+	list-style:none;
+	padding: 0 0 0 15px;
+	height:2em;
+	line-height:2em;
+}
+div#navbar ul li:hover
+{
+	background:#ff9640;
+}
+div#navbar ul li.selected
+{
+	background:#ff7400;
+}
+div#navbar ul li.selected a
+{
+	color:#fff;
+}
+div#body
+{
+	padding:100px 0 0 350px;
+}
+div#form label
+{
+	float:left;
+	display:block;
+	width:200px;
+}
+div#form input
+{
+	border:1px solid #ff7400;
+	margin-left:0px;
+}
+div#form input[type="submit"]
+{
+	margin-left:200px;
+}
+div#form ul.errorlist
+{
+	color:red;
+	list-style:none;
+	padding:0;
+	margin-left:200px;
+	font-size:.8em;
+}
+div#form ul.errorlist li
+{
+	padding:0;
+}
+span.bookinfo
+{
+	font-size:.7em;
+}
+span.isbn
+{
+	font-size:.8em;
+}
+table.highlight_row tr:hover
+{
+	border:1px dotted #ff7400;
+}
+
+ul.messages
+{
+	list-style:none outside none;
+	padding:0;
+	margin:0;
+}
+ul.messages li
+{
+	padding:10px;
+	margin-bottom:5px;
+}
+ul.messages li.success
+{
+	background-color:#7f7;
+}
+ul.messages li.error
+{
+	background-color:#f77;
+}
+ul.messages li.info
+{
+	background-color:#7cf;
+}

@@ -1,0 +1,15 @@
+# no sqlite3 databases should be tracked
+*.sqlite3
+
+# we don't want to carry byte-compiled python around
+*.pyc
+
+# Doesn't everyone love Vim?
+*.swp
+
+# we have lithub_config-example.py. Changes to everyone's
+# individual copy of the actual config file should not
+# be be tracked
+lithub_config.py
+
+/static

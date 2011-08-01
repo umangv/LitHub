@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+    Copyright 2010, 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head>
+        <title>{% block title %}{% endblock %} &raquo; Kzoo LitHub</title>
+        <link rel="stylesheet" href="{{STATIC_URL}}style.css" type="text/css" />
+        <style type="text/css">
+            body
+            {
+                background: #fff url('{{STATIC_URL}}images/bg.png') repeat-y left top;
+            }
+        </style>
+
+    </head>
+    <body>
+        <div id="sidebar">
+            <div id="header">
+                <img src="{{STATIC_URL}}images/K.png" alt="Kalamazoo College Bookswap"/>
+                <p>Kzoo LitHub</p>
+            </div>
+            <div id="navbar">
+                <ul>
+                    <li class="{% block nav_home %}{% endblock %}"><a href="{% url home %}">Home</a></li>
+                    <li class="{% block nav_all %}{% endblock %}"><a href="{% url bookswap.views.all_books %}">All Books</a></li>
+                    <li class="{% block nav_search %}{% endblock %}"><a href="{% url bookswap.views.search_books %}">Search</a></li>
+                    <li class="{% block nav_sell %}{% endblock %}"><a href="{% url bookswap.views.sell_step_search %}">Sell a book</a></li>
+                    <li class="{% block nav_profile %}{% endblock %}"><a href="{% url bookswap.views.my_account %}">My Account</a></li>
+                    {% if user.is_authenticated %}<li><a href="{% url django.contrib.auth.views.password_change %}">Logout</a></li>{% endif %}
+                </ul>
+            </div>
+        </div>
+        <div id="body">
+            <div id="messages">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>
