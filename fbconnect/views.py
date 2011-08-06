@@ -37,6 +37,9 @@ def receive_code(request):
                 return redirect('fbconnect.views.register', code=code)
         except ValueError:
             return render(request, "fbconnect/code_error.html")
+    else:
+        messages.error(request, "There was an error getting your " +\
+            "information from facebook.")
     return redirect('django.contrib.auth.views.login')
 
 def register(request, code):
