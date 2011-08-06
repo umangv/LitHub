@@ -22,4 +22,6 @@ urlpatterns = patterns('fbconnect.views',
     url(r'^$', 'receive_code'), 
     url(r'^register/(?P<code>[^\\]+)/$', 'register'), 
     url(r'^redirect/$', 'redirect_to_fb'), 
+    url(r'^assoc_curr/redirect/$', 'assoc_with_curr_user_redir'), 
+    url(r'^assoc_curr/$', 'assoc_with_curr_user'), 
 )

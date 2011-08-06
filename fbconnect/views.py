@@ -22,7 +22,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, render, redirect
 
-from fbconnect.models import *
+from fbconnect.models import FBProfile
 import fbconnect.utils as fb_utils
 
 def receive_code(request):
@@ -47,3 +47,32 @@ def register(request, code):
 
 def redirect_to_fb(request):
     return redirect(fb_utils.redirect_to_fb_url())
+
+def assoc_with_curr_user(request):
+    code = request.GET.get('code', '')
+    if code:
+        try:
+            uid = fb_utils.get_userid(code, assoc_with_curr_user)
+            matches = FBProfile.objects.filter(fb_userid=uid).count()
+            if matches:
+                messages.error(request, "This facebook is already " +\
+                        "associated with an account on LitHub")
+                return redirect('bookswap.views.my_account')
+            try:
+                profile = FBProfile.objects.get(user=request.user)
+            except ObjectDoesNotExist:
+                profile = FBProfile(user=request.user)
+            profile.fb_userid = uid
+            profile.save()
+            messages.success(request, "LitHub now recognizes your " +\
+                    "facebook account.")
+            return redirect('bookswap.views.my_account')
+        except ValueError:
+            return render(request, "fbconnect/code_error.html")
+    else:
+        messages.error(request, "There was an error getting your " +\
+            "information from facebook.")
+    return redirect('django.contrib.auth.views.login')
+
+def assoc_with_curr_user_redir(request):
+    return redirect(fb_utils.redirect_to_fb_url(assoc_with_curr_user))

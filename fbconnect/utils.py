@@ -18,14 +18,16 @@
 
 from django.utils.http import urlquote, urlencode
 from django.conf import settings
+from django.core.urlresolvers import reverse
+
 import urllib2
 from urlparse import parse_qs
 import json
 
-def get_access_token(code):
+def get_access_token(code, view=None):
     LOOKUP_URL = "https://graph.facebook.com/oauth/access_token?"
     opts = {'client_id':settings.FB_APP_ID,
-            'redirect_uri':settings.FB_REDIRECT_URL,
+            'redirect_uri':_url_receiving_code(view),
             'client_secret':settings.FB_APP_SECRET,
             'code':code}
     try:
@@ -33,7 +35,7 @@ def get_access_token(code):
         result = fb_resp.read()
         fb_resp.close()
     except urllib2.HTTPError:
-        raise ValueError("The code was invalid or there was a problem" +\
+        raise ValueError("The code was invalid or there was a problem " +\
                 "connecting to facebook")
     resp = parse_qs(result)
     if not resp.has_key('access_token'):
@@ -65,14 +67,19 @@ def get_networks(access_token, uid):
                 "connecting to facebook")
     return json.loads(results).get('affiliations', [])
 
-def get_userid(code):
-    acc_tok = get_access_token(code)
+def get_userid(code, view=None):
+    acc_tok = get_access_token(code, view)
     info = get_basic_info(acc_tok)
     return info['id']
 
-def redirect_to_fb_url():
+def redirect_to_fb_url(view=None):
     base_url = "https://www.facebook.com/dialog/oauth?"
     opts = {'client_id':settings.FB_APP_ID,
-            'redirect_uri':settings.FB_REDIRECT_URL,
+            'redirect_uri':_url_receiving_code(view),
             'scope':'email',}
     return base_url + urlencode(opts)
+
+def _url_receiving_code(view=None):
+    view = view or 'fbconnect.views.receive_code'
+    extra = reverse(view)
+    return settings.FB_REDIRECT_URL + extra
