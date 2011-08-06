@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+<!--
+    Copyright © 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+-->
+{% block title %}Disconnect from Facebook{% endblock %}
+{% block nav_profile %}selected{% endblock %}
+{% block content %}
+<h2>Disconnect your Facebook and LitHub accounts</h2>
+<p>LitHub stores your Facebook id that it uses to identify you when you login using facebook. When you submit this form, that facebook id is deleted from our database. Your account will still be functional, but you will need to enter your username and password to log in.</p>
+<p>Note: if you registered using Facebook, we have stored your primary email from facebook in our database also. Since an email address is required to have a LitHub account, we will not delete your email from our database. You are free to delete your LitHub account if you prefer not to have your email address in our database.</p>
+<form action="" method="post">
+{% csrf_token %}
+<table>
+    {{form}}
+    <tr><td></td><td><input type="submit" value="Disconnect"/></td></tr>
+</table>
+</form>
+{% endblock %}

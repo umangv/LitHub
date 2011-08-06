@@ -20,6 +20,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as authViews
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template import RequestContext, Context, loader
@@ -214,3 +215,23 @@ def delete_account(request):
 
 def delete_account_success(request):
     return render(request, "registration/delete_account_success.html")
+
+def dissoc_fb(request):
+    try:
+        request.user.fbprofile
+    except ObjectDoesNotExist:
+        messages.error(request, "Your account is not connected to a " +\
+            "facebook profile.")
+        return redirect(my_account)
+    if request.method=='POST':
+        password = request.POST.get('password', '')
+        if request.user.check_password(password):
+            request.user.fbprofile.delete()
+            messages.success(request, "Your LitHub and facebook accounts"+\
+                    " are no longer connected.")
+            return redirect(my_account)
+        else:
+            messages.error(request, "Your password did not match")
+    form = ConfirmPasswordForm()
+    return render(request, "registration/dissoc_fb.html",
+            {'form':form})
