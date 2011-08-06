@@ -30,6 +30,7 @@
     <input type="hidden" name="next" value="{{ next|escape }}" />
   </form>
   </div>
+  <p>Don't have an account? <a href="{% url registration_register %}">Sign up</a> for one now!</p>
 {% else %}
 <p>You are already logged in as {{user.username}}</p>
 {% endif %}
