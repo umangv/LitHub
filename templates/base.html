@@ -43,7 +43,7 @@
                     <li class="{% block nav_search %}{% endblock %}"><a href="{% url bookswap.views.search_books %}">Search</a></li>
                     <li class="{% block nav_sell %}{% endblock %}"><a href="{% url bookswap.views.sell_step_search %}">Sell a book</a></li>
                     <li class="{% block nav_profile %}{% endblock %}"><a href="{% url bookswap.views.my_account %}">My Account</a></li>
-                    {% if user.is_authenticated %}<li><a href="{% url django.contrib.auth.views.password_change %}">Logout</a></li>{% endif %}
+                    {% if user.is_authenticated %}<li><a href="{% url django.contrib.auth.views.logout %}">Logout</a></li>{% endif %}
                 </ul>
             </div>
         </div>
