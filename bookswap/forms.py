@@ -48,3 +48,6 @@ class EditCopyForm(forms.ModelForm):
     class Meta:
         model = Copy
         exclude = ('owner', 'book','soldTime', 'pubDate',)
+
+class ConfirmPasswordForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput)

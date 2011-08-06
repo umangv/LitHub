@@ -198,3 +198,19 @@ def view_profile(request, username):
     user = User.objects.get(username=username)
     return render(request, "bookswap/profile_view.html",
             {'user':user})
+
+@login_required
+def delete_account(request):
+    if request.method=='POST':
+        password = request.POST.get('password', '')
+        if request.user.check_password(password):
+            request.user.delete()
+            return redirect('bookswap.views.delete_account_success')
+        else:
+            messages.error(request, "Your password did not match")
+    form = ConfirmPasswordForm()
+    return render(request, "registration/delete_account.html",
+            {'form':form})
+
+def delete_account_success(request):
+    return render(request, "registration/delete_account_success.html")
