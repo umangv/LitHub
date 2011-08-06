@@ -22,3 +22,6 @@ from django.contrib.auth.models import User
 class FBProfile(models.Model):
     user = models.OneToOneField(User)
     fb_userid = models.CharField(max_length=30, unique=True)
+
+    def __unicode__(self):
+        return "%s's facebook information"%self.user.username
