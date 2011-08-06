@@ -14,6 +14,7 @@ You should ensure you have the following installed:
 
  - Python2 (preferably version 2.6 or newer)
  - Django 1.3 (if you like `virtualenv`, feel free to use it when developing)
+ - django-registration (I have commit 401:89e83387c41f; I didn't realize I wasn't using a stable version when I began using it)
  - a supported database driver. If you don't which to use:
 
    - if you are contributing, always use **pysqlite2** (DB-API 2.0, for sqlite3 databases). You may already have this installed. 

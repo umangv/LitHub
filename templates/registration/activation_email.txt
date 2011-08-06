@@ -1,0 +1,9 @@
+Thank you for registering your LitHub account! We hope you find it a useful resource.
+
+You have one last link to click before your account is marked as active:
+
+http://kzoolithub.it.cx{% url registration.views.activate activation_key=activation_key %}
+
+Thanks,
+
+The LitHub team

@@ -19,6 +19,7 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
 from django.conf.urls.static import static
+from bookswap.kregform import KzooRegistrationForm
 
 from django.contrib import admin
 admin.autodiscover()
@@ -26,4 +27,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('bookswap.urls')),
+    url(r'^accounts/register/$', 'registration.views.register', 
+        {'backend': 'registration.backends.default.DefaultBackend',
+            'form_class': KzooRegistrationForm},
+        name='registration_register'),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
