@@ -22,10 +22,6 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 {% if not user.is_authenticated %}
-  {% if form.errors %}
-    <p class="error">Sorry, that's not a valid username or password</p>
-  {% endif %}
-
   <div id="form">
   <form action="" method="post">
     {% csrf_token %}
