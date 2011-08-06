@@ -25,6 +25,7 @@
 <p>Manage your account:</p>
 <ul>
     <li><a href="{% url django.contrib.auth.views.password_change %}">Change your password</a></li>
+    <li><a href="{% url fbconnect.views.assoc_with_curr_user_redir %}">Associate LitHub and facebook accounts</a></li>
     <li>Update your profile (under construction)</li>
     <li><a href="{% url bookswap.views.delete_account %}">Delete your account</a></li>
 </ul>
