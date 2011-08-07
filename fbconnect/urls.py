@@ -17,6 +17,7 @@
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf.urls.defaults import *
+from django.views.generic import TemplateView
 
 urlpatterns = patterns('fbconnect.views',
     url(r'^$', 'receive_code'), 
@@ -26,4 +27,6 @@ urlpatterns = patterns('fbconnect.views',
     url(r'^assoc_curr/$', 'assoc_with_curr_user'), 
     url(r'^change_pass/redirect/$', 'change_pass_redir'), 
     url(r'^change_pass/$', 'change_pass'), 
+    url(r'^privacy/$', TemplateView.as_view(
+        template_name="fbconnect/privacy.html")), 
 )

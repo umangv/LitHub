@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+<!--
+    Copyright © 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+-->
+{% block title %}Privacy Policy{% endblock %}
+{% block nav_profile %}selected{% endblock %}
+{% block content %}
+<h2>Facebook App Privacy Policy</h2>
+<p>Some things about Facebook can be scary sometimes, and we understand that. This page explains what we do with your data</p>
+<h3>The short answer</h3>
+<ul>
+    <li>If you associate your LitHub and Facebook accounts, we store your Facebook user id. This allows us to log you in quickly.</li>
+    <li>In addition, if you <b>registered</b> your LitHub account using Facebook, we use Facebook to access and store your first and last name, your email address and your networks (to verify that you are a K college student).</li>
+</ul>
+<h3>The long answer</h3>
+<p>All users need to provide their first and last names and email addresses to register. If you register using Facebook, this information is taken from Facebook (which is why you only need to select a username when you register using Facebook) and stored in our database.</p>
+<p>However, there needs to be a way of verifying that you go to K College. If you register the regular way, we ensure that you have a @kzoo.edu email address and send a confirmation email. If you register using Facebook, we verify this by checking if you are in the Kalamazoo network on Facebook.</p>
+<p>In addition, to allow you to login to LitHub quickly, we let you log in using Facebook. Using the Facebook Connect technology, we get your Facebook user id and use that to find your LitHub user account (by searching the stored list of facebook user ids). If you ever want to delete your user id from our database, you can "Dissociate LitHub and facebook accounts". If you want to delete all the information we have about you, can you "Delete your account". (Both these options are available from the "My Account" page on LitHub).</p>
+<p>We cannot and will not store your Facebook password. For that matter, even your LitHub password (in case you were wondering, you do not have one initially if you registered using Facebook) is not stored in plain text on our database. So, in the unlikely event of someone breaking into our database, your password is safe. The hacker would only get a <a href="http://en.wikipedia.org/wiki/Salt_(cryptography)">salted hash</a> of your password.</p>
+{% endblock %}
