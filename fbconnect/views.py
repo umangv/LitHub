@@ -20,10 +20,12 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 
 from fbconnect.models import FBProfile
 import fbconnect.utils as fb_utils
+from fbconnect.forms import FBRegisterForm
 
 def receive_code(request):
     code = request.GET.get('code', '')
@@ -43,7 +45,38 @@ def receive_code(request):
     return redirect('django.contrib.auth.views.login')
 
 def register(request, code):
-    return render(request, "fbconnect/register.html")
+    try:
+        acc_tok = fb_utils.get_access_token(code)
+        networks = fb_utils.get_networks(acc_tok)
+        k = False
+        for network in networks:
+            if str(network['nid']) == '16777626':
+                k = True
+                break
+        if not k:
+            messages.error(request, "You need to be in the Kalamazoo "+\
+                "network to register")
+            return redirect('bookswap.views.my_account')
+        form = FBRegisterForm()
+        if request.method == 'POST':
+            form = FBRegisterForm(request.POST)
+            if form.is_valid():
+                user_info = fb_utils.get_basic_info(acc_tok)
+                new_user = User.objects.create_user(
+                        form.cleaned_data['username'], 
+                        user_info['email'])
+                new_user.first_name = user_info['first_name']
+                new_user.last_name = user_info['last_name']
+                new_user.is_active = True
+                new_user.save()
+                fbp = FBProfile(user=new_user, fb_userid=user_info['id'])
+                fbp.save()
+                messages.success(request, "Your account has been created!")
+                return redirect('bookswap.views.my_account')
+        return render(request, "fbconnect/register.html", 
+                {'form':form})
+    except ValueError:
+        return render(request, "fbconnect/code_error.html")
 
 def redirect_to_fb(request):
     return redirect(fb_utils.redirect_to_fb_url())

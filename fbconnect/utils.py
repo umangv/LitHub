@@ -54,7 +54,8 @@ def get_basic_info(access_token):
                 "connecting to facebook")
     return json.loads(results)
 
-def get_networks(access_token, uid):
+def get_networks(access_token):
+    uid = get_basic_info(access_token)['id']
     LOOKUP_URL = "https://api.facebook.com/method/fql.query?"
     opts = {'query':"SELECT affiliations FROM user WHERE uid=%s"%uid,
             'access_token':access_token, 'format':'json'}
@@ -65,7 +66,7 @@ def get_networks(access_token, uid):
     except urllib2.HTTPError:
         raise ValueError("The token was invalid or there was a problem" +\
                 "connecting to facebook")
-    return json.loads(results).get('affiliations', [])
+    return json.loads(results)[0]['affiliations']
 
 def get_userid(code, view=None):
     acc_tok = get_access_token(code, view)
