@@ -29,6 +29,7 @@ Installing LitHub for development
   2. Edit the ``LITHUB_ROOT`` variable so that it points to the directory in which your project exists
   3. Run ``python manage.py syncdb``. Note, however, that if the version of python you hope to use is different from the default python, you should use that instead.
   4. Run the development server using ``python manage.py runserver``
+  5. The default link to your server should be ``http//:127.0.0.1:8000/``
 
 Installing LitHub in production
 --------------------------------
