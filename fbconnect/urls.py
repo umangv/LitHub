@@ -28,5 +28,5 @@ urlpatterns = patterns('fbconnect.views',
     url(r'^change_pass/redirect/$', 'change_pass_redir'), 
     url(r'^change_pass/$', 'change_pass'), 
     url(r'^privacy/$', TemplateView.as_view(
-        template_name="fbconnect/privacy.html")), 
+        template_name="fbconnect/privacy.html"), name="fbconnect_privacy"), 
 )

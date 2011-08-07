@@ -30,7 +30,7 @@
     <input type="hidden" name="next" value="{{ next|escape }}" />
   </form>
   </div>
-  <p>You can also <a href="{% url fbconnect.views.redirect_to_fb %}">login using facebook</a></p>
+  <p>You can also <a href="{% url fbconnect.views.redirect_to_fb %}">login using facebook</a>. (<a href="{% url fbconnect_privacy %}">Privacy policy</a>)</p>
   <p>Don't have an account? <a href="{% url registration_register %}">Sign up</a> for one now!</p>
 {% else %}
 <p>You are already logged in as {{user.username}}</p>
