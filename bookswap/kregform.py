@@ -20,6 +20,9 @@ from registration.forms import RegistrationFormUniqueEmail
 from django import forms
 
 class KzooRegistrationForm(RegistrationFormUniqueEmail):
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=30)
+
     def clean_email(self):
         """Ensures a valid K student email id is used. """
         email_parts = self.cleaned_data['email'].split('@')
@@ -32,3 +35,9 @@ class KzooRegistrationForm(RegistrationFormUniqueEmail):
                     "abbreviated email ids (e.g. k99zz01@kzoo.edu) are " +\
                     "not allowed on Kzoo LitHub.")
         return super(KzooRegistrationForm, self).clean_email()
+
+    def post_save(self, user):
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.save()
+
