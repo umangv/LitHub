@@ -17,6 +17,7 @@
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -109,3 +110,35 @@ def assoc_with_curr_user(request):
 
 def assoc_with_curr_user_redir(request):
     return redirect(fb_utils.redirect_to_fb_url(assoc_with_curr_user))
+
+def change_pass(request):
+    code = request.GET.get('code', '')
+    if code:
+        try:
+            uid = fb_utils.get_userid(code, change_pass)
+            if uid != request.user.fbprofile.fb_userid:
+                messages.error(request, "Your facebook account did not" +\
+                    " match the one registered with LitHub.")
+                return redirect('bookswap.views.my_account')
+            form = SetPasswordForm(user=request.user)
+            if request.method=="POST":
+                form = SetPasswordForm(request.user, request.POST)
+                if form.is_valid():
+                    form.save()
+                    messages.success(request, "Your password was "+\
+                        "successfully changed.")
+                    return redirect("bookswap.views.my_account")
+            return render(request, "fbconnect/password_change.html",
+                    {'form':form},)
+        except ObjectDoesNotExist:
+            return redirect('bookswap.views.my_account')
+        except ValueError:
+            return render(request, "fbconnect/code_error.html")
+    else:
+        messages.error(request, "There was an error getting your " +\
+            "information from facebook.")
+    return redirect('django.contrib.auth.views.login')
+
+
+def change_pass_redir(request):
+    return redirect(fb_utils.redirect_to_fb_url(change_pass))

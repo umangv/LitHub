@@ -24,4 +24,6 @@ urlpatterns = patterns('fbconnect.views',
     url(r'^redirect/$', 'redirect_to_fb'), 
     url(r'^assoc_curr/redirect/$', 'assoc_with_curr_user_redir'), 
     url(r'^assoc_curr/$', 'assoc_with_curr_user'), 
+    url(r'^change_pass/redirect/$', 'change_pass_redir'), 
+    url(r'^change_pass/$', 'change_pass'), 
 )
