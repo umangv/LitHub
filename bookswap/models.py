@@ -45,3 +45,6 @@ class Copy(models.Model):
 
     def __unicode__(self):
         return "%s's copy of '%s'"%(self.owner.username, self.book.title)
+
+    class Meta:
+        verbose_name_plural = "Copies"
