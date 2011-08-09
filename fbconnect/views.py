@@ -56,8 +56,8 @@ def register(request, code):
                 break
         if not k:
             messages.error(request, "You need to be in the Kalamazoo "+\
-                "network to register")
-            return redirect('bookswap.views.my_account')
+                "College network to register using facebook.")
+            return redirect('registration.views.register')
         form = FBRegisterForm()
         if request.method == 'POST':
             form = FBRegisterForm(request.POST)

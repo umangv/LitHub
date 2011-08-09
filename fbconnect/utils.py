@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.utils.http import urlquote, urlencode
+from django.utils.http import urlencode
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
