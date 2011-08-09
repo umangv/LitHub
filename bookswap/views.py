@@ -57,8 +57,11 @@ def book_details(request, book_id):
 def search_books(request):
     if request.method == "POST":
         if request.POST.get('action') == 'isbn_search':
-            isbn_no = request.POST.get("isbn","")
-            return redirect('bookswap.views.book_by_isbn', isbn_no=isbn_no)
+            try:
+                isbn_no = isbn.clean_isbn(request.POST.get("isbn","0"))
+                return redirect(book_by_isbn, isbn_no=isbn_no)
+            except ValueError:
+                messages.error(request, "Please enter a valid ISBN number")
     title = request.GET.get('title', '')
     author = request.GET.get('author', '')
     if title or author:
