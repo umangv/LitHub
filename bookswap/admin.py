@@ -25,7 +25,7 @@ class CopyInline(admin.StackedInline):
 
 class BookAdmin(admin.ModelAdmin):
     fieldsets = [
-            (None, {'fields':['isbn', 'title', 'author', 'edition',
+            (None, {'fields':['isbn', 'title', 'author', 'publisher',
                 'copyrightYear']})]
     inlines = [CopyInline]
 

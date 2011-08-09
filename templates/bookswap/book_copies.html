@@ -33,7 +33,7 @@
         <td>ISBN &nbsp;&nbsp;&nbsp;</td><td>{{book.isbn}}</td>
     </tr>
     <tr>
-        <td>Edition </td><td>{{book.edition}}{% if book.copyrightYear %}; (Copyright {{book.copyrightYear}}) {% endif %}</td>
+        <td>Publisher</td><td>{{book.publisher}}{% if book.copyrightYear %}; (copyright {{book.copyrightYear}}) {% endif %}</td>
     </tr>
 </table>
 <p>Own a copy of this book? <a href="{% url bookswap.views.sell_existing book.id %}">Sell it!</a></p>

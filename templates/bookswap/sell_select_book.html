@@ -24,13 +24,13 @@
 <p>Please select a book from the following list of books. If none of the following books match your book, you sell a new book.</p>
 <table>
     <thead>
-        <th>Title</th><th>Author</th><th>Edition</th><th>ISBN</th>
+        <th>Title</th><th>Author</th><th>Publisher</th><th>ISBN</th>
     </thead>
 {% for res, res_count in results %}
 <tr>
     <td><a href="{% url bookswap.views.sell_existing res.id %}">{{res.title}}</a>  <br/><span class="bookinfo">{{res_count}} copies on sale.</span></td> 
     <td>{{res.author}}  </td>
-    <td>{{res.edition}}<br/><span class="bookinfo">(Copyright year: {% if res.copyrightYear %}&copy; {{res.copyrightYear}}{% else %}unknown{% endif %})</span></td>
+    <td>{{res.publisher}}<br/><span class="bookinfo">{% if res.copyrightYear %}(&copy; {{res.copyrightYear}}){% endif %}</span></td>
     <td><span class="isbn">{{res.isbn}}</span></td>
 </tr>
 {% endfor %}
