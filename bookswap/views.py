@@ -26,6 +26,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.template import RequestContext, Context, loader
 
 from datetime import datetime
+import utils
 import isbn
 
 from bookswap.models import Book, Copy
@@ -122,8 +123,6 @@ def sell_new(request, isbn_no):
     # it's not our responsibility to be nice. No well meaning
     # user will see an error page at this stage
     isbn_no = isbn.clean_isbn(isbn_no)
-    book_form = SellNewBookForm(prefix="book")
-    copy_form = SellExistingBookForm(prefix="copy")
     if request.method == 'POST':
         book_form = SellNewBookForm(request.POST, prefix="book")
         copy_form = SellExistingBookForm(request.POST, prefix="copy")
@@ -139,6 +138,10 @@ def sell_new(request, isbn_no):
             messages.success(request, "Your copy of %s is now on sale."%\
                     book.title)
             return redirect('bookswap.views.book_details', book.id)
+    else:
+        info = utils.get_book_details(isbn_no)
+        book_form = SellNewBookForm(prefix="book", initial=info)
+        copy_form = SellExistingBookForm(prefix="copy")
     return render(request, "bookswap/sell_new.html",
             {'book_form':book_form, 'copy_form':copy_form,
                 'isbn_no':isbn_no})
