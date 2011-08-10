@@ -36,7 +36,10 @@
         <td>Publisher</td><td>{{book.publisher}}{% if book.copyrightYear %}; (copyright {{book.copyrightYear}}) {% endif %}</td>
     </tr>
 </table>
-<p>Own a copy of this book? <a href="{% url bookswap.views.sell_existing book.id %}">Sell it!</a></p>
+<script type="text/javascript" src="http://books.google.com/books/previewlib.js"></script>
+<script type="text/javascript">
+GBS_insertPreviewButtonPopup('ISBN:{{book.isbn}}');
+</script>
 <h2>Copies on sale:</h2>
 <table class="highlight_row">
     <thead>
@@ -50,4 +53,6 @@
     <td>{{copy.comments}}</td>
 </tr>
 {% endfor %}
+</table>
+<p>Own a copy of this book? <a href="{% url bookswap.views.sell_existing book.id %}">Sell it!</a></p>
 {% endblock %}
