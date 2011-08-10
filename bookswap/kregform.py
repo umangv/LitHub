@@ -46,6 +46,6 @@ class KzooRegistrationBackend(DefaultBackend):
     def register(self, request, **kwargs):
         user = super(KzooRegistrationBackend, self).register(request, **kwargs)
         user.first_name = kwargs['first_name']
-        user.first_name = kwargs['last_name']
+        user.last_name = kwargs['last_name']
         user.save()
         return user
