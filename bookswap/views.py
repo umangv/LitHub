@@ -114,7 +114,7 @@ def sell_existing(request, book_id):
             copy.owner = request.user
             copy.pubDate = datetime.now()
             copy.save()
-            messages.success(request, "Your copy of %s is now on sale."%\
+            messages.success(request, "Your copy of `%s` is now on sale."%\
                     book.title)
             return redirect('bookswap.views.book_details', book.id)
     return render(request, "bookswap/sell_existing.html",
@@ -138,7 +138,7 @@ def sell_new(request, isbn_no):
             copy.owner = request.user
             copy.pubDate = datetime.now()
             copy.save()
-            messages.success(request, "Your copy of %s is now on sale."%\
+            messages.success(request, "Your copy of `%s` is now on sale."%\
                     book.title)
             return redirect('bookswap.views.book_details', book.id)
     else:
@@ -191,7 +191,7 @@ def edit_copy(request, copy_id):
         form = EditCopyForm(request.POST, instance=copy)
         if form.is_valid():
             copy = form.save()
-            messages.success(request, "Your copy of %s was saved" %\
+            messages.success(request, "Your copy of `%s` was saved" %\
                     copy.book.title)
             return redirect('bookswap.views.my_account')
         else:
