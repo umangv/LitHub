@@ -14,7 +14,7 @@ You should ensure you have the following installed:
 
  - Python2 (preferably version 2.6 or newer)
  - Django 1.3 (if you like `virtualenv`, feel free to use it when developing)
- - django-registration - I'm currently using a slightly modified version of registration's hg tip. I'll update this file once I'm using pristine upstream source.
+ - django-registration - use the latest version from the hg repository. Tested with revision 409.
  - a supported database driver. If you don't which to use:
 
    - if you are contributing, always use **pysqlite2** (DB-API 2.0, for sqlite3 databases). You may already have this installed. 
