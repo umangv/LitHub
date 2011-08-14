@@ -24,7 +24,7 @@ class KzooRegistrationForm(RegistrationFormUniqueEmail):
     """Registration form with modifications for Kzoo LitHb
     
     This adds the first and last name fields and verifies that the user has
-    a valid @kzoo.edu email address."""
+    a valid kzoo.edu email address."""
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
 
@@ -32,13 +32,8 @@ class KzooRegistrationForm(RegistrationFormUniqueEmail):
         """Ensures a valid K student email id is used. """
         email_parts = self.cleaned_data['email'].split('@')
         if email_parts[1].lower () != "kzoo.edu":
-            raise forms.ValidationError("Only @kzoo.edu addresses " +\
+            raise forms.ValidationError("Only kzoo.edu addresses " +\
                     "are allowed!")
-        email_u = email_parts[0].lower()
-        if email_u[0] == 'k' and email_u[1:3].isdigit():
-            raise forms.ValidationError("To avoid duplicate accounts, "+\
-                    "abbreviated email ids (e.g. k99zz01@kzoo.edu) are " +\
-                    "not allowed on Kzoo LitHub.")
         return super(KzooRegistrationForm, self).clean_email()
 
 class KzooRegistrationBackend(DefaultBackend):
