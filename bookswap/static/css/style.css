@@ -56,9 +56,13 @@ html, body, h1, h2, h3, h4, input
 {
 	color:#fff;
 }
-#navbar ul li a:hover
+#navbar ul li a:hover, #navbar ul li.selected a
 {
 	color:#ff7200;
+}
+#navbar ul li.selected a
+{
+	border-bottom:2px solid #ff7200;
 }
 #navbar
 {
