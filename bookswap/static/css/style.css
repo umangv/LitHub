@@ -1,0 +1,135 @@
+/*
+    Copyright © 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+html, body, div { margin:0; padding:0; } /* Reset */
+html, body /* Image background is in wrapper */
+{
+	background: #ff7200;
+}
+html, body, h1, h2, h3, h4, input
+{
+	font-family: 'Droid Sans', arial, sans-serif;
+}
+#wrapper
+{
+	width:1000px;
+	background: #ff7200 url('../images/bg.png') repeat-y scroll center top;
+	height:100%;
+	margin:0 auto;
+}
+#topbar
+{
+	z-index:100;
+	position:fixed;
+	width:960px;
+	margin-left:20px; /* wrapper is 1000px wide. This centers topbar */
+	top:0;
+	clear:both;
+}
+#navbar
+{
+	background: url('../images/topbar.png') repeat-x;
+	height:50px;
+	color:#fff;
+}
+#kzoolithub 
+{
+	margin-left:30px;
+	float:left;
+	margin-top:7px;
+}
+div.navlinks
+{
+	text-align:right;
+	height:50px;
+}
+ul.navlinks
+{
+	margin:0;
+	padding:0;
+	list-style: none outside none;
+	font-size:17px;
+	letter-spacing:1px;
+	line-height:1em;
+	text-align:right;
+	padding-top:16px;
+}
+ul.navlinks li
+{
+	display:inline;
+	margin-right:30px;
+}
+#searchbox
+{
+	height:70px;
+	background:#ffbb66;
+}
+#searchbox .sform_field, #searchbox .sform_field_submit
+{
+	margin-left:20px;
+	margin-right:0;
+	padding:0;
+	float:left;
+	margin-top:10px;
+	width:220px;
+}
+#searchbox .sform_field_submit
+{
+	margin-left:20px;
+	width:70px;
+}
+#searchbox input[type=text]
+{
+	border:0;
+	height:18px;
+	width:210px;
+}
+#searchbox label
+{
+	font-size:13px;
+	line-height:20px;
+}
+#fixedboxgradient
+{
+	height:20px;
+	background:transparent url('../images/fixedboxgradient.png') left top repeat-x;
+}
+#content
+{
+	width:940px;
+	margin:0 auto;
+	clear:both;
+	padding-top:150px;
+}
+#twocol_main
+{
+	width:700px;
+	float:left;
+	border-top:0px solid #ff7200; 
+}
+#twocol_side
+{
+	width:200px;
+	margin-left:720px;
+}
+#twocol_side .sidebar_item
+{
+	border-top:2px solid #ff7200;
+}

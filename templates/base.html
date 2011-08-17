@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <!--
     Copyright 2010, 2011 Kalamazoo College Computer Science Club
     <kzoo-cs-board@googlegroups.com>
@@ -21,43 +21,61 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %} &raquo; Kzoo LitHub</title>
-        <link rel="stylesheet" href="{{STATIC_URL}}style.css" type="text/css" />
-        <style type="text/css">
-            body
-            {
-                background: #fff url('{{STATIC_URL}}images/bg.png') repeat-y left top;
-            }
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+        <link href='{{STATIC_URL}}css/style.css' rel='stylesheet' type='text/css'>
         </style>
-
     </head>
     <body>
-        <div id="sidebar">
-            <div id="header">
-                <img src="{{STATIC_URL}}images/K.png" alt="Kalamazoo College Bookswap"/>
-                <p>Kzoo LitHub</p>
-            </div>
-            <div id="navbar">
-                <ul>
-                    <li class="{% block nav_home %}{% endblock %}"><a href="{% url home %}">Home</a></li>
-                    <li class="{% block nav_all %}{% endblock %}"><a href="{% url bookswap.views.all_books %}">All Books</a></li>
-                    <li class="{% block nav_search %}{% endblock %}"><a href="{% url bookswap.views.search_books %}">Search</a></li>
-                    <li class="{% block nav_sell %}{% endblock %}"><a href="{% url bookswap.views.sell_step_search %}">Sell a book</a></li>
-                    <li class="{% block nav_profile %}{% endblock %}"><a href="{% url bookswap.views.my_account %}">My Account</a></li>
-                    {% if user.is_authenticated %}<li><a href="{% url django.contrib.auth.views.logout %}">Logout</a></li>{% endif %}
+        <div id="wrapper">
+            <div id="topbar">
+                <div id="navbar">
+                    <img id="kzoolithub" src="{{STATIC_URL}}images/kzoolithub.png" alt="Kzoo LitHub" style="" />
+                    <div class="navlinks">
+                        <ul class="navlinks">
+                            <li>Available books</li>
+                            <li>Sell a book</li>
+                            <li>My account</li>
+                            <li>Logout</li>
+                        </ul>
+                    </div>
+                </div> <!-- end navbar -->
+                <div id="searchbox" style="clear:both;">
+                    <div class="sform_field">
+                        <label for="search_title">Title:</label><br/>
+                        <input type="text" id="search_title" placeholder="Title" x-webkit-speech/>
+                    </div>
+                    <div class="sform_field">
+                        <label for="search_title">Author:</label><br/>
+                        <input type="text" id="search_author" placeholder="Author" x-webkit-speech/>
+                    </div>
+                    <div class="sform_field_submit">
+                        <br/>
+                        <input type="submit" value="Search"/>
+                    </div>
+                    <div class="sform_field">
+                        <label for="search_isbn">ISBN:</label><br/>
+                        <input type="text" id="search_isbn" placeholder="Title" x-webkit-speech/>
+                    </div>
+                    <div class="sform_field_submit">
+                        <br/>
+                        <input type="submit" id="search_isbn" value="Search"/>
+                    </div>
+                </div><!-- end searchbox -->
+                <div id="fixedboxgradient"></div>
+            </div><!-- end topbar -->
+            <div id="content">
+           	    <div id="messages">
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
                 </ul>
-            </div>
-        </div>
-        <div id="body">
-            <div id="messages">
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            </div>
-            {% block content %}{% endblock %}
-        </div>
+                {% endif %}
+                </div><!-- end messages-->
+                {% block content %}{% endblock %}
+                <div style="clear:both;">&nbsp;</div><!-- Wrapper class needs to be streched down so that the background extend's to the page bottom -->
+            </div><!-- end content -->
+        </div><!-- end wrapper -->
     </body>
 </html>
