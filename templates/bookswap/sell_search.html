@@ -26,7 +26,7 @@
     <p>Enter the ISBN number of the book you are trying to sell. We need the ISBN to find information about the book.</p>
     <form method="post" action="">
         {% csrf_token %}
-        <p><label for="isbn">ISBN:</label><input type="text" id="isbn" name="isbn"/></p>
+        <p><label for="isbn">ISBN:</label><input type="text" id="isbn" name="isbn" placeholder="978-0-123-45678-9" x-webkit-speech/></p>
         <input type="submit" value="Find information"/>
     </form>
 </div>
