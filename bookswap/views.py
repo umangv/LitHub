@@ -46,7 +46,7 @@ def book_by_isbn(request, isbn_no):
     except ValueError:
         results = []
     return render(request, "bookswap/book_isbn.html",
-            {"results":results})
+            {"results":results, 'search_isbn':isbn_no})
 
 def book_details(request, book_id):
     book = Book.objects.get(pk=book_id)
