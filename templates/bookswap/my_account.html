@@ -22,18 +22,11 @@
 {% block title %}My Account{% endblock %}
 {% block content %}
 <p>Welcome, <b>{{user.username}}</b>!</p>
-<p>Manage your account:</p>
-<ul>
-    <li><a href="{% url django.contrib.auth.views.password_change %}">Change your password</a></li>
-    <li><a href="{% url fbconnect.views.assoc_with_curr_user_redir %}">Associate LitHub and facebook accounts</a></li>
-    <li><a href="{% url bookswap.views.dissoc_fb %}">Dissociate LitHub and facebook accounts</a></li>
-    <li>Update your profile (under construction)</li>
-    <li><a href="{% url bookswap.views.delete_account %}">Delete your account</a></li>
-</ul>
 <p>The following are books that you've posted for sale:</p>
-<table>
+<div id="twocol_main">
+<table class="booklist">
     <thead>
-        <th>Book</th><th>Price</th><th>Condition</th><th>Actions</th>
+        <th style="width:450px;">Book</th><th>Price</th><th>Condition</th><th>Actions</th>
     </thead>
     {% for copy in copies %}
     <tr>
@@ -44,4 +37,14 @@
     </tr>
     {% endfor %}
 </table>
+</div>
+<div id="twocol_side">
+<p>Manage your account:</p>
+<ul class="account_sidelinks">
+    <li><a href="{% url django.contrib.auth.views.password_change %}">Change your password</a></li>
+    <li><a href="{% url fbconnect.views.assoc_with_curr_user_redir %}">Associate LitHub and facebook accounts</a></li>
+    <li><a href="{% url bookswap.views.dissoc_fb %}">Dissociate LitHub and facebook accounts</a></li>
+    <li><a href="{% url bookswap.views.delete_account %}">Delete your account</a></li>
+</ul>
+</div>
 {% endblock %}

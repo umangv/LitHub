@@ -179,3 +179,24 @@ ul.messages li.info
 {
 	background-color:#7cf;
 }
+table.booklist tr td
+{
+	padding:7px 0;
+}
+ul.account_sidelinks
+{
+	list-style:none outside none;
+	margin:0;
+	padding:0;
+	font-size:14px;
+}
+ul.account_sidelinks li
+{
+	padding: 7px 0 7px 5px;
+	border-left:2px solid transparent;
+	padding-left
+}
+ul.account_sidelinks li:hover
+{
+	border-left:2px solid #ff7200;
+}
