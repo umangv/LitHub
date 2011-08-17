@@ -154,3 +154,28 @@ ul.navlinks li
 {
 	border-top:2px solid #ff7200;
 }
+
+ul.messages
+{
+	list-style:none outside none;
+	font-size:12px;
+	padding:0;
+	margin:0;
+}
+ul.messages li
+{
+	padding:5px;
+	margin-bottom:3px;
+}
+ul.messages li.success
+{
+	background-color:#7f7;
+}
+ul.messages li.error
+{
+	background-color:#f77;
+}
+ul.messages li.info
+{
+	background-color:#7cf;
+}
