@@ -62,6 +62,8 @@ def search_books(request):
                 return redirect(book_by_isbn, isbn_no=isbn_no)
             except ValueError:
                 messages.error(request, "Please enter a valid ISBN number")
+                return render(request, "bookswap/home.html",
+                        {'search_isbn':request.POST.get('isbn','')})
     title = request.GET.get('title', '')
     author = request.GET.get('author', '')
     if title or author:
@@ -70,9 +72,10 @@ def search_books(request):
         results = [(b, len(b.copy_set.filter(soldTime=None))) for b in books]
         results.sort(reverse=True, key=lambda x:x[1])
         return render(request, "bookswap/results.html",
-                {"results":results})
+                {"results":results, 'search_title':title,
+                    'search_author':author})
     else:
-        return render(request, 'bookswap/search.html')
+        return redirect(all_books)
 
 def all_books(request):
     books = Book.objects.all()

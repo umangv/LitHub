@@ -44,26 +44,32 @@
                     </div>
                 </div> <!-- end navbar -->
                 <div id="searchbox" style="clear:both;">
+                    <form action="{% url bookswap.views.search_books %}" method="get">
                     <div class="sform_field">
                         <label for="search_title">Title:</label><br/>
-                        <input type="text" id="search_title" placeholder="Title" x-webkit-speech/>
+                        <input type="text" id="search_title" name="title" placeholder="Title" {% if search_title%}value="{{search_title}}" {%endif%}x-webkit-speech/>
                     </div>
                     <div class="sform_field">
                         <label for="search_title">Author:</label><br/>
-                        <input type="text" id="search_author" placeholder="Author" x-webkit-speech/>
+                        <input type="text" id="search_author" name="author" placeholder="Author" {% if search_author%}value="{{search_author}}" {%endif%}x-webkit-speech/>
                     </div>
                     <div class="sform_field_submit">
                         <br/>
                         <input type="submit" value="Search"/>
                     </div>
+                    </form>
+                    <form action="{% url bookswap.views.search_books %}" method="post">
                     <div class="sform_field">
+                        {% csrf_token %}
+                        <input type="hidden" id="action" name="action" value="isbn_search"/>
                         <label for="search_isbn">ISBN:</label><br/>
-                        <input type="text" id="search_isbn" placeholder="Title" x-webkit-speech/>
+                        <input type="text" id="search_isbn" name="isbn" placeholder="ISBN" {% if search_isbn%}value="{{search_isbn}}" {%endif%}x-webkit-speech/>
                     </div>
                     <div class="sform_field_submit">
                         <br/>
-                        <input type="submit" id="search_isbn" value="Search"/>
+                        <input type="submit" value="Search"/>
                     </div>
+                    </form>
                 </div><!-- end searchbox -->
                 <div id="fixedboxgradient"></div>
             </div><!-- end topbar -->
