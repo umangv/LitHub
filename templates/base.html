@@ -29,13 +29,17 @@
         <div id="wrapper">
             <div id="topbar">
                 <div id="navbar">
-                    <img id="kzoolithub" src="{{STATIC_URL}}images/kzoolithub.png" alt="Kzoo LitHub" style="" />
+                    <a href="{% url home %}"><img id="kzoolithub" src="{{STATIC_URL}}images/kzoolithub.png" alt="Kzoo LitHub" style="" /></a>
                     <div class="navlinks">
                         <ul class="navlinks">
-                            <li>Available books</li>
-                            <li>Sell a book</li>
-                            <li>My account</li>
-                            <li>Logout</li>
+                            <li><a href="{% url bookswap.views.all_books %}">Available books</a></li>
+                            <li><a href="{% url bookswap.views.sell_step_search %}">Sell a book</a></li>
+                            <li><a href="{% url bookswap.views.my_account %}">My account</a></li>
+                            {% if user.is_authenticated %}
+                            <li><a href="{% url django.contrib.auth.views.logout %}">Logout</a></li>
+                            {% else %}
+                            <li><a href="{% url django.contrib.auth.views.login %}">Login</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div> <!-- end navbar -->

@@ -23,6 +23,15 @@ html, body /* Image background is in wrapper */
 {
 	background: #ff7200;
 }
+img
+{
+	border:0;
+}
+a
+{
+	color:#ff7200;
+	text-decoration:none;
+}
 html, body, h1, h2, h3, h4, input
 {
 	font-family: 'Droid Sans', arial, sans-serif;
@@ -42,6 +51,14 @@ html, body, h1, h2, h3, h4, input
 	margin-left:20px; /* wrapper is 1000px wide. This centers topbar */
 	top:0;
 	clear:both;
+}
+#navbar a
+{
+	color:#fff;
+}
+#navbar ul li a:hover
+{
+	color:#ff7200;
 }
 #navbar
 {
