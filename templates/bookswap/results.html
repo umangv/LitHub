@@ -22,7 +22,7 @@
 {% block title %}Search Results{% endblock %}
 {% block content %}{% block message %}<p>We found {{results|length}} results:</p>{% endblock %}
 {% if results %}
-<table>
+<table class="booklist">
     <thead>
         <th>Title</th><th>Author</th><th>ISBN</th>
     </thead>
