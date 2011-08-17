@@ -155,6 +155,15 @@ ul.navlinks li
 	border-top:2px solid #ff7200;
 }
 
+div#content a
+{
+	border-bottom:1px dashed #ff7200;
+}
+div#content a:hover
+{
+	border-bottom:1px solid #ff7200;
+}
+
 div#form label
 {
 	float:left;
@@ -221,20 +230,24 @@ table.booklist tr td
 {
 	padding:7px 0;
 }
-ul.account_sidelinks
+ul#account_sidelinks
 {
 	list-style:none outside none;
 	margin:0;
 	padding:0;
 	font-size:14px;
 }
-ul.account_sidelinks li
+ul#account_sidelinks li
 {
 	padding: 7px 0 7px 5px;
 	border-left:2px solid transparent;
 	padding-left
 }
-ul.account_sidelinks li:hover
+ul#account_sidelinks li:hover
 {
 	border-left:2px solid #ff7200;
+}
+ul#account_sidelinks li a, ul#account_sidelinks li a:hover 
+{
+	border-bottom:0;
 }

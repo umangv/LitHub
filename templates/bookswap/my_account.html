@@ -40,7 +40,7 @@
 </div>
 <div id="twocol_side">
 <p>Manage your account:</p>
-<ul class="account_sidelinks">
+<ul id="account_sidelinks">
     <li><a href="{% url django.contrib.auth.views.password_change %}">Change your password</a></li>
     <li><a href="{% url fbconnect.views.assoc_with_curr_user_redir %}">Associate LitHub and facebook accounts</a></li>
     <li><a href="{% url bookswap.views.dissoc_fb %}">Dissociate LitHub and facebook accounts</a></li>
