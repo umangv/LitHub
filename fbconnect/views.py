@@ -73,6 +73,9 @@ def register(request, code):
                 fbp = FBProfile(user=new_user, fb_userid=user_info['id'])
                 fbp.save()
                 messages.success(request, "Your account has been created!")
+                user = authenticate(fb_uid=fbp.fb_userid)
+                if user and user.is_active:
+                    login(request, user)
                 return redirect('bookswap.views.my_account')
         return render(request, "fbconnect/register.html", 
                 {'form':form})

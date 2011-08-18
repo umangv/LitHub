@@ -28,13 +28,15 @@ class FBAuthentication:
     supports_anonymous_user = False
     supports_inactive_user = False
 
-    def authenticate(self, fb_code):
+    def authenticate(self, fb_code=None, fb_uid=None):
+        if not fb_uid:
+            try:
+                fb_uid = get_userid(fb_code)
+            except ValueError:
+                return None
         try:
-            fb_uid = get_userid(fb_code)
             profile = FBProfile.objects.get(fb_userid=fb_uid)
             return profile.user
-        except ValueError:
-            return None
         except ObjectDoesNotExist:
             return None
 
