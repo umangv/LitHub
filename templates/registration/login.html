@@ -22,15 +22,16 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 {% if not user.is_authenticated %}
+  <p style="padding-left:200px;"><a href="{% url fbconnect.views.redirect_to_fb %}" style="border:0;"><img src="{{STATIC_URL}}images/loginfb.png" alt="Login using facebook"/></a>
+  <br/><span style="font-size:12px;">No registration required to login using facebook. <a href="{% url fbconnect_privacy %}">Privacy policy</a>.</span></p>
   <div id="form">
   <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="login" />
+    <input type="submit" value="Login" />
     <input type="hidden" name="next" value="{{ next|escape }}" />
   </form>
   </div>
-  <p>You can also <a href="{% url fbconnect.views.redirect_to_fb %}">login using facebook</a>. (<a href="{% url fbconnect_privacy %}">Privacy policy</a>)</p>
   <p>Don't have an account? <a href="{% url registration_register %}">Sign up</a> for one now!</p>
 {% else %}
 <p>You are already logged in as {{user.username}}</p>
