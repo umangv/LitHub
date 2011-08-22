@@ -252,3 +252,16 @@ ul#account_sidelinks li a, ul#account_sidelinks li a:hover
 {
 	border-bottom:0;
 }
+ul.features
+{
+	list-style:square inside none;
+	margin:0;
+	padding-left:0px;
+	font-size:14px;
+	line-height:1.5em;
+}
+ul.features li
+{
+	margin-bottom:1em;
+	color:#000;
+}
