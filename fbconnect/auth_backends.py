@@ -18,9 +18,6 @@
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-
-from utils import get_userid
-
 from fbconnect.models import FBProfile
 
 class FBAuthentication:
@@ -28,12 +25,7 @@ class FBAuthentication:
     supports_anonymous_user = False
     supports_inactive_user = False
 
-    def authenticate(self, fb_code=None, fb_uid=None):
-        if not fb_uid:
-            try:
-                fb_uid = get_userid(fb_code)
-            except ValueError:
-                return None
+    def authenticate(self, fb_uid):
         try:
             profile = FBProfile.objects.get(fb_userid=fb_uid)
             return profile.user

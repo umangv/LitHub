@@ -24,54 +24,82 @@ import urllib2
 from urlparse import parse_qs
 import json
 
-def get_access_token(code, view=None):
-    LOOKUP_URL = "https://graph.facebook.com/oauth/access_token?"
-    opts = {'client_id':settings.FB_APP_ID,
-            'redirect_uri':_url_receiving_code(view),
-            'client_secret':settings.FB_APP_SECRET,
-            'code':code}
-    try:
-        fb_resp = urllib2.urlopen(LOOKUP_URL + urlencode(opts))
-        result = fb_resp.read()
-        fb_resp.close()
-    except urllib2.HTTPError:
-        raise ValueError("The code was invalid or there was a problem " +\
-                "connecting to facebook")
-    resp = parse_qs(result)
-    if not resp.has_key('access_token'):
-        raise ValueError("No access token returned")
-    return resp['access_token'][0]
+def lazy_prop(func):
+    """Wrapper for properties that should be evaluated lazily
 
-def get_basic_info(access_token):
-    LOOKUP_URL = "https://graph.facebook.com/me?"
-    opts = {'access_token':access_token,}
-    try:
-        fb_resp = urllib2.urlopen(LOOKUP_URL + urlencode(opts))
-        results = fb_resp.read()
-        fb_resp.close()
-    except urllib2.HTTPError:
-        raise ValueError("The token was invalid or there was a problem" +\
-                "connecting to facebook")
-    return json.loads(results)
+    This calls the actual method only once per instance. On the first time 
+    the property is read, it's value is stored in self.__dict__.  The next
+    time onwards, the stored value is returned. 
 
-def get_networks(access_token):
-    uid = get_basic_info(access_token)['id']
-    LOOKUP_URL = "https://api.facebook.com/method/fql.query?"
-    opts = {'query':"SELECT affiliations FROM user WHERE uid=%s"%uid,
-            'access_token':access_token, 'format':'json'}
-    try:
-        fb_resp = urllib2.urlopen(LOOKUP_URL + urlencode(opts))
-        results = fb_resp.read()
-        fb_resp.close()
-    except urllib2.HTTPError:
-        raise ValueError("The token was invalid or there was a problem" +\
-                "connecting to facebook")
-    return json.loads(results)[0]['affiliations']
+    Note that this wrapper also wraps the property wrapper on the method, so
+    only the @lazy_prop wrapper needs to be used. 
+    """
+    def wrap(self, *args, **kwargs):
+        if not func.__name__ in self.__dict__:
+            self.__dict__[func.__name__] = func(self, *args, **kwargs)
+        return self.__dict__[func.__name__]
+    return property(wrap)
 
-def get_userid(code, view=None):
-    acc_tok = get_access_token(code, view)
-    info = get_basic_info(acc_tok)
-    return info['id']
+class FBConnect(object):
+    """Access and run queries using the Facebook Connect API"""
+    def __init__(self, code, view=None):
+        self.access_token = ""
+        self._get_access_token(code, view)
+
+    def _get_access_token(self, code, view=None):
+        LOOKUP_URL = "https://graph.facebook.com/oauth/access_token?"
+        opts = {'client_id':settings.FB_APP_ID,
+                'redirect_uri':_url_receiving_code(view),
+                'client_secret':settings.FB_APP_SECRET,
+                'code':code}
+        try:
+            fb_resp = urllib2.urlopen(LOOKUP_URL + urlencode(opts))
+            result = fb_resp.read()
+            fb_resp.close()
+        except urllib2.HTTPError:
+            raise ValueError("The code was invalid or there was a problem" \
+            + " connecting to Facebook")
+        resp = parse_qs(result)
+        if not resp.has_key('access_token'):
+            raise ValueError("No access token returned")
+        self.access_token = resp['access_token'][0]
+
+    @lazy_prop
+    def basic_info(self):
+        LOOKUP_URL = "https://graph.facebook.com/me?"
+        opts = {'access_token':self.access_token,}
+        try:
+            fb_resp = urllib2.urlopen(LOOKUP_URL + urlencode(opts))
+            results = fb_resp.read()
+            fb_resp.close()
+        except urllib2.HTTPError:
+            raise ValueError("The token was invalid or there was a " +\
+                    "problem connecting to facebook")
+        return json.loads(results)
+
+    @lazy_prop
+    def networks(self):
+        LOOKUP_URL = "https://api.facebook.com/method/fql.query?"
+        opts = {'query':"SELECT affiliations FROM user WHERE uid=%s"%\
+                self.userid, 'access_token':self.access_token,
+                'format':'json'}
+        try:
+            fb_resp = urllib2.urlopen(LOOKUP_URL + urlencode(opts))
+            results = fb_resp.read()
+            fb_resp.close()
+        except urllib2.HTTPError:
+            raise ValueError("The token was invalid or there was a" + \
+                    "problem connecting to facebook")
+        return json.loads(results)[0]['affiliations']
+
+    @lazy_prop
+    def userid(self):
+        return self.basic_info['id']
+
+def _url_receiving_code(view=None):
+    view = view or 'fbconnect.views.receive_code'
+    extra = reverse(view)
+    return settings.FB_REDIRECT_URL + extra
 
 def redirect_to_fb_url(view=None):
     base_url = "https://www.facebook.com/dialog/oauth?"
@@ -79,8 +107,3 @@ def redirect_to_fb_url(view=None):
             'redirect_uri':_url_receiving_code(view),
             'scope':'email',}
     return base_url + urlencode(opts)
-
-def _url_receiving_code(view=None):
-    view = view or 'fbconnect.views.receive_code'
-    extra = reverse(view)
-    return settings.FB_REDIRECT_URL + extra
