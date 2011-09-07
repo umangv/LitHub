@@ -28,6 +28,7 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     copyrightYear=models.IntegerField()
     publisher=models.CharField(max_length=100)
+    thumbnail_url = models.CharField(max_length=500, blank=True)
 
     def __unicode__(self):
         return "'%s' by '%s' (%d); %s"%(self.title, self.author,

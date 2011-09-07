@@ -26,7 +26,7 @@ class CopyInline(admin.StackedInline):
 class BookAdmin(admin.ModelAdmin):
     fieldsets = [
             (None, {'fields':['isbn', 'title', 'author', 'publisher',
-                'copyrightYear']})]
+                'copyrightYear', 'thumbnail_url']})]
     inlines = [CopyInline]
 
 admin.site.register(Book, BookAdmin)

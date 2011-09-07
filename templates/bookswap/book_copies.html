@@ -22,6 +22,11 @@
 {% block title %}{{book.title}}{% endblock %}
 {% block content %}
 <h2>Book details:</h2>
+{% if book.thumbnail_url %}
+<div class="bookthumbnail">
+<img src="{{book.thumbnail_url}}" alt="{{book.title}}" />
+</div>
+{% endif %}
 <table>
     <tr>
         <td>Title &nbsp;&nbsp;&nbsp;</td><td>{{book.title}}</td>

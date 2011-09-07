@@ -265,3 +265,12 @@ ul.features li
 	margin-bottom:1em;
 	color:#000;
 }
+div.bookthumbnail
+{
+	float:right;
+	padding-right:50px;
+}
+div.bookthumbnail img
+{
+	border:0;
+}

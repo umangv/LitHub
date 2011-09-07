@@ -129,12 +129,14 @@ def sell_new(request, isbn_no):
     # it's not our responsibility to be nice. No well meaning
     # user will see an error page at this stage
     isbn_no = isbn.clean_isbn(isbn_no)
+    info = utils.get_book_details(isbn_no)
     if request.method == 'POST':
         book_form = SellNewBookForm(request.POST, prefix="book")
         copy_form = SellExistingBookForm(request.POST, prefix="copy")
         if book_form.is_valid() and copy_form.is_valid():
             book = book_form.save(commit=False)
             book.isbn = isbn_no
+            book.thumbnail_url = info['thumbnail_url']
             book.save()
             copy = copy_form.save(commit=False)
             copy.book = book
@@ -145,7 +147,6 @@ def sell_new(request, isbn_no):
                     book.title)
             return redirect('bookswap.views.book_details', book.id)
     else:
-        info = utils.get_book_details(isbn_no)
         book_form = SellNewBookForm(prefix="book", initial=info)
         copy_form = SellExistingBookForm(prefix="copy")
     return render(request, "bookswap/sell_new.html",
