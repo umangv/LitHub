@@ -22,11 +22,14 @@
 {% block title %}{{book.title}}{% endblock %}
 {% block content %}
 <h2>Book details:</h2>
-{% if book.thumbnail_url %}
 <div class="bookthumbnail">
 <img src="{{book.thumbnail_url}}" alt="{{book.title}}" />
+<br/>
+<script type="text/javascript" src="http://books.google.com/books/previewlib.js"></script>
+<script type="text/javascript">
+GBS_insertPreviewButtonPopup('ISBN:{{book.isbn}}');
+</script>
 </div>
-{% endif %}
 <table>
     <tr>
         <td>Title &nbsp;&nbsp;&nbsp;</td><td>{{book.title}}</td>
@@ -41,10 +44,6 @@
         <td>Publisher</td><td>{{book.publisher}}{% if book.copyrightYear %}; (copyright {{book.copyrightYear}}) {% endif %}</td>
     </tr>
 </table>
-<script type="text/javascript" src="http://books.google.com/books/previewlib.js"></script>
-<script type="text/javascript">
-GBS_insertPreviewButtonPopup('ISBN:{{book.isbn}}');
-</script>
 <h2>Copies on sale:</h2>
 <table class="highlight_row">
     <thead>

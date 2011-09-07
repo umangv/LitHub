@@ -28,6 +28,16 @@ class BookAdmin(admin.ModelAdmin):
             (None, {'fields':['isbn', 'title', 'author', 'publisher',
                 'copyrightYear', 'thumbnail_url']})]
     inlines = [CopyInline]
+    actions = ['update_thumbnail']
+
+    def update_thumbnail(self, request, queryset):
+        from utils import get_book_details
+        for b in queryset:
+            info = get_book_details(b.isbn)
+            if info:
+                b.thumbnail_url = info['thumbnail_url']
+            b.save()
+        self.message_user(request, "%s rows updated"%queryset.count())
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Copy)

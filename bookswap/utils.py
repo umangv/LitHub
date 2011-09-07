@@ -44,10 +44,10 @@ def get_book_details(isbn_no):
                         authors[-1])
             else:
                 info['author'] = authors[0]
-            info['copyrightYear'] = vol.get('publishedDate').split("-")[0]
-            info['publisher'] = vol.get('publisher')
+            info['copyrightYear'] = vol.get('publishedDate', '').split("-")[0]
+            info['publisher'] = vol.get('publisher', '')
             info['thumbnail_url'] = (vol.get('imageLinks') or
-                    {'na':'na'}).get('thumbnail')
+                    {'na':'na'}).get('thumbnail', '')
             return info
     except Exception:
         return None

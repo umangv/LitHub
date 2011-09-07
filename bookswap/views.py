@@ -136,7 +136,8 @@ def sell_new(request, isbn_no):
         if book_form.is_valid() and copy_form.is_valid():
             book = book_form.save(commit=False)
             book.isbn = isbn_no
-            book.thumbnail_url = info['thumbnail_url']
+            if info:
+                book.thumbnail_url = info['thumbnail_url']
             book.save()
             copy = copy_form.save(commit=False)
             copy.book = book
