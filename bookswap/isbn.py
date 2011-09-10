@@ -33,8 +33,9 @@ def clean_isbn(isbn):
             for i, x in enumerate(isbn[:9]):
                 sum += (i + 1) * int(x)
             sum = sum % 11
-            if sum == 10 and isbn[9] != 'X':
-                raise ValueError("Invalid ISBN")
+            if sum == 10:
+                if isbn[9] != 'X':
+                    raise ValueError("Invalid ISBN")
             elif int(isbn[9]) != sum:
                 raise ValueError("Invalid ISBN")
             return ten_to_thirteen(isbn)
