@@ -53,12 +53,11 @@ def register(request, code):
                 k = True
                 break
         if not k:
-            messages.error(request, "You need to be in the Kalamazoo "+\
-                "College network to register using facebook. You may " +\
-                "either join the Kalamazoo College Network on Facebook " +\
-                "and try again or register using the form below. " + \
-                "Note that if you use the form below you can connect "+ \
-                "your account to facebook after you sign in.")
+            messages.error(request, "You are not in the Kalamazoo "+\
+                "College network on Facebook. Please join the " +\
+                "Kalamazoo College Network and try again or register "+\
+                "using the form below. You may connect your account " +\
+                "to Facebook after registration")
             return redirect('registration.views.register')
         form = FBRegisterForm()
         if request.method == 'POST':
