@@ -67,8 +67,8 @@ def search_books(request):
     title = request.GET.get('title', '')
     author = request.GET.get('author', '')
     if title or author:
-        books = Book.objects.filter( title__contains=title,
-                author__contains=author)
+        books = Book.objects.filter(title__icontains=title,
+                author__icontains=author)
         results = [(b, len(b.copy_set.filter(soldTime=None))) for b in books]
         results.sort(reverse=True, key=lambda x:x[1])
         return render(request, "bookswap/results.html",
