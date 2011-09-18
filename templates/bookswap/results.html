@@ -29,7 +29,7 @@
 {% for res, len in results %}
 {% if len %}
 <tr>
-    <td><a href="{% url bookswap.views.book_details res.id %}">{{res.title}}</a><br/><span class="bookinfo">There are {{len}} copies on sale!</span></td> 
+    <td><a href="{% url bookswap.views.book_details res.id %}">{{res.title}}</a><br/><span class="bookinfo">There {% if len == 1 %}is 1 copy{% else%}are {{len}} copies{% endif %} on sale!</span></td> 
     <td>{{res.author}}</td>
     <td><span class="isbn">{{res.isbn}}</span></td>
 </tr>
