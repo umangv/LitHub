@@ -95,10 +95,10 @@ def contact_us(request):
             feedback.save()
             messages.success(request, "Thank you for your feedback! We " +\
                     "appreciate your valuable input.")
-            mail_body = ("Hi!\nKzoo Lithub received new feedback:\n" +\
-                    "Name: %s\nSubject:%s\nComments:%s\n\nWith love " +\
-                    "from your sincere mail bot!")%(feedback.name,
-                            feedback.subject, feedback.comment)
+            mail_body = ("Hi!\n\nKzoo Lithub received new feedback:\n\n" +\
+                    "Name: %s\n\nSubject:%s\n\nComments:\n%s\n\n" +\
+                    "With love from your sincere mail bot!")%( \
+                    feedback.name, feedback.subject, feedback.comment)
             send_mail('New feedback received', mail_body,
                     settings.DEFAULT_FROM_EMAIL,
                     [settings.DEFAULT_FROM_EMAIL],
