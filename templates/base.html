@@ -34,6 +34,7 @@
                             <li class="{% block nav_availbooks %}{% endblock %}"><a href="{% url bookswap.views.all_books %}">Available books</a></li>
                             <li class="{% block nav_sell %}{% endblock %}"><a href="{% url bookswap.views.sell_step_search %}">Sell a book</a></li>
                             <li class="{% block nav_profile %}{% endblock %}"><a href="{% url bookswap.views.my_account %}">My account</a></li>
+                            <li class="{% block nav_contact %}{% endblock %}"><a href="{% url bookswap.views.contact_us %}">Contact</a></li>
                             {% if user.is_authenticated %}
                             <li><a href="{% url django.contrib.auth.views.logout %}">Logout</a></li>
                             {% else %}

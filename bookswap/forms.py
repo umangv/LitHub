@@ -17,9 +17,14 @@
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import forms
-from models import COPY_CONDITIONS, Book, Copy
+from models import COPY_CONDITIONS, Book, Copy, Feedback
 from datetime import datetime
 import isbn 
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        exclude = ('date')
 
 class SellExistingBookForm(forms.ModelForm):
     class Meta:

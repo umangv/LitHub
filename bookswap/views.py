@@ -24,6 +24,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template import RequestContext, Context, loader
+from django.core.mail import send_mail
+from django.conf import settings
 
 from datetime import datetime
 import utils
@@ -83,6 +85,28 @@ def all_books(request):
     results.sort(reverse=True, key=lambda x:x[1])
     return render(request, "bookswap/all_books.html",
             {"results":results})
+
+def contact_us(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            feedback.date = datetime.now()
+            feedback.save()
+            messages.success(request, "Thank you for your feedback! We " +\
+                    "appreciate your valuable input.")
+            mail_body = ("Hi!\nKzoo Lithub received new feedback:\n" +\
+                    "Name: %s\nSubject:%s\nComments:%s\n\nWith love " +\
+                    "from your sincere mail bot!")%(feedback.name,
+                            feedback.subject, feedback.comment)
+            send_mail('New feedback received', mail_body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [settings.DEFAULT_FROM_EMAIL],
+                    fail_silently=False)
+            return redirect('home')
+    else:
+        form = ContactForm()
+    return render(request, "bookswap/contact.html", {'form':form})
 
 @login_required
 def sell_step_search(request):

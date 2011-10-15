@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
-from bookswap.models import Book, Copy
+from bookswap.models import Book, Copy, Feedback
 from django.contrib import admin
 
 class CopyInline(admin.StackedInline):
@@ -41,3 +41,4 @@ class BookAdmin(admin.ModelAdmin):
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Copy)
+admin.site.register(Feedback)

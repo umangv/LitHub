@@ -49,3 +49,12 @@ class Copy(models.Model):
 
     class Meta:
         verbose_name_plural = "Copies"
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=30)
+    subject = models.CharField(max_length=100)
+    comment = models.TextField()
+    date = models.DateTimeField()
+
+    def __unicode__(self):
+        return "%s's comments about '%s'"%(self.name, self.subject[:30])
