@@ -20,6 +20,7 @@ from django.conf.urls.defaults import *
 from django.contrib.auth.views import login, logout, password_change, \
         password_change_done
 from django.views.generic import TemplateView
+from render_template import render_template
 
 urlpatterns = patterns('bookswap.views',
     (r'^bookswap/isbn/(?P<isbn_no>\w+)/$','book_by_isbn'),
@@ -41,6 +42,6 @@ urlpatterns = patterns('bookswap.views',
     (r'^accounts/profile/delete/success/$', 'delete_account_success'),
     (r'^accounts/profile/dissoc_fb/$', 'dissoc_fb'),
     (r'^accounts/profile/view/(?P<username>.+)/$', 'view_profile'),
-    url(r'^$', TemplateView.as_view(template_name="bookswap/home.html"),
+    url(r'^$', render_template, {'template':"bookswap/home.html"},
         name="home"),
     )

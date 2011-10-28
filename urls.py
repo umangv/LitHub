@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.defaults import *
 from django.conf.urls.static import static
 from bookswap.kregform import KzooRegistrationForm
+from render_template import render_template
 
 from django.contrib import admin
 admin.autodiscover()
