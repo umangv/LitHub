@@ -3,6 +3,7 @@ from lithub_config import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),

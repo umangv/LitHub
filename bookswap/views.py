@@ -22,6 +22,7 @@ from django.contrib.auth import views as authViews
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template import RequestContext, Context, loader
@@ -35,6 +36,7 @@ from smtplib import SMTPException
 
 from bookswap.models import Book, Copy
 from bookswap.forms import *
+from fbconnect import utils as fbutils
 
 def render_403(error, status=403):
     t = loader.get_template('bookswap/error.html')
@@ -56,7 +58,7 @@ def book_details(request, book_id):
     book = Book.objects.get(pk=book_id)
     copies = book.copy_set.filter(soldTime=None).order_by('price')
     return render(request, "bookswap/book_copies.html",
-        {"book":book, 'copies':copies})
+        {"book":book, 'copies':copies, 'settings':settings})
 
 def search_books(request):
     if request.method == "POST":
@@ -145,6 +147,12 @@ def sell_existing(request, book_id):
             copy.save()
             messages.success(request, "Your copy of `%s` is now on sale."%\
                     book.title)
+            fb_at = request.session.get('fb_at', None)
+            if fb_at:
+                fb = fbutils.FBConnect(access_token=fb_at)
+                fb.publish_og('list', 'book', 
+                        settings.FB_REDIRECT_URL[:-1] +
+                        reverse(book_details, args=[book.id]))
             return redirect('bookswap.views.book_details', book.id)
     return render(request, "bookswap/sell_existing.html",
             {'form':form, 'book':book})
@@ -172,6 +180,12 @@ def sell_new(request, isbn_no):
             copy.save()
             messages.success(request, "Your copy of `%s` is now on sale."%\
                     book.title)
+            fb_at = request.session.get('fb_at', None)
+            if fb_at:
+                fb = fbutils.FBConnect(access_token=fb_at)
+                fb.publish_og('list', 'book', 
+                        settings.FB_REDIRECT_URL[:-1] +
+                        reverse(book_details, args=[book.id]))
             return redirect('bookswap.views.book_details', book.id)
     else:
         book_form = SellNewBookForm(prefix="book", initial=info)

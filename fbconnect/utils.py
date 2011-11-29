@@ -42,9 +42,14 @@ def lazy_prop(func):
 
 class FBConnect(object):
     """Access and run queries using the Facebook Connect API"""
-    def __init__(self, code, view=None):
-        self.access_token = ""
-        self._get_access_token(code, view)
+    def __init__(self, code=None, view=None, access_token=None):
+        if code != None:
+            self.access_token = ""
+            self._get_access_token(code, view)
+        elif access_token != None:
+            self.access_token = access_token
+        elif access_token==None and code==None:
+            raise ValueError('code and access_token cannot both be None.')
 
     def _get_access_token(self, code, view=None):
         LOOKUP_URL = "https://graph.facebook.com/oauth/access_token?"
@@ -96,6 +101,20 @@ class FBConnect(object):
     def userid(self):
         return self.basic_info['id']
 
+    def publish_og(self, action, obj_type, obj):
+        opts = {'access_token':self.access_token,
+            obj_type:obj}
+        try:
+            fb_resp = urllib2.urlopen(\
+                    'https://graph.facebook.com/me/%s:%s'%(\
+                    settings.FB_APP_NAMESPACE, action),
+                    urlencode(opts))
+            id = fb_resp.read()
+            fb_resp.close()
+        except urllib2.HTTPError as e:
+            raise ValueError("There was a problem connecting to facebook.")
+        return id
+
 def _url_receiving_code(view=None):
     view = view or 'fbconnect.views.receive_code'
     extra = reverse(view)
@@ -105,5 +124,5 @@ def redirect_to_fb_url(view=None):
     base_url = "https://www.facebook.com/dialog/oauth?"
     opts = {'client_id':settings.FB_APP_ID,
             'redirect_uri':_url_receiving_code(view),
-            'scope':'email',}
+            'scope':'email,publish_actions',}
     return base_url + urlencode(opts)

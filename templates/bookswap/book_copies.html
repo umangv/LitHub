@@ -20,6 +20,16 @@
 -->
 {% block nav_availbooks %}selected{% endblock %}
 {% block title %}{{book.title}}{% endblock %}
+{% block headprefix %} prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# book: http://ogp.me/ns/book#"{% endblock %}
+{% block headextra %}
+        <meta property="fb:app_id"      content="{{settings.FB_APP_ID}}" /> 
+        <meta property="og:type"        content="book" /> 
+        <meta property="og:url"         content="{{settings.FB_REDIRECT_URL}}{% url bookswap.views.book_details book.id %}" /> 
+        <meta property="og:title"       content="{{book.title}}" /> 
+        <meta property="og:isbn"       content="{{book.isbn}}" /> 
+        <meta property="og:description" content="{{book.title}} by {{book.author}}" /> 
+        <meta property="og:image"       content="{{book.thumbnail_url}}" />
+{% endblock %}
 {% block content %}
 <div class="bookthumbnail">
 {% if book.thumbnail_url %}    

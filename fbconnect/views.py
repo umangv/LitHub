@@ -31,12 +31,14 @@ import fbconnect.utils as fb_utils
 from fbconnect.forms import FBRegisterForm
 
 def receive_code(request):
+    """Receives fb code for logging in."""
     try:
         code = request.GET.get('code', '')
         fb = fb_utils.FBConnect(code)
         user = authenticate(fb_uid=fb.userid)
         if user and user.is_active:
             login(request, user)
+            request.session['fb_at'] = fb.access_token
             next = request.session.get('next', '')
             try:
                 del request.session['next']
@@ -93,6 +95,7 @@ def register(request, code):
                 fbp.save()
                 messages.success(request, "Your account has been created!")
                 user = authenticate(fb_uid=fbp.fb_userid)
+                request.session['fb_at'] = fb.access_token
                 if user and user.is_active:
                     login(request, user)
                 return redirect('bookswap.views.my_account')

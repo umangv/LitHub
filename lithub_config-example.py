@@ -15,6 +15,7 @@ DEFAULT_FROM_EMAIL="test <test@example.com>"
 
 # For FB integration
 FB_APP_ID='12345'
+FB_APP_NAMESPACE='lithub-example'
 FB_APP_SECRET='67890'
 FB_REDIRECT_URL = "http://example.com"
 
