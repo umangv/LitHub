@@ -6,6 +6,7 @@
 
 # Doesn't everyone love Vim?
 *.swp
+*.swo
 
 # we have lithub_config-example.py. Changes to everyone's
 # individual copy of the actual config file should not
