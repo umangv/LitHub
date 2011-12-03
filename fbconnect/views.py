@@ -70,6 +70,7 @@ def register(request, code):
                 new_user.first_name = user_info['first_name']
                 new_user.last_name = user_info['last_name']
                 new_user.is_active = True
+                new_user.set_unusable_password()
                 new_user.save()
                 fbp = FBProfile(user=new_user, fb_userid=user_info['id'])
                 fbp.save()

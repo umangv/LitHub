@@ -235,6 +235,18 @@ def view_profile(request, username):
     return render(request, "bookswap/profile_view.html",
             {'user':user})
 
+def password_reset_wrapper(request, *args, **kwargs):
+    from django.contrib.auth.views import password_reset
+    if request.method == 'POST':
+        users = User.objects.filter(
+                email__iexact= request.POST.get('email', ''),
+                is_active=True)
+        if len(users):
+            if any([not user.has_usable_password() for user in users]):
+                return render(request,
+                        "registration/password_reset_has_fb.html")
+    return password_reset(request, *args, **kwargs)
+
 @login_required
 def delete_account(request):
     if request.method=='POST':
