@@ -22,17 +22,18 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 {% if not user.is_authenticated %}
-  <p style="padding-left:200px;"><a href="{% url fbconnect.views.redirect_to_fb %}" style="border:0;"><img src="{{STATIC_URL}}images/loginfb.png" alt="Login using facebook"/></a>
+<table>
+    <tr><td width="200px"></td><td><a href="{% url fbconnect.views.redirect_to_fb %}" style="border:0;"><img src="{{STATIC_URL}}images/loginfb.png" alt="Login using facebook"/></a>
   <br/><span style="font-size:12px;">No registration required to login using facebook. <a href="{% url fbconnect_privacy %}">Privacy policy</a>.</span></p>
-  <div id="form">
+  </td></tr>
   <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Login" />
-    <input type="hidden" name="next" value="{{ next|escape }}" />
+    {{ form }}
+    <tr><td></td><td><input type="submit" value="Login" />
+            <input type="hidden" name="next" value="{{ next|escape }}" /><a style="font-size:12px;" href="{% url password_reset %}">Forgot your password?</a></td></tr>
   </form>
-  </div>
-  <p>Don't have an account? <a href="{% url registration_register %}">Sign up</a> for one now!</p>
+  <tr><td></td><td style="padding-top:20px;">Don't have an account? <a href="{% url registration_register %}">Sign up</a> for one now!</td></tr>
+  </table>
 {% else %}
 <p>You are already logged in as {{user.username}}</p>
 {% endif %}

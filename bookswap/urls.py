@@ -18,7 +18,8 @@
 
 from django.conf.urls.defaults import *
 from django.contrib.auth.views import login, logout, password_change, \
-        password_change_done
+        password_change_done, password_reset, password_reset_confirm, \
+        password_reset_done, password_reset_complete
 from django.views.generic import TemplateView
 from render_template import render_template
 
@@ -33,8 +34,14 @@ urlpatterns = patterns('bookswap.views',
     (r'^bookswap/sell/new/(?P<isbn_no>\d+)/$', 'sell_new'),
     (r'^bookswap/mark_sold/(?P<copy_id>\d+)/$', 'mark_sold'),
     (r'^bookswap/edit_copy/(?P<copy_id>\d+)/$', 'edit_copy'),
-    (r'^accounts/logout/$', logout),
-    (r'^accounts/login/$', login),
+    url(r'^accounts/logout/$', logout, name="logout"),
+    url(r'^accounts/login/$', login, name="login"),
+    url(r'^accounts/password/reset/$', password_reset,
+        name="password_reset"),
+    url(r'^accounts/password/reset/done/$', password_reset_done),
+    url(r'^accounts/password/reset/confirm/(?P<uidb36>.*)/(?P<token>.*)/$',
+        password_reset_confirm, name="password_reset_confirm"),
+    url(r'^accounts/password/reset/complete/$', password_reset_complete),
     (r'^accounts/change_password/$', password_change),
     (r'^accounts/change_password_done/$', password_change_done),
     (r'^accounts/profile/$', 'my_account'),
