@@ -42,8 +42,11 @@
 <p>Manage your account:</p>
 <ul id="account_sidelinks">
     <li><a href="{% url password_change %}">Change your password</a></li>
+    {% if not fb %}
     <li><a href="{% url fbconnect.views.assoc_with_curr_user_redir %}">Associate LitHub and facebook accounts</a></li>
+    {% else %}
     <li><a href="{% url bookswap.views.dissoc_fb %}">Dissociate LitHub and facebook accounts</a></li>
+    {% endif %}
     <li><a href="{% url bookswap.views.delete_account %}">Delete your account</a></li>
 </ul>
 </div>

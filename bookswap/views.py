@@ -181,8 +181,13 @@ def sell_new(request, isbn_no):
 @login_required
 def my_account(request):
     copies = request.user.copy_set.filter(soldTime=None)
+    try:
+        request.user.fbprofile
+        fb = True
+    except ObjectDoesNotExist:
+        fb = False
     return render(request, "bookswap/my_account.html",
-            {'copies':copies})
+            {'copies':copies, 'fb':fb})
 
 @login_required
 def mark_sold(request, copy_id):
