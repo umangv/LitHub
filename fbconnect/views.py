@@ -95,7 +95,7 @@ def assoc_with_curr_user(request):
         matches = FBProfile.objects.filter(fb_userid=uid).count()
         if matches:
             messages.error(request, "Your facebook account is already " +\
-                    "associated with an account on LitHub")
+                    "associated with another account on LitHub")
             return redirect('bookswap.views.my_account')
         try:
             profile = FBProfile.objects.get(user=request.user)
