@@ -248,6 +248,13 @@ def password_reset_wrapper(request, *args, **kwargs):
     return password_reset(request, *args, **kwargs)
 
 @login_required
+def password_change_wrapper(request, *args, **kwargs):
+    from django.contrib.auth.views import password_change
+    if not request.user.has_usable_password():
+        return redirect('fbconnect.views.change_pass_redir')
+    return password_change(request, *args, **kwargs)
+
+@login_required
 def delete_account(request):
     if request.method=='POST':
         password = request.POST.get('password', '')
