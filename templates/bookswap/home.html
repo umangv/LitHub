@@ -21,9 +21,7 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <div id="twocol_main" style="font-size:15px;">
-<h2>Welcome!</h2>
-<p>Hi! The <i>Kzoo LitHub</i> was created for K College students by the K College <i>Computer Science Club.</i></p>
-<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=178974338841655&amp;xfbml=1"></script><fb:like href="https://www.facebook.com/pages/Kalamazoo-College-Computer-Science-Club/226844833998586" send="true" layout="button_count" width="100" show_faces="true" action="like" font=""></fb:like>
+<p><img src="{{ STATIC_URL}}images/mainpage.png" alt="Save money on books; Make money on books"/></p>
 <h3>Why should you use LitHub?</h3>
 <p>LitHub can help you save money! When compared to websites online and bookstores, LitHub helps buy books for less and sell them for more. Here's how:</p>
 <p>If you buy a Calculus book for $100 and later sell it, you will probably get far less than $100 in return. This is because there are additional costs in buying and selling a book through a bookstore or website. First, the company needs to make money and keeps a portion of the total sales. Second, the book needs to be packaged and shipped. As a result, you pay more than the book's real "value" when you buy it and make less when you sell it.
@@ -43,5 +41,7 @@
         <li>HTML5 speech recognition on search forms (currently only on Google Chrome)</li>
         <li>Restricted to K college students</li>
     </ul>
+    <br/>
+    <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=178974338841655&amp;xfbml=1"></script><fb:like href="https://www.facebook.com/pages/Kalamazoo-College-Computer-Science-Club/226844833998586" send="true" layout="button_count" width="100" show_faces="true" action="like" font=""></fb:like>
 </div>
 {% endblock %}
