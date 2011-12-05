@@ -255,6 +255,10 @@ table.copylist tr td.copycomments
 {
 	min-width:400px;
 }
+table.copylist tr td.requestcopy
+{
+	min-width:150px;
+}
 div#content table.copylist tr td.requestcopy a, div#content table.copylist tr td.requestcopy a:hover
 {
 	font-weight:bold;
