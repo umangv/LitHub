@@ -21,7 +21,6 @@
 {% block nav_availbooks %}selected{% endblock %}
 {% block title %}{{book.title}}{% endblock %}
 {% block content %}
-<h2>Book details:</h2>
 <div class="bookthumbnail">
 {% if book.thumbnail_url %}    
 <img src="{{book.thumbnail_url}}" alt="{{book.title}}" />
@@ -32,33 +31,22 @@
 GBS_insertPreviewButtonPopup('ISBN:{{book.isbn}}');
 </script>
 </div>
-<table>
-    <tr>
-        <td>Title &nbsp;&nbsp;&nbsp;</td><td>{{book.title}}</td>
-    </tr>
-    <tr>
-        <td>Authors &nbsp;&nbsp;&nbsp;</td><td>{{book.author}}</td>
-    </tr>
-    <tr>
-        <td>ISBN &nbsp;&nbsp;&nbsp;</td><td>{{book.isbn}}</td>
-    </tr>
-    <tr>
-        <td>Publisher</td><td>{{book.publisher}}{% if book.copyrightYear %}; (copyright {{book.copyrightYear}}) {% endif %}</td>
-    </tr>
-</table>
-<h2>Copies on sale:</h2>
-<table class="highlight_row">
-    <thead>
-        <th>Owner &nbsp;&nbsp;&nbsp;</th><th>Condition&nbsp;&nbsp;&nbsp;</th><th>Price&nbsp;&nbsp;&nbsp;</th><th>Comments&nbsp;&nbsp;&nbsp;</th>
-    </thead>
+<div>
+<div class="bookinfo">
+<h2>{{book.title}}</h2>
+<span>by <i>{{book.author}}</i></span></br/>
+<span>Publisher: {{book.publisher}}{% if book.copyrightYear %} (&copy; {{book.copyrightYear}}) {% endif %}</span><br/>
+<span>ISBN-13: {{book.isbn}}</span><br/>
+<a class="imagelink" href="{% url bookswap.views.sell_existing book.id %}"><img src="{{STATIC_URL}}images/sellbook.png" alt="Sell this book"/></a>
+</div>
+<p style="clear:both;">Copies on sale:</p>
+<table class="copylist">
 {% for copy in copies %}
 <tr>
-    <td><a href="{% url bookswap.views.view_profile copy.owner.username %}">{{copy.owner.username}}</a></td> 
-    <td>{{copy.condition}}</td>
-    <td>${{copy.price|floatformat:2}}</td>
-    <td>{{copy.comments}}</td>
+    <td class="price"><p><sup>$</sup>{{copy.price|floatformat:2}}</p><p class="condition">{{copy.condition}}</p></td>
+    <td class="copycomments">{% if copy.comments %}{{copy.comments}}{% else %}<i>(No comment provided)</i>{% endif %}</td>
+    <td class="requestcopy">{% if copy.owner.id == request.user.id %}<a href="{% url bookswap.views.mark_sold copy.id %}">Mark sold</a> <a href="{% url bookswap.views.edit_copy copy.id %}">Edit</a>{% else %}<a href="{% url bookswap.views.view_profile copy.owner.username %}">Contact Seller &raquo; </a>{% endif %}</td> 
 </tr>
 {% endfor %}
 </table>
-<p>Own a copy of this book? <a href="{% url bookswap.views.sell_existing book.id %}">Sell it!</a></p>
 {% endblock %}

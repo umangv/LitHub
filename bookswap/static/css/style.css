@@ -164,7 +164,10 @@ div#content a:hover
 {
 	border-bottom:1px solid #ff7200;
 }
-
+div#content a.imagelink, div#content a.imagelink:hover
+{
+	border:0;
+}
 div#form label
 {
 	float:left;
@@ -198,10 +201,6 @@ span.isbn
 {
 	font-size:13px;
 }
-table.highlight_row tr:hover
-{
-	border:1px dotted #ff7400;
-}
 
 ul.messages
 {
@@ -230,6 +229,46 @@ ul.messages li.info
 table.booklist tr td
 {
 	padding:7px 0;
+}
+table.copylist
+{
+	border-collapse:collapse;
+}
+table.copylist tr td
+{
+	border-top: 1px solid #ff7200;
+	border-bottom: 1px solid #ff7200;
+}
+table.copylist tr td
+{
+	padding:15px 5px;
+	vertical-align:center;
+}
+table.copylist tr td.price
+{
+	color:#ff7200;
+	font-size:32px;
+	line-height:1em;
+	max-width:120px;
+}
+table.copylist tr td.copycomments
+{
+	min-width:400px;
+}
+div#content table.copylist tr td.requestcopy a, div#content table.copylist tr td.requestcopy a:hover
+{
+	font-weight:bold;
+}
+table.copylist tr td.price p
+{
+	margin:0;
+	font-weight:bold;
+	padding:0;
+}
+table.copylist tr td.price p.condition
+{
+	font-size:14px;
+	margin-top:-0.5em;
 }
 ul#account_sidelinks
 {
@@ -267,10 +306,25 @@ ul.features li
 }
 div.bookthumbnail
 {
-	float:right;
-	padding-right:50px;
+	float:left;
+	padding:0 20px;
+	max-width:150px;
+	overflow-x:hidden;
 }
 div.bookthumbnail img
 {
 	border:0;
+}
+div.bookinfo
+{
+	margin-left:190px;
+	line-height:2em;
+}
+div.bookinfo h2
+{
+	color:#ff7200;
+	padding:0;
+	margin:0;
+	font-size:36px;
+	line-height:1.0em;
 }
