@@ -52,7 +52,7 @@ def book_by_isbn(request, isbn_no):
 
 def book_details(request, book_id):
     book = Book.objects.get(pk=book_id)
-    copies = book.copy_set.filter(soldTime=None)
+    copies = book.copy_set.filter(soldTime=None).order_by('price')
     return render(request, "bookswap/book_copies.html",
         {"book":book, 'copies':copies})
 
