@@ -195,11 +195,11 @@ def my_account(request):
 def mark_sold(request, copy_id):
     copy = Copy.objects.get(pk=copy_id)
     if copy.soldTime != None:
-        messages.error("This book is already sold!")
+        messages.error(request, "This book is already sold!")
         return redirect('bookswap.views.my_account')
     if copy.owner != request.user:
-        messages.error("You may not sell this copy of the book." +\
-                " You do not own it.")
+        messages.error(request, "You may not sell this copy of " +\
+                "the book. You do not own it.")
         return redirect('bookswap.views.my_account')
     if request.method == 'POST':
         copy.soldTime = datetime.now()
@@ -216,10 +216,10 @@ def mark_sold(request, copy_id):
 def edit_copy(request, copy_id):
     copy = Copy.objects.get(pk=copy_id)
     if copy.soldTime != None:
-        messages.error("This book is already sold!")
+        messages.error(request, "This book is already sold!")
         return redirect('bookswap.views.my_account')
     if copy.owner != request.user:
-        messages.error("You may not edit this copy." +\
+        messages.error(request, "You may not edit this copy." +\
                 " You do not own it.")
         return redirect('bookswap.views.my_account')
     form = EditCopyForm(instance=copy)
