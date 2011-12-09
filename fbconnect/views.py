@@ -35,6 +35,14 @@ def receive_code(request):
         user = authenticate(fb_uid=fb.userid)
         if user and user.is_active:
             login(request, user)
+            next = request.session.get('next', '')
+            if next and next[0] == '/':
+                try:
+                    del request.session['next']
+                except KeyError:
+                    pass
+                return redirect(next)
+            # Note that next begins with / so there can be no injection
             return redirect('bookswap.views.my_account')
         else:
             return redirect('fbconnect.views.register', code=code)
@@ -85,6 +93,9 @@ def register(request, code):
         return render(request, "fbconnect/code_error.html")
 
 def redirect_to_fb(request):
+    next = request.GET.get('next', '')
+    if next and next[0] == '/':
+        request.session['next'] = next
     return redirect(fb_utils.redirect_to_fb_url())
 
 def assoc_with_curr_user(request):
