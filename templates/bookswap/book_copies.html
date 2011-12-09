@@ -44,7 +44,7 @@ GBS_insertPreviewButtonPopup('ISBN:{{book.isbn}}');
 <tr>
     <td class="price"><p><sup>$</sup>{{copy.price|floatformat:2}}</p><p class="condition">{{copy.condition}}</p></td>
     <td class="copycomments">{% if copy.comments %}{{copy.comments}}{% else %}<i>(No comment provided)</i>{% endif %}</td>
-    <td class="requestcopy">{% if copy.owner.id == request.user.id %}<a href="{% url bookswap.views.mark_sold copy.id %}">Mark sold</a> <a href="{% url bookswap.views.edit_copy copy.id %}">Edit</a>{% else %}<a href="{% url bookswap.views.view_profile copy.owner.username %}">Contact Seller &raquo; </a>{% endif %}</td> 
+    <td class="requestcopy">{% if copy.owner.id == request.user.id %}<a href="{% url bookswap.views.mark_sold copy.id %}">Mark sold</a> &nbsp;<a href="{% url bookswap.views.edit_copy copy.id %}">Edit</a>{% else %}<b><a href="{% url bookswap.views.buy_copy copy.id %}">Contact Seller &raquo; </a></b>{% endif %}</td> 
 </tr>
 {% endfor %}
 </table>

@@ -21,6 +21,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as authViews
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template import RequestContext, Context, loader
@@ -30,6 +31,7 @@ from django.conf import settings
 from datetime import datetime
 import utils
 import isbn
+from smtplib import SMTPException
 
 from bookswap.models import Book, Copy
 from bookswap.forms import *
@@ -239,6 +241,37 @@ def view_profile(request, username):
     user = User.objects.get(username=username)
     return render(request, "bookswap/profile_view.html",
             {'user':user})
+
+@login_required
+def buy_copy(request, copy_id):
+    copy = get_object_or_404(Copy, pk=copy_id)
+    if copy.soldTime != None:
+        messages.error(request, "The copy you requested is no longer " +\
+                "available.")
+        return redirect(book_details, book_id=copy.book.id)
+    if copy.owner == request.user:
+        return redirect(book_details, book_id=copy.book.id)
+    if request.method == 'POST':
+        body = request.POST.get('emailbody', '')
+        if not body:
+            return redirect(buy_copy, copy_id=copy_id)
+        email_body = loader.render_to_string('bookswap/buy_copy_email.html',
+                {'copy':copy, 'buyer':request.user,
+                    'site':settings.FB_REDIRECT_URL, 'body':body})
+        subject = ('[Kzoo LitHub] %s wants to buy your book on' +\
+               'LitHub')%(request.user.username)
+        email = EmailMessage(subject=subject, body=email_body,
+                to=[copy.owner.email], cc=[request.user.email],
+                headers={'Reply-To': request.user.email})
+        try:
+            email.send(fail_silently=False)
+            messages.success(request, "Email sent successfully. You were " +\
+                    "CC'ed and will receive a copy.")
+            return redirect(book_details, book_id=copy.book.id)
+        except SMTPException:
+            messages.error(request, "There was an error sending the email." +\
+                    "Please try again or contact the seller directly")
+    return render(request, "bookswap/buy_copy.html", {'copy':copy})
 
 def password_reset_wrapper(request, *args, **kwargs):
     from django.contrib.auth.views import password_reset

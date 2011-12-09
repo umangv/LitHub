@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+<!--
+    Copyright © 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+-->
+{% block nav_availbooks %}selected{% endblock %}
+{% block title %}Buy{% endblock %}
+{% block content %}
+<div class="bookthumbnail">
+{% if copy.book.thumbnail_url %}    
+<img src="{{copy.book.thumbnail_url}}" alt="{{copy.book.title}}" />
+{% endif %}
+</div>
+<div class="bookinfo">
+<h2><a href="{% url bookswap.views.book_details copy.book.id %}" style="line-height:1.25em;">{{copy.book.title}}</a></h2>
+<span>by <i>{{copy.book.author}}</i></span></br/>
+<span>Publisher: {{copy.book.publisher}}{% if copy.book.copyrightYear %} (&copy; {{copy.book.copyrightYear}}) {% endif %}</span><br/>
+<span>ISBN-13: {{copy.book.isbn}}</span>
+</div>
+<h3 style="clear:both; padding-top:1em;">Contact seller</h3>
+<form action="" method="post">
+{% csrf_token %}
+<table class="contactseller">
+    <tr>
+        <td>To:</td> <td>{{copy.owner.first_name}} {{copy.owner.last_name}} &lt;<a href="mailto:{{copy.owner.email|urlencode}}">{{copy.owner.email}}</a>&gt;</td>
+    </tr>
+    <tr>
+        <td>CC:</td> <td>{{request.user.first_name}} {{request.user.last_name}} &lt;<a href="mailto:{{request.user.email|urlencode}}">{{request.user.email}}</a>&gt;</td>
+    </tr>
+    <tr>
+        <td>Subject:</td><td>[Kzoo LitHub] {{request.user.username}} wants to buy your book on LitHub</td>
+    </tr>
+    <tr>
+        <td>Email:</td><td><span style="font-size:14px; color:red;">Don't forget to edit the message before sending!</span><br/><textarea cols="80" rows="10" name="emailbody">Hi {{copy.owner.first_name}},
+
+I'm interested in buying your copy of "{{copy.book.title}}" for the price you listed of ${{copy.price}}. Could we meet in Hicks at (time) (date)? 
+
+Thanks,
+
+{{request.user.first_name}}</textarea></td>
+    </tr>
+    <tr><td></td><td><input type="submit" value="Send"/></td></tr>
+</table>
+</form>
+{% endblock %}

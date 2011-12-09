@@ -259,10 +259,6 @@ table.copylist tr td.requestcopy
 {
 	min-width:150px;
 }
-div#content table.copylist tr td.requestcopy a, div#content table.copylist tr td.requestcopy a:hover
-{
-	font-weight:bold;
-}
 table.copylist tr td.price p
 {
 	margin:0;
@@ -331,4 +327,9 @@ div.bookinfo h2
 	margin:0;
 	font-size:36px;
 	line-height:1.0em;
+}
+table.contactseller tr td
+{
+	padding:5px 5px;
+	vertical-align:center;
 }

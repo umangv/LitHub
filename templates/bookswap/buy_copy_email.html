@@ -1,0 +1,17 @@
+{% autoescape off %}
+Hello {{copy.owner.first_name}},
+
+{{buyer.username}} ({{buyer.first_name}} {{buyer.last_name}}) would like to buy a book from you. Reply to this email to respond to {{buyer.first_name}}.
+
+Remember that once you have sold this book, you should mark your copy as sold on LitHub: {{site}}{% url bookswap.views.mark_sold copy.id %}
+
+The book you listed was:
+{{copy.book.title}} by {{copy.book.author}}
+Condition: {{copy.condition}}
+Price: ${{copy.price}}
+
+Below is a message from {{buyer.first_name}}:
+-------------------------------------------------------------------------
+
+{{body}}
+{% endautoescape %}
