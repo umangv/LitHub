@@ -258,7 +258,7 @@ def buy_copy(request, copy_id):
         email_body = loader.render_to_string('bookswap/buy_copy_email.html',
                 {'copy':copy, 'buyer':request.user,
                     'site':settings.FB_REDIRECT_URL, 'body':body})
-        subject = ('[Kzoo LitHub] %s wants to buy your book on' +\
+        subject = ('[Kzoo LitHub] %s wants to buy your book on ' +\
                'LitHub')%(request.user.username)
         email = EmailMessage(subject=subject, body=email_body,
                 to=[copy.owner.email], cc=[request.user.email],
