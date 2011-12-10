@@ -21,8 +21,10 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
+
+import urlparse
 
 from fbconnect.models import FBProfile
 import fbconnect.utils as fb_utils
@@ -36,14 +38,21 @@ def receive_code(request):
         if user and user.is_active:
             login(request, user)
             next = request.session.get('next', '')
+            try:
+                del request.session['next']
+            except KeyError:
+                pass
+            netloc = urlparse.urlparse(next)[1]
+            # Security check: taken from Django code in
+            # django.contrib.auth.views.login 
+            # (don't allow redirection to different host)
+            if netloc and netloc != request.get_host():
+                next = ''
+            # Ensure that Django doesn't URL reverse.
             if next and next[0] == '/':
-                try:
-                    del request.session['next']
-                except KeyError:
-                    pass
-                return redirect(next)
-            # Note that next begins with / so there can be no injection
-            return redirect('bookswap.views.my_account')
+                return HttpResponseRedirect(next)
+            else:
+                return redirect('bookswap.views.my_account')
         else:
             return redirect('fbconnect.views.register', code=code)
     except ValueError:
@@ -94,6 +103,9 @@ def register(request, code):
 
 def redirect_to_fb(request):
     next = request.GET.get('next', '')
+    netloc = urlparse.urlparse(next)[1]
+    if netloc and netloc != request.get_host():
+        next = ''
     if next and next[0] == '/':
         request.session['next'] = next
     return redirect(fb_utils.redirect_to_fb_url())
