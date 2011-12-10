@@ -1,1 +1,54 @@
-File Not Found. 404
+<!DOCTYPE html>
+<!--
+    Copyright 2010, 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head>
+        <title>File Not Found 404 &raquo; Kzoo LitHub</title>
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+        <link href='{{STATIC_URL}}css/style.css' rel='stylesheet' type='text/css'>
+        <link rel="icon" href="/favicon.ico"/>
+        <script type="text/javascript">
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-25703286-1']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="topbar">
+                <div id="navbar">
+                    <a href="/"><img id="kzoolithub" src="{{STATIC_URL}}images/kzoolithub.png" alt="Kzoo LitHub" style="" /></a>
+                </div> <!-- end navbar -->
+            </div><!-- end topbar -->
+            <div id="content" style="clear:both; padding-top:60px;">
+                <h1 style="color:#ff7200;">404: File Not Found</h1>
+                <p>Oops. We tried, but weren't able to find the file you requested. Would you like to go back to our <a href="/">home page</a>?</p>
+                <div style="clear:both;">&nbsp;</div><!-- Wrapper class needs to be streched down so that the background extend's to the page bottom -->
+            </div><!-- end content -->
+        </div><!-- end wrapper -->
+    </body>
+</html>
