@@ -230,6 +230,10 @@ table.booklist tr td
 {
 	padding:7px 0;
 }
+table tr td.actions
+{
+	min-width:150px;
+}
 table.copylist
 {
 	border-collapse:collapse;
