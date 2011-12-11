@@ -18,8 +18,11 @@
 
 import urllib2
 import isbn
+import datetime
 from django.utils.http import urlencode
+from django.contrib import messages
 from django.conf import settings
+from django.core.urlresolvers import reverse
 import json
 
 def get_book_details(isbn_no):
@@ -51,3 +54,21 @@ def get_book_details(isbn_no):
             return info
     except Exception:
         return None
+
+def opengraph_list_book(request, copy):
+    from fbconnect import utils as fbutils
+    fb_at = request.session.get('fb_at', '')
+    if fb_at:
+        fb = fbutils.FBConnect(access_token=fb_at)
+        try:
+            params = {'expires_in': 60*60*24*3}
+            fb.publish_og('list', 'book', settings.FB_REDIRECT_URL +\
+                    reverse('bookswap.views.book_details',
+                        args=[copy.book.id]), params=params)
+            return True
+        except ValueError:
+            return False
+        # an access_token can sometimes expire and we cannot do anything to
+        # prevent it from doing so if we don't have offline access
+    else:
+        return False

@@ -147,12 +147,7 @@ def sell_existing(request, book_id):
             copy.save()
             messages.success(request, "Your copy of `%s` is now on sale."%\
                     book.title)
-            fb_at = request.session.get('fb_at', None)
-            if fb_at:
-                fb = fbutils.FBConnect(access_token=fb_at)
-                fb.publish_og('list', 'book', 
-                        settings.FB_REDIRECT_URL[:-1] +
-                        reverse(book_details, args=[book.id]))
+            utils.opengraph_list_book(request, copy)
             return redirect('bookswap.views.book_details', book.id)
     return render(request, "bookswap/sell_existing.html",
             {'form':form, 'book':book})
@@ -180,12 +175,7 @@ def sell_new(request, isbn_no):
             copy.save()
             messages.success(request, "Your copy of `%s` is now on sale."%\
                     book.title)
-            fb_at = request.session.get('fb_at', None)
-            if fb_at:
-                fb = fbutils.FBConnect(access_token=fb_at)
-                fb.publish_og('list', 'book', 
-                        settings.FB_REDIRECT_URL[:-1] +
-                        reverse(book_details, args=[book.id]))
+            utils.opengraph_list_book(request, copy)
             return redirect('bookswap.views.book_details', book.id)
     else:
         book_form = SellNewBookForm(prefix="book", initial=info)
@@ -249,6 +239,18 @@ def edit_copy(request, copy_id):
                     " Please fix the error and try again.")
     return render(request, "bookswap/edit_copy.html",
             {'form':form, 'copy':copy})
+
+@login_required
+def fb_og_publish(request, copy_id):
+    copy = get_object_or_404(Copy, pk=copy_id)
+    if copy.owner == request.user:
+        publish = utils.opengraph_list_book(request, copy)
+        if publish:
+            messages.success(request, "Published to your facebook activity log")
+        else:
+            messages.error(request, "Error publishing to facebook. Try" +\
+                    " logging in again.")
+    return redirect(my_account)
 
 @login_required
 def view_profile(request, username):

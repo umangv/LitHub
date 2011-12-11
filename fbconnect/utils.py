@@ -101,9 +101,12 @@ class FBConnect(object):
     def userid(self):
         return self.basic_info['id']
 
-    def publish_og(self, action, obj_type, obj):
+    def publish_og(self, action, obj_type, obj, params=None):
         opts = {'access_token':self.access_token,
             obj_type:obj}
+        if params:
+            opts.update(params)
+            # Allows overriding any of the options in opts
         try:
             fb_resp = urllib2.urlopen(\
                     'https://graph.facebook.com/me/%s:%s'%(\
