@@ -26,7 +26,7 @@
         <meta property="og:type"        content="book" /> 
         <meta property="og:url"         content="{{settings.FB_REDIRECT_URL}}{% url bookswap.views.book_details book.id %}" /> 
         <meta property="og:title"       content="{{book.title}}" /> 
-        <meta property="og:isbn"       content="{{book.isbn}}" /> 
+        <meta property="book:isbn"       content="{{book.isbn}}" /> 
         <meta property="og:description" content="{{book.title}} by {{book.author}}" /> 
         <meta property="og:image"       content="{{book.thumbnail_url}}" />
 {% endblock %}
