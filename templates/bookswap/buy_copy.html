@@ -24,6 +24,8 @@
 <div class="bookthumbnail">
 {% if copy.book.thumbnail_url %}    
 <img src="{{copy.book.thumbnail_url}}" alt="{{copy.book.title}}" />
+{% else %}
+<img src="{{STATIC_URL}}images/no_preview.png" alt="No preview available" />
 {% endif %}
 </div>
 <div class="bookinfo">
