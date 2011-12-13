@@ -21,14 +21,14 @@
 {% block nav_sell %}selected{% endblock %}
 {% block title %}Sell a book{% endblock %}
 {% block content %}
-<p>Please select a book from the following list of books. If none of the following books match your book, you sell a new book.</p>
+<p>Please select a book from the following list of books. If none of the following books match your book, you may sell a new book.</p>
 <table>
     <thead>
         <th>Title</th><th>Author</th><th>Publisher</th><th>ISBN</th>
     </thead>
-{% for res, res_count in results %}
+{% for res, res_count, sub in results %}
 <tr>
-    <td><a href="{% url bookswap.views.sell_existing res.id %}">{{res.title}}</a>  <br/><span class="bookinfo">{{res_count}} copies on sale.</span></td> 
+    <td><a href="{% url bookswap.views.sell_existing res.id %}">{{res.title}}</a>  <br/><span class="bookinfo">{{res_count}} copies on sale.</span><br/><span class="bookinfo">{%if sub %}{{sub}}{% else %}no{% endif %} subscriber{% if not sub == 1 %}s{% endif %}.</span></td> 
     <td>{{res.author}}  </td>
     <td>{{res.publisher}}<br/><span class="bookinfo">{% if res.copyrightYear %}(&copy; {{res.copyrightYear}}){% endif %}</span></td>
     <td><span class="isbn">{{res.isbn}}</span></td>
