@@ -1,7 +1,7 @@
 {% autoescape off %}
 Hello {{user.first_name}},
 
-There is one new copy of "{{book.title}}" (by {{book.author}}) on sale on Kzoo LitHub. To contact the seller, please visit: {{settings.FB_REDIRECT_URL}}{% url bookswap.views.book_details book.id %}
+There is one new copy of "{{book.title}}" (by {{book.author}}) on sale on Kzoo LitHub. To browse the copies available, please visit: {{settings.FB_REDIRECT_URL}}{% url bookswap.views.book_details book.id %}
 
 Title: {{book.title}}
 Author: {{book.author}}
@@ -13,4 +13,6 @@ Copies on sale:
 {% endfor %}
 
 Thanks for using Kzoo LitHub!
+
+To unsubscribe from updates for {{book.title}}, please visit: {{settings.FB_REDIRECT_URL}}{% url bookswap.views.unsubscribe book.id %}
 {% endautoescape %}
