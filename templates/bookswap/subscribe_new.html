@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+<!--
+    Copyright 2010, 2011 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+-->
+{% block nav_availbooks %}selected{% endblock %}
+{% block title %}Subscribe to a book{% endblock %}
+{% block content %}
+<div class="bookthumbnail">
+{% if info.thumbnail_url %}    
+<img src="{{info.thumbnail_url}}" alt="{{info.title}}" />
+{% else %}
+<img src="{{STATIC_URL}}images/no_preview.png" alt="No preview available" />
+{% endif %}
+<br/>
+<script type="text/javascript" src="http://books.google.com/books/previewlib.js"></script>
+<script type="text/javascript">
+GBS_insertPreviewButtonPopup('ISBN:{{isbn_no}}');
+</script>
+</div>
+<div class="bookinfo">
+<h2>{{info.title}}</h2>
+<span>by <i>{{info.author}}</i></span></br/>
+<span>Publisher: {{info.publisher}}{% if info.copyrightYear %} (&copy; {{info.copyrightYear}}) {% endif %}</span><br/>
+<span>ISBN-13: {{isbn_no}}</span><br/>
+</div>
+<div style="clear:both;">
+<form action="" method="post">
+{% csrf_token %}
+<input type="checkbox" name="verify_book" id="verify_book" /><label for="verify_book">Yes, this is the book I am looking for</label><br/>
+<input type="submit" value="Subscribe" />
+</div>
+{% endblock %}

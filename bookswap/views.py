@@ -334,6 +334,50 @@ def unsubscribe(request, book_id):
             book.title, book.author))
     return redirect(book_details, book_id=book_id)
 
+@login_required
+def subscribed_to_new(request, isbn_no):
+    try:
+        isbn_no = isbn.clean_isbn(isbn_no)
+        if request.method == "POST":
+            if request.POST.get('verify_book') == 'on':
+                if "isbn_%s"%isbn_no in request.session:
+                        info = request.session["isbn_%s"%isbn_no]
+                        book = Book(isbn=isbn_no, title=info['title'],
+                                author=info['author'],
+                                copyrightYear=info['copyrightYear'],
+                                publisher=info['publisher'],
+                                thumbnail_url=info['thumbnail_url'])
+                        book.save()
+                        book.subscribers.add(request.user)
+                        messages.success(request, ("You've been subscribed "+\
+                            "to %s by %s. You will be notified when a " +\
+                            "copy of this book is available.")%(book.title,
+                                book.author))
+                        return redirect(book_details, book_id=book.id)
+                else:
+                    messages.error(request, "Sorry, there was an error " +\
+                            "reading data. Please try again or inform "+\
+                            "us about this problem.")
+            else:
+                messages.error(request, "Please verify that this is the book"+\
+                        " you are looking for.")
+        info = utils.get_book_details(isbn_no)
+        request.session['isbn_%s'%isbn_no] = info
+        if info and info['title']:
+            return render(request, "bookswap/subscribe_new.html",
+                    {'info':info, 'isbn_no':isbn_no})
+        else:
+            messages.info(request, "Sorry. We were not able to find " +\
+                    "information for the book you requested. If you " +\
+                    "would like to be notified when this book is available" +\
+                    " please inform us using the contact page above. " +\
+                    "Please include all relevant book details, such as "+\
+                    "ISBN number, title and author.")
+            return redirect(book_by_isbn, isbn_no=isbn_no)
+    except ValueError:
+        messages.error(request, "Invalid ISBN number")
+        return redirect('home')
+
 def password_reset_wrapper(request, *args, **kwargs):
     from django.contrib.auth.views import password_reset
     if request.method == 'POST':
