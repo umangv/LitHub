@@ -312,8 +312,9 @@ def subscribe(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
     if not book.subscribers.filter(pk=request.user.id):
         book.subscribers.add(request.user)
-        messages.success(request, "You've been subscribed to %s by %s"%(
-            book.title, book.author))
+        messages.success(request, ("You've been subscribed to %s by %s." +\
+                " You will be notified when more copies of this book " +\
+                "are available.")%(book.title, book.author))
     else:
         messages.error(request, "You are already subscribed to %s by %s"%(
             book.title, book.author))
@@ -324,8 +325,10 @@ def unsubscribe(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
     if book.subscribers.filter(pk=request.user.id):
         book.subscribers.remove(request.user)
-        messages.success(request, "You've been unsubscribed from %s by %s"%(
-            book.title, book.author))
+        messages.info(request, ("You've been unsubscribed from %s by %s"\
+                + ". You will no longer be notified when " +\
+                "more copies of this book are listed for sale.")%\
+                (book.title, book.author))
     else:
         messages.error(request, "You are not subscribed to %s by %s"%(
             book.title, book.author))
