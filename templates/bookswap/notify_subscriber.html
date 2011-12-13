@@ -1,0 +1,16 @@
+{% autoescape off %}
+Hello {{user.first_name}},
+
+There is one new copy of "{{book.title}}" (by {{book.author}}) on sale on Kzoo LitHub. To contact the seller, please visit: {{settings.FB_REDIRECT_URL}}{% url bookswap.views.book_details book.id %}
+
+Title: {{book.title}}
+Author: {{book.author}}
+ISBN-13: {{book.isbn}}
+
+Copies on sale:
+
+{% for copy in copies.all %}${{copy.price|floatformat:2}} ({{copy.condition}})
+{% endfor %}
+
+Thanks for using Kzoo LitHub!
+{% endautoescape %}

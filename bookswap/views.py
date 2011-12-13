@@ -57,8 +57,13 @@ def book_by_isbn(request, isbn_no):
 def book_details(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
     copies = book.copy_set.filter(soldTime=None).order_by('price')
+    subscribed = False
+    if request.user.is_authenticated() and \
+            book.subscribers.filter(pk=request.user.id):
+                subscribed = True
     return render(request, "bookswap/book_copies.html",
-        {"book":book, 'copies':copies, 'settings':settings})
+            {"book":book, 'copies':copies, 'settings':settings,
+                'subscribed':subscribed})
 
 def search_books(request):
     if request.method == "POST":
@@ -147,6 +152,19 @@ def sell_existing(request, book_id):
             copy.save()
             messages.success(request, "Your copy of `%s` is now on sale."%\
                     book.title)
+            book = copy.book
+            copies = book.copy_set.filter(soldTime=None).order_by('price')
+            copy_count = book.copy_set.filter(soldTime=None).count()
+            for user in copy.book.subscribers.all():
+                email = EmailMessage()
+                email.subject = "[Kzoo LitHub] 1 new copy of '%s' on sale."\
+                        %book.title
+                email.body = loader.render_to_string(
+                        'bookswap/notify_subscriber.html', {'book':book,
+                            'copies':copies, 'copy_count':copy_count,
+                            'user':user, 'settings':settings})
+                email.to = [user.email]
+                email.send(fail_silently=True)
             utils.opengraph_list_book(request, copy)
             return redirect('bookswap.views.book_details', book.id)
     return render(request, "bookswap/sell_existing.html",
@@ -288,6 +306,30 @@ def buy_copy(request, copy_id):
             messages.error(request, "There was an error sending the email." +\
                     "Please try again or contact the seller directly")
     return render(request, "bookswap/buy_copy.html", {'copy':copy})
+
+@login_required
+def subscribe(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    if not book.subscribers.filter(pk=request.user.id):
+        book.subscribers.add(request.user)
+        messages.success(request, "You've been subscribed to %s by %s"%(
+            book.title, book.author))
+    else:
+        messages.error(request, "You are already subscribed to %s by %s"%(
+            book.title, book.author))
+    return redirect(book_details, book_id=book_id)
+
+@login_required
+def unsubscribe(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    if book.subscribers.filter(pk=request.user.id):
+        book.subscribers.remove(request.user)
+        messages.success(request, "You've been unsubscribed from %s by %s"%(
+            book.title, book.author))
+    else:
+        messages.error(request, "You are not subscribed to %s by %s"%(
+            book.title, book.author))
+    return redirect(book_details, book_id=book_id)
 
 def password_reset_wrapper(request, *args, **kwargs):
     from django.contrib.auth.views import password_reset

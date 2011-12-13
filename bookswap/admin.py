@@ -26,8 +26,9 @@ class CopyInline(admin.StackedInline):
 class BookAdmin(admin.ModelAdmin):
     fieldsets = [
             (None, {'fields':['isbn', 'title', 'author', 'publisher',
-                'copyrightYear', 'thumbnail_url']})]
+                'copyrightYear', 'thumbnail_url', 'subscribers']})]
     inlines = [CopyInline]
+    filter_horizontal = ['subscribers']
     actions = ['update_thumbnail']
 
     def update_thumbnail(self, request, queryset):
