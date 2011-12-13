@@ -38,11 +38,11 @@ GBS_insertPreviewButtonPopup('ISBN:{{isbn_no}}');
 <span>by <i>{{info.author}}</i></span></br/>
 <span>Publisher: {{info.publisher}}{% if info.copyrightYear %} (&copy; {{info.copyrightYear}}) {% endif %}</span><br/>
 <span>ISBN-13: {{isbn_no}}</span><br/>
-</div>
-<div style="clear:both;">
+<div style="padding-top:20px;">
 <form action="" method="post">
 {% csrf_token %}
-<input type="checkbox" name="verify_book" id="verify_book" /><label for="verify_book">Yes, this is the book I am looking for</label><br/>
+<input type="checkbox" name="verify_book" id="verify_book" /><label for="verify_book"><b>Yes, this is the book I am looking for</b></label><br/>
 <input type="submit" value="Subscribe" />
+</div>
 </div>
 {% endblock %}
