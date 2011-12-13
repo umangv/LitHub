@@ -335,7 +335,7 @@ def unsubscribe(request, book_id):
     return redirect(book_details, book_id=book_id)
 
 @login_required
-def subscribed_to_new(request, isbn_no):
+def subscribe_to_new(request, isbn_no):
     try:
         isbn_no = isbn.clean_isbn(isbn_no)
         if request.method == "POST":
