@@ -55,7 +55,7 @@ def book_by_isbn(request, isbn_no):
             {"results":results, 'search_isbn':isbn_no})
 
 def book_details(request, book_id):
-    book = Book.objects.get(pk=book_id)
+    book = get_object_or_404(Book, pk=book_id)
     copies = book.copy_set.filter(soldTime=None).order_by('price')
     return render(request, "bookswap/book_copies.html",
         {"book":book, 'copies':copies, 'settings':settings})
@@ -197,7 +197,7 @@ def my_account(request):
 
 @login_required
 def mark_sold(request, copy_id):
-    copy = Copy.objects.get(pk=copy_id)
+    copy = get_object_or_404(Copy, pk=copy_id)
     if copy.soldTime != None:
         messages.error(request, "This book is already sold!")
         return redirect('bookswap.views.my_account')
@@ -218,7 +218,7 @@ def mark_sold(request, copy_id):
 
 @login_required
 def edit_copy(request, copy_id):
-    copy = Copy.objects.get(pk=copy_id)
+    copy = get_object_or_404(Copy, pk=copy_id)
     if copy.soldTime != None:
         messages.error(request, "This book is already sold!")
         return redirect('bookswap.views.my_account')
@@ -254,7 +254,7 @@ def fb_og_publish(request, copy_id):
 
 @login_required
 def view_profile(request, username):
-    user = User.objects.get(username=username)
+    user = get_object_or_404(User, username=username)
     return render(request, "bookswap/profile_view.html",
             {'user':user})
 
