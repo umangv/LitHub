@@ -304,6 +304,11 @@ ul.features li
 	margin-bottom:1em;
 	color:#000;
 }
+ul.features li span.new
+{
+	font-size:10px;
+	color:red;
+}
 div.bookthumbnail
 {
 	float:left;
