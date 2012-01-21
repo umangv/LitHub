@@ -22,8 +22,20 @@
 {% block title %}My Account{% endblock %}
 {% block content %}
 <p>Welcome, <b>{{user.username}}</b>!</p>
-<p>The following are books that you've posted for sale:</p>
 <div id="twocol_main">
+<h2>Your subscriptions</h2>
+<table>
+    <thead>
+        <th style="width:450px;">Title</th><th>Author</th>
+    </thead>
+    {% for book in request.user.subscriptions.all %}
+    <tr>
+        <td><a href="{% url bookswap.views.book_details book.id %}">{{book.title}}</a></td>
+        <td>{{book.author}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<h2>Books you've listed</h2>
 <table class="booklist">
     <thead>
         <th style="width:450px;">Book</th><th>Price</th><th>Condition</th><th>Actions</th>
