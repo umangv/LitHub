@@ -52,6 +52,14 @@ def book_by_isbn(request, isbn_no):
         results.sort(reverse=True, key=lambda x:(x[1], x[2]))
     except ValueError:
         results = []
+    if not results:
+        messages.info(request, "The book you were looking for is currently " +\
+            "not on sale. We're now looking for more information so that you"+\
+            " can sign up to be notified when this book becomes available. "+\
+            "Other users will be able to see the number of subscribers for"+\
+            " each book, helping them decide which books "+\
+            "to sell.")
+        return redirect(subscribe_to_new, isbn_no)
     return render(request, "bookswap/book_isbn.html",
             {"results":results, 'search_isbn':isbn_no})
 
@@ -370,13 +378,14 @@ def subscribe_to_new(request, isbn_no):
             return render(request, "bookswap/subscribe_new.html",
                     {'info':info, 'isbn_no':isbn_no})
         else:
-            messages.info(request, "Sorry. We were not able to find " +\
-                    "information for the book you requested. If you " +\
+            messages.info(request, "Sorry. We tried to find more "+\
+                    "information about the book you requested, but were" +\
+                    " not able to find any. If you " +\
                     "would like to be notified when this book is available" +\
                     " please inform us using the contact page above. " +\
                     "Please include all relevant book details, such as "+\
                     "ISBN number, title and author.")
-            return redirect(book_by_isbn, isbn_no=isbn_no)
+            return redirect("home")
     except ValueError:
         messages.error(request, "Invalid ISBN number")
         return redirect('home')
