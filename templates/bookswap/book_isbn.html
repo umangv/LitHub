@@ -18,7 +18,7 @@
     You should have received a copy of the GNU General Public License
     along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 -->
-{% block nav_availbooks %}selected{% endblock %}
+{% block nav_allbooks %}selected{% endblock %}
 {% block message %}<p>{% if results|length > 1 %}We found {{results|length}} books. There should only be one book for every ISBN number. However, there may be some user-submitted duplicates. If you notice any inaccurate information, please inform us using the contact page.</p><p>Look through the results below to find the best match.{% else %}{% if results %}We found one book:{% else %}No matches found. Use the link below to be notified when this book is available.{% endif %}{% endif %}</p>
 {% endblock %}
 {% block subscribe_new %}<b>Can't find the book you are looking for? <a href="{% url bookswap.views.subscribe_to_new search_isbn %}">Sign up to be notified when this book becomes available.</a></b>{% endblock %}

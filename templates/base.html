@@ -35,7 +35,7 @@
                     <a href="{% url home %}"><img id="kzoolithub" src="{{STATIC_URL}}images/kzoolithub.png" alt="Kzoo LitHub" style="" /></a>
                     <div class="navlinks">
                         <ul class="navlinks">
-                            <li class="{% block nav_availbooks %}{% endblock %}"><a href="{% url bookswap.views.all_books %}">Available books</a></li>
+                            <li class="{% block nav_allbooks %}{% endblock %}"><a href="{% url bookswap.views.all_books %}">All books</a></li>
                             <li class="{% block nav_sell %}{% endblock %}"><a href="{% url bookswap.views.sell_step_search %}">Sell a book</a></li>
                             <li class="{% block nav_profile %}{% endblock %}"><a href="{% url bookswap.views.my_account %}">My account</a></li>
                             <li class="{% block nav_contact %}{% endblock %}"><a href="{% url bookswap.views.contact_us %}">Contact</a></li>

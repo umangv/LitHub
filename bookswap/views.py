@@ -49,7 +49,7 @@ def book_by_isbn(request, isbn_no):
         books = Book.objects.filter(isbn=isbn_no)
         results = [(b, len(b.copy_set.all().filter(soldTime=None)),
             b.subscribers.count) for b in books]
-        results.sort(reverse=True, key=lambda x:(x[1], x[2]))
+        results.sort(reverse=True, key=lambda x:(x[2], x[1]))
     except ValueError:
         results = []
     if not results:
@@ -91,7 +91,7 @@ def search_books(request):
                 author__icontains=author)
         results = [(b, len(b.copy_set.filter(soldTime=None)),
             b.subscribers.count()) for b in books]
-        results.sort(reverse=True, key=lambda x:(x[1], x[2]))
+        results.sort(reverse=True, key=lambda x:(x[2], x[1]))
         return render(request, "bookswap/results.html",
                 {"results":results, 'search_title':title,
                     'search_author':author})
@@ -102,7 +102,7 @@ def all_books(request):
     books = Book.objects.all()
     results = [(b, len(b.copy_set.all().filter(soldTime=None)),
         b.subscribers.count()) for b in books]
-    results.sort(reverse=True, key=lambda x:(x[1], x[2]))
+    results.sort(reverse=True, key=lambda x:(x[2], x[1]))
     return render(request, "bookswap/all_books.html",
             {"results":results})
 
@@ -139,7 +139,7 @@ def sell_step_search(request):
             results = [(b, b.copy_set.filter(soldTime=None).count(),
                     b.subscribers.count()) for b in books]
             if results:
-                results.sort(reverse=True, key=lambda x:(x[1], x[2]))
+                results.sort(reverse=True, key=lambda x:(x[2], x[1]))
                 return render(request,
                     "bookswap/sell_select_book.html", 
                     {'results':results, 'isbn_no':isbn_no})
