@@ -34,7 +34,7 @@ class SellExistingBookForm(forms.ModelForm):
 class SellNewBookForm(forms.ModelForm):
     class Meta:
         model = Book
-        exclude = ('isbn','thumbnail_url')
+        exclude = ('isbn','thumbnail_url', 'subscribers')
 
 class SearchTitleAuthorForm(forms.Form):
     title = forms.CharField(max_length=200)
