@@ -18,6 +18,9 @@
 
 from bookswap.models import Book, Copy, Feedback
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User 
+from django.contrib import messages
 
 class CopyInline(admin.StackedInline):
     model = Copy
@@ -40,6 +43,36 @@ class BookAdmin(admin.ModelAdmin):
             b.save()
         self.message_user(request, "%s rows updated"%queryset.count())
 
+class CustomUserAdmin(UserAdmin):
+    actions = ['send_email']
+
+    def send_email(self, request, queryset):
+        """Sends email to selected users using templates on server.
+
+        The templates are as follows:
+        templates/bookswap/mass_email_sub.html - one line subject
+        templates/bookswap/mass_email_body.html - HTML body
+        templates/bookswap/mass_email_body.txt - text body"""
+        from django.template.loader import render_to_string
+        from django.core.mail import EmailMultiAlternatives
+        from django.core import mail
+        sub = render_to_string('bookswap/mass_email_sub.html').split("\n")[0]
+        emails = []
+        for user in queryset:
+            e = EmailMultiAlternatives()
+            e.subject = sub
+            e.to = [user.email,]
+            e.body = render_to_string('bookswap/mass_email_body.txt', 
+                    {'user':user})
+            e.attach_alternative(render_to_string(
+                'bookswap/mass_email_body.html', {'user':user}), "text/html")
+            emails.append(e)
+        connection = mail.get_connection()
+        connection.send_messages(emails)
+        messages.success(request, "Emails sent!")
+
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(Copy)
 admin.site.register(Feedback)
