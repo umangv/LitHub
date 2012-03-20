@@ -1,3 +1,6 @@
+# no temporary hidden files
+*~
+
 # no sqlite3 databases should be tracked
 *.sqlite3
 
