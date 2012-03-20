@@ -16,18 +16,19 @@
 #    You should have received a copy of the GNU General Public License
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib import messages
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as authViews
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
+from django.db.models import Count, Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template import RequestContext, Context, loader
-from django.core.mail import send_mail
-from django.conf import settings
 
 from datetime import datetime
 import utils
@@ -46,13 +47,14 @@ def render_403(error, status=403):
 def book_by_isbn(request, isbn_no):
     try:
         isbn_no = isbn.clean_isbn(isbn_no)
-        books = Book.objects.filter(isbn=isbn_no)
-        results = [(b, len(b.copy_set.all().filter(soldTime=None)),
-            b.subscribers.count) for b in books]
-        results.sort(reverse=True, key=lambda x:(x[2], x[1]))
+        books = Book.objects.filter(isbn=isbn_no)\
+            .annotate(
+                    num_copies=Count('copy', distinct=True),
+                    num_sub=Count('subscribers', distinct=True))\
+            .order_by('-num_copies', '-num_sub')
     except ValueError:
-        results = []
-    if not results:
+        books = []
+    if not books:
         messages.info(request, "The book you were looking for is currently " +\
             "not on sale. We're now looking for more information so that you"+\
             " can sign up to be notified when this book becomes available. "+\
@@ -61,7 +63,7 @@ def book_by_isbn(request, isbn_no):
             "to sell.")
         return redirect(subscribe_to_new, isbn_no)
     return render(request, "bookswap/book_isbn.html",
-            {"results":results, 'search_isbn':isbn_no})
+            {"results":books, 'search_isbn':isbn_no})
 
 def book_details(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
@@ -87,24 +89,29 @@ def search_books(request):
     title = request.GET.get('title', '')
     author = request.GET.get('author', '')
     if title or author:
-        books = Book.objects.filter(title__icontains=title,
-                author__icontains=author)
-        results = [(b, len(b.copy_set.filter(soldTime=None)),
-            b.subscribers.count()) for b in books]
-        results.sort(reverse=True, key=lambda x:(x[2], x[1]))
+        books = Book.objects.filter(
+                    copy__soldTime=None,
+                    title__icontains=title,
+                    author__icontains=author)\
+                .annotate(
+                        num_copies=Count('copy', distinct=True),
+                        num_sub=Count('subscribers', distinct=True))\
+                .order_by('-num_copies', '-num_sub')
         return render(request, "bookswap/results.html",
-                {"results":results, 'search_title':title,
+                {"results":books, 'search_title':title,
                     'search_author':author})
     else:
         return redirect(all_books)
 
 def all_books(request):
-    books = Book.objects.all()
-    results = [(b, len(b.copy_set.all().filter(soldTime=None)),
-        b.subscribers.count()) for b in books]
-    results.sort(reverse=True, key=lambda x:(x[2], x[1]))
+    books = Book.objects.filter(copy__soldTime=None)\
+            .annotate(
+                    num_copies=Count('copy', distinct=True),
+                    num_sub=Count('subscribers', distinct=True))\
+            .filter(~Q(num_copies=0) | ~Q(num_sub=0))\
+            .order_by('-num_sub', '-num_copies')
     return render(request, "bookswap/all_books.html",
-            {"results":results})
+            {"results":books})
 
 def contact_us(request):
     if request.method == "POST":
@@ -135,14 +142,15 @@ def sell_step_search(request):
         isbn_no = request.POST.get('isbn', '')
         try:
             isbn_no = isbn.clean_isbn(isbn_no)
-            books = Book.objects.filter(isbn=isbn_no)
-            results = [(b, b.copy_set.filter(soldTime=None).count(),
-                    b.subscribers.count()) for b in books]
-            if results:
-                results.sort(reverse=True, key=lambda x:(x[2], x[1]))
+            books = Book.objects.filter(copy__soldTime=None, isbn=isbn_no)\
+                    .annotate(
+                            num_copies=Count('copy', distinct=True),
+                            num_sub=Count('subscribers', distinct=True))\
+                    .order_by('-num_copies', '-num_sub')
+            if books:
                 return render(request,
                     "bookswap/sell_select_book.html", 
-                    {'results':results, 'isbn_no':isbn_no})
+                    {'results':books, 'isbn_no':isbn_no})
             else:
                 return redirect('bookswap.views.sell_new', isbn_no)
         except ValueError:

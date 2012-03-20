@@ -26,12 +26,12 @@
     <thead>
         <th>Title</th><th>Author</th><th>Publisher</th><th>ISBN</th>
     </thead>
-{% for res, res_count, sub in results %}
+{% for book in results %}
 <tr>
-    <td><a href="{% url bookswap.views.sell_existing res.id %}">{{res.title}}</a>  <br/><span class="bookinfo">{{res_count}} copies on sale.</span><br/><span class="bookinfo">{%if sub %}{{sub}}{% else %}no{% endif %} subscriber{% if not sub == 1 %}s{% endif %}.</span></td> 
-    <td>{{res.author}}  </td>
-    <td>{{res.publisher}}<br/><span class="bookinfo">{% if res.copyrightYear %}(&copy; {{res.copyrightYear}}){% endif %}</span></td>
-    <td><span class="isbn">{{res.isbn}}</span></td>
+    <td><a href="{% url bookswap.views.sell_existing book.id %}">{{book.title}}</a>  <br/><span class="bookinfo">{{book.num_copies}} copies on sale.</span><br/><span class="bookinfo">{%if book.num_sub %}{{book.num_sub}}{% else %}no{% endif %} subscriber{% if not book.num_sub == 1 %}s{% endif %}.</span></td> 
+    <td>{{book.author}}  </td>
+    <td>{{book.publisher}}<br/><span class="bookinfo">{% if book.copyrightYear %}(&copy; {{book.copyrightYear}}){% endif %}</span></td>
+    <td><span class="isbn">{{book.isbn}}</span></td>
 </tr>
 {% endfor %}
 </table>
