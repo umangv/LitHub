@@ -358,3 +358,12 @@ table.contactseller tr td
 	padding:10px 5px;
 	vertical-align:center;
 }
+div.pagination table
+{
+	margin:0 auto;
+}
+div.pagination table tr td
+{
+	text-align:center;
+	font-size:.8em;
+}

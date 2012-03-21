@@ -1,13 +1,21 @@
 <div class="pagination">
+    <table><tr>
+    <td style="min-width:65px;">
     {% if results.has_previous %}
-        <a href="{{results.paginator.other_get_vars}}{{results.previous_page_number}}">previous</a>
+    <a href="{{results.paginator.other_get_vars}}1" class="imagelink"><img src="{{STATIC_URL}}images/firstpage.png" alt="&laquo;" title="first page"/></a>
+    <a href="{{results.paginator.other_get_vars}}{{results.previous_page_number}}" class="imagelink"><img src="{{STATIC_URL}}images/prevpage.png" alt="&lsaquo;" title="previous page"/></a>
     {% endif %}
-
+    </td>
+    <td>
     <span class="current">
-        Page {{ results.number }} of {{ results.paginator.num_pages }} {% if results.has_other_pages %}(displaying {{results.start_index}} to {{results.end_index}} of {{results.paginator.count}} books){% endif %}
+        Page {{ results.number }} of {{ results.paginator.num_pages }} {% if results.has_other_pages %}<br/>(displaying {{results.start_index}} to {{results.end_index}} of {{results.paginator.count}} books){% endif %}
     </span>
-
+    </td>
+    <td style="min-width:65px;">
     {% if results.has_next %}
-        <a href="{{results.paginator.other_get_vars}}{{results.next_page_number}}">next</a>
+        <a href="{{results.paginator.other_get_vars}}{{results.next_page_number}}" class="imagelink"><img src="{{STATIC_URL}}images/nextpage.png" alt="&rsaquo;" title="next page"/></a>
+        <a href="{{results.paginator.other_get_vars}}{{results.paginator.num_pages}}" class="imagelink"><img src="{{STATIC_URL}}images/lastpage.png" alt="&raquo;" title="last page"/></a>
     {% endif %}
+    </td>
+    </tr></table>
 </div>
