@@ -1,0 +1,13 @@
+<div class="pagination">
+    {% if results.has_previous %}
+        <a href="{{results.paginator.other_get_vars}}{{results.previous_page_number}}">previous</a>
+    {% endif %}
+
+    <span class="current">
+        Page {{ results.number }} of {{ results.paginator.num_pages }} (displaying {{results.start_index}} to {{results.end_index}} of {{results.paginator.count}})
+    </span>
+
+    {% if results.has_next %}
+        <a href="{{results.paginator.other_get_vars}}{{results.next_page_number}}">next</a>
+    {% endif %}
+</div>

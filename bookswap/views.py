@@ -110,8 +110,9 @@ def all_books(request):
                     num_sub=Count('subscribers', distinct=True))\
             .filter(~Q(num_copies=0) | ~Q(num_sub=0))\
             .order_by('-num_sub', '-num_copies')
+    results = utils.PaginatorN(books, request)
     return render(request, "bookswap/all_books.html",
-            {"results":books})
+            {"results":results.page_auto()})
 
 def contact_us(request):
     if request.method == "POST":

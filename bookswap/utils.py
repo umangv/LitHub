@@ -19,10 +19,11 @@
 import urllib2
 import isbn
 import datetime
-from django.utils.http import urlencode
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
+from django.core.paginator import Paginator, InvalidPage, EmptyPage, Page
 from django.core.urlresolvers import reverse
+from django.utils.http import urlencode
 import json
 
 def get_book_details(isbn_no):
@@ -72,3 +73,37 @@ def opengraph_list_book(request, copy):
         # prevent it from doing so if we don't have offline access
     else:
         return False
+
+class PaginatorN(Paginator):
+    GET_PAGE_VAR = 'p'
+    def __init__(self, object_list, request, per_page=15, *args, **kwargs):
+        self.request = request
+        Paginator.__init__(self, object_list, per_page, \
+                *args, **kwargs)
+
+    def page(self, number):
+        class PageN(Page):
+            def __init__(self, page):
+                self.__dict__ = page.__dict__
+        try:
+            return Paginator.page(self, number)
+        except (EmptyPage, InvalidPage):
+            return Paginator.page(self, self.num_pages)
+
+    def page_auto(self):
+        try:
+            page = int(self.request.GET.get(self.GET_PAGE_VAR, '1'))
+        except ValueError:
+            page = 1
+        return self.page(page)
+
+    def other_get_vars(self):
+        opts = self.request.GET.copy()
+        try:
+            opts.pop(self.GET_PAGE_VAR)
+        except KeyError:
+            pass
+        if opts:
+            return "?%s&%s="%(urlencode(opts), self.GET_PAGE_VAR)
+        else:
+            return "?%s="%self.GET_PAGE_VAR

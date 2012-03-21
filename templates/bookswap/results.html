@@ -22,11 +22,12 @@
 {% block title %}Search Results{% endblock %}
 {% block content %}{% block message %}<p>We found {{results|length}} results:</p>{% endblock %}
 {% if results %}
+{% include "bookswap/pagination.html" %}
 <table class="booklist">
     <thead>
         <th>Title</th><th>Author</th><th>ISBN</th>
     </thead>
-{% for book in results %}
+{% for book in results.object_list %}
 <tr>
     <td><a href="{% url bookswap.views.book_details book.id %}">{{book.title}}</a><br/><span class="bookinfo">{% if book.num_copies == 1 %}1 copy{% else%}{{book.num_copies}} copies{% endif %} on sale, {%if book.num_sub %}{{book.num_sub}}{% else %}no{% endif %} subscriber{% if not book.num_sub == 1 %}s{% endif %}.</span></td> 
     <td>{{book.author}}</td>
@@ -34,6 +35,7 @@
 </tr>
 {% endfor %}
 </table>
+{% include "bookswap/pagination.html" %}
 {% endif %}
 {% block subscribe_new %}<div><p><b>Can't find the book you are looking for? Sign up to be notified about new copies:</b></p>
 <p><form action="{% url bookswap.views.search_books %}" method="post">{% csrf_token %}<input type="hidden" id="action" name="action" value="isbn_search"/><label for="subscribe_new_isbn" style="padding-right:10px;">ISBN:</label><input type="text" id="subscribe_new_isbn" name="isbn" placeholder="ISBN" title="ISBN number of the book you are looking for" {% if search_isbn%}value="{{search_isbn}}" {%endif%}x-webkit-speech/><input type="submit" value="Subscribe" /></form></p>
