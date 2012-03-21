@@ -21,8 +21,8 @@
 {% load lh_math %}
 {% block nav_allbooks %}selected{% endblock %}
 {% block title %}Search Results{% endblock %}
-{% block content %}{% block message %}<p>We found {{results|length}} results:</p>{% endblock %}
-{% if results %}
+{% block content %}{% block message %}<p>We found {{results.object_list|length }} results:</p>{% endblock %}
+{% if results.object_list %}
 {% include "bookswap/pagination.html" %}
 <table class="bookgrid">
 <tr>
