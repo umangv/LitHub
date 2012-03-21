@@ -250,6 +250,11 @@ div#content table.bookgrid tr td a
 	border-bottom:0;
 	text-decoration:none;
 }
+table.bookgrid tr td img
+{
+	max-width:150px;
+	max-height:250px;
+}
 table.copylist
 {
 	border-collapse:collapse;
