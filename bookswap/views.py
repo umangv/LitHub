@@ -62,8 +62,9 @@ def book_by_isbn(request, isbn_no):
             " each book, helping them decide which books "+\
             "to sell.")
         return redirect(subscribe_to_new, isbn_no)
+    results = utils.PaginatorN(books, request)
     return render(request, "bookswap/book_isbn.html",
-            {"results":books, 'search_isbn':isbn_no})
+            {"results":results.page_auto(), 'search_isbn':isbn_no})
 
 def book_details(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
@@ -97,8 +98,9 @@ def search_books(request):
                         num_copies=Count('copy', distinct=True),
                         num_sub=Count('subscribers', distinct=True))\
                 .order_by('-num_copies', '-num_sub')
+        results = utils.PaginatorN(books, request)
         return render(request, "bookswap/results.html",
-                {"results":books, 'search_title':title,
+                {"results":results.page_auto(), 'search_title':title,
                     'search_author':author})
     else:
         return redirect(all_books)
