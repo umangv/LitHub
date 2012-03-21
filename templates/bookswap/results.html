@@ -18,22 +18,31 @@
     You should have received a copy of the GNU General Public License
     along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 -->
+{% load lh_math %}
 {% block nav_allbooks %}selected{% endblock %}
 {% block title %}Search Results{% endblock %}
 {% block content %}{% block message %}<p>We found {{results|length}} results:</p>{% endblock %}
 {% if results %}
 {% include "bookswap/pagination.html" %}
-<table class="booklist">
-    <thead>
-        <th>Title</th><th>Author</th><th>ISBN</th>
-    </thead>
-{% for book in results.object_list %}
+<table class="bookgrid">
 <tr>
-    <td><a href="{% url bookswap.views.book_details book.id %}">{{book.title}}</a><br/><span class="bookinfo">{% if book.num_copies == 1 %}1 copy{% else%}{{book.num_copies}} copies{% endif %} on sale, {%if book.num_sub %}{{book.num_sub}}{% else %}no{% endif %} subscriber{% if not book.num_sub == 1 %}s{% endif %}.</span></td> 
-    <td>{{book.author}}</td>
-    <td><span class="isbn">{{book.isbn}}</span></td>
-</tr>
+{% for book in results.object_list %}
+    <td>
+    <a href="{% url bookswap.views.book_details book.id %}">
+    {% if book.thumbnail_url %}    
+    <img src="{{book.thumbnail_url}}" alt="{{book.title}}" />
+    {% else %}
+    <img src="{{STATIC_URL}}images/no_preview.png" alt="No preview available" />
+    {% endif %}<br/>
+    <i>{{book.title}}</i><br/>
+    {{book.author}}<br/>
+    <span class="bookinfo">{% if book.num_copies == 1 %}1 copy{% else%}{{book.num_copies}} copies{% endif %} on sale, {%if book.num_sub %}{{book.num_sub}}{% else %}no{% endif %} subscriber{% if not book.num_sub == 1 %}s{% endif %}.</span><br/>
+    <span class="isbn">{{book.isbn}}</span>
+    </a>
+    </td>
+    {% if forloop.counter0|mod:3 == 2 and forloop.revcounter0 != 0%}</tr><tr>{% endif %}
 {% endfor %}
+    </tr>
 </table>
 {% include "bookswap/pagination.html" %}
 {% endif %}

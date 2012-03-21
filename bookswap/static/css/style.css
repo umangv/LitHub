@@ -234,6 +234,22 @@ table tr td.actions
 {
 	min-width:150px;
 }
+table.bookgrid
+{
+	width:900px;
+	table-layout:fixed;
+}
+table.bookgrid tr td
+{
+	text-align:center;
+	padding: 15px 10px;
+}
+div#content table.bookgrid tr td a
+{
+	color:inherit;
+	border-bottom:0;
+	text-decoration:none;
+}
 table.copylist
 {
 	border-collapse:collapse;

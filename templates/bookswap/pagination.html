@@ -4,7 +4,7 @@
     {% endif %}
 
     <span class="current">
-        Page {{ results.number }} of {{ results.paginator.num_pages }} (displaying {{results.start_index}} to {{results.end_index}} of {{results.paginator.count}})
+        Page {{ results.number }} of {{ results.paginator.num_pages }} {% if results.has_other_pages %}(displaying {{results.start_index}} to {{results.end_index}} of {{results.paginator.count}} books){% endif %}
     </span>
 
     {% if results.has_next %}
