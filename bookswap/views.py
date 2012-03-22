@@ -109,12 +109,22 @@ def all_books(request):
     books = Book.objects.filter(copy__soldTime=None)\
             .annotate(
                     num_copies=Count('copy', distinct=True),
-                    num_sub=Count('subscribers', distinct=True))\
-            .filter(~Q(num_copies=0) | ~Q(num_sub=0))\
-            .order_by('-num_sub', '-num_copies')
+                    num_sub=Count('subscribers', distinct=True))
+    filters = {'wanted': lambda x: x.filter(~Q(num_sub=0))\
+                .order_by('-num_sub'),
+            'available': lambda x: x.filter(~Q(num_copies=0))\
+                    .order_by('-num_copies'),
+            'default': lambda x: x.filter(~Q(num_copies=0) | ~Q(num_sub=0))\
+                    .order_by('-num_sub', '-num_copies')}
+    filterform = FilterAllBooksForm(request.GET)
+    if filterform.is_valid():
+        booksfilter = filterform.cleaned_data['filter']
+    else:
+        booksfilter = ''
+    books = filters.get(booksfilter, filters['default'])(books)
     results = utils.PaginatorN(books, request)
     return render(request, "bookswap/all_books.html",
-            {"results":results.page_auto()})
+            {"results":results.page_auto(), 'filterform':filterform})
 
 def contact_us(request):
     if request.method == "POST":

@@ -20,4 +20,4 @@
 -->
 {% block title %}All books{% endblock %}
 {% block nav_allbooks %}selected{% endblock %}
-{% block message %}<p>Here are all the books in our database:</p>{% endblock %}
+{% block message %}<div><form action="" method="get">{{filterform.filter}}<input type="submit" value="Filter"/></form>{{bf}}</div>{% endblock %}

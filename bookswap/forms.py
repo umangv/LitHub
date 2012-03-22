@@ -56,3 +56,8 @@ class EditCopyForm(forms.ModelForm):
 
 class ConfirmPasswordForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
+
+class FilterAllBooksForm(forms.Form):
+    filter = forms.ChoiceField(choices=(('', "All books"),
+            ('wanted', "Wanted books"),
+            ('available', "Available books")))
