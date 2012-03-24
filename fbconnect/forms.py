@@ -27,6 +27,4 @@ class FBRegisterForm(forms.Form):
         if User.objects.filter(username=username).count():
             raise forms.ValidationError("This username has already been "+\
                     "taken. Please try again")
-        if username.lower() != username:
-            raise forms.ValidationError("Username has to be lower case!")
         return self.cleaned_data['username']
