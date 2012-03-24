@@ -65,6 +65,9 @@ def receive_code(request):
 def register(request, code):
     try:
         fb = fb_utils.FBConnect(code)
+        user = authenticate(fb_uid=fb.userid)
+        if user:
+            return redirect("bookswap.views.my_account")
         networks = fb.networks
         k = False
         for network in networks:
