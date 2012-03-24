@@ -21,13 +21,24 @@
 {% block title %}Register{% endblock %}
 {% block nav_profile %}selected{% endblock %}
 {% block content %}
-<h2>Register</h2>
+<h2>Create a new account</h2>
 <p>You're almost there. Just select a user name and your account will be ready!</p>
 <form action="" method="post">
+<input type="hidden" name="action" value="createnew" />
 {% csrf_token %}
 <table>
-    {{form}}
+    {{createform}}
     <tr><td></td><td><input type="submit" value="Sign up"/></td></tr>
+</table>
+</form>
+<h2>... Or connect to an existing account</h2>
+<p>Already have an account? Login using the form below and you'll be able to log in to your LitHub account using Facebook next time.</p> 
+<form action="" method="post">
+<input type="hidden" name="action" value="associate" />
+{% csrf_token %}
+<table>
+    {{loginform}}
+    <tr><td></td><td><input type="submit" value="Login"/></td></tr>
 </table>
 </form>
 

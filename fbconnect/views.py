@@ -17,7 +17,7 @@
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.forms import SetPasswordForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -81,29 +81,43 @@ def register(request, code):
                 "using the form below. You may connect your account " +\
                 "to Facebook after registration")
             return redirect('registration.views.register')
-        form = FBRegisterForm()
+        createform = FBRegisterForm()
+        loginform = AuthenticationForm()
         if request.method == 'POST':
-            form = FBRegisterForm(request.POST)
-            if form.is_valid():
-                user_info = fb.basic_info
-                new_user = User.objects.create_user(
-                        form.cleaned_data['username'], 
-                        user_info['email'])
-                new_user.first_name = user_info['first_name']
-                new_user.last_name = user_info['last_name']
-                new_user.is_active = True
-                new_user.set_unusable_password()
-                new_user.save()
-                fbp = FBProfile(user=new_user, fb_userid=user_info['id'])
-                fbp.save()
-                messages.success(request, "Your account has been created!")
-                user = authenticate(fb_uid=fbp.fb_userid)
-                request.session['fb_at'] = fb.access_token
-                if user and user.is_active:
+            action = request.POST.get('action', '')
+            if action == "createnew":
+                createform = FBRegisterForm(request.POST)
+                if createform.is_valid():
+                    user_info = fb.basic_info
+                    new_user = User.objects.create_user(
+                            createform.cleaned_data['username'], 
+                            user_info['email'])
+                    new_user.first_name = user_info['first_name']
+                    new_user.last_name = user_info['last_name']
+                    new_user.is_active = True
+                    new_user.set_unusable_password()
+                    new_user.save()
+                    fbp = FBProfile(user=new_user, fb_userid=user_info['id'])
+                    fbp.save()
+                    messages.success(request, "Your account has been created!")
+                    user = authenticate(fb_uid=fbp.fb_userid)
+                    request.session['fb_at'] = fb.access_token
+                    if user and user.is_active:
+                        login(request, user)
+                    return redirect('bookswap.views.my_account')
+            elif action == "associate":
+                loginform = AuthenticationForm(data=request.POST)
+                if loginform.is_valid():
+                    user = loginform.get_user()
                     login(request, user)
-                return redirect('bookswap.views.my_account')
+                    fbp = FBProfile(user=user,fb_userid=fb.basic_info['id'])
+                    fbp.save()
+                    request.session['fb_at'] = fb.access_token
+                    messages.success(request, "Your account is now connected "
+                            "to your Facebook account!")
+                    return redirect('bookswap.views.my_account')
         return render(request, "fbconnect/register.html", 
-                {'form':form})
+                {'createform':createform, "loginform":loginform})
     except ValueError:
         return render(request, "fbconnect/code_error.html")
 
