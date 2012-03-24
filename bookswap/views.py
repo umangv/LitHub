@@ -457,6 +457,10 @@ def dissoc_fb(request):
         password = request.POST.get('password', '')
         if request.user.check_password(password):
             request.user.fbprofile.delete()
+            try:
+                del request.session["fb_at"]
+            except KeyError:
+                pass
             messages.success(request, "Your LitHub and facebook accounts"+\
                     " are no longer connected.")
             return redirect(my_account)
