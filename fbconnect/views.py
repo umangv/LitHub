@@ -28,7 +28,7 @@ import urlparse
 
 from fbconnect.models import FBProfile
 import fbconnect.utils as fb_utils
-from fbconnect.forms import FBRegisterForm
+from fbconnect.forms import FBRegisterForm, FBRegisterVerifyForm
 
 def receive_code(request):
     """Receives fb code for logging in."""
@@ -55,6 +55,11 @@ def receive_code(request):
                 return HttpResponseRedirect(next)
             else:
                 return redirect('bookswap.views.my_account')
+        if user and not user.is_active:
+            messages.error(request, "Please activate your account before "
+                "you login. If you haven't received an email about this "
+                "please contact us.")
+            return redirect('bookswap.views.my_account')
         else:
             return redirect('fbconnect.views.register', code=code)
     except ValueError:
@@ -74,18 +79,14 @@ def register(request, code):
             if str(network['nid']) == '16777626':
                 k = True
                 break
-        if not k:
-            messages.error(request, "You are not in the Kalamazoo "+\
-                "College network on Facebook. Please join the " +\
-                "Kalamazoo College Network and try again or register "+\
-                "using the form below. You may connect your account " +\
-                "to Facebook after registration")
-            return redirect('registration.views.register')
-        createform = FBRegisterForm()
+        if k:
+            createform = FBRegisterForm()
+        else:
+            createform = FBRegisterVerifyForm()
         loginform = AuthenticationForm()
         if request.method == 'POST':
             action = request.POST.get('action', '')
-            if action == "createnew":
+            if k and action == "createnew":
                 createform = FBRegisterForm(request.POST)
                 if createform.is_valid():
                     user_info = fb.basic_info
@@ -105,18 +106,48 @@ def register(request, code):
                     if user and user.is_active:
                         login(request, user)
                     return redirect('bookswap.views.my_account')
+            if (not k) and action == "createnew":
+                createform = FBRegisterVerifyForm(request.POST)
+                if createform.is_valid():
+                    from bookswap.kregform import KzooRegistrationBackend
+                    user_info = fb.basic_info
+                    backend = KzooRegistrationBackend()
+                    new_user = backend.register(request,
+                            username=createform.cleaned_data['username'],
+                            email=createform.cleaned_data['email'],
+                            password1=None,
+                            first_name=user_info['first_name'],
+                            last_name=user_info['last_name'])
+                    new_user.set_unusable_password()
+                    new_user.save()
+                    fbp = FBProfile(user=new_user, fb_userid=user_info['id'])
+                    fbp.save()
+                    messages.success(request, "An email has been sent to your "
+                        "account. Once you confirm your account, you will be "
+                        "able to log in.")
+                    return redirect('bookswap.views.my_account')
             elif action == "associate":
                 loginform = AuthenticationForm(data=request.POST)
                 if loginform.is_valid():
                     user = loginform.get_user()
                     login(request, user)
+                    try:
+                        user.fbprofile
+                        messages.error(request, "You are already connected to "
+                            "a facebook account. If you are trying to connect "
+                            "a different facebook account, please dissociate "
+                            "your LitHub and facebook accounts.")
+                        return redirect('bookswap.views.my_account')
+                    except ObjectDoesNotExist:
+                        pass 
                     fbp = FBProfile(user=user,fb_userid=fb.basic_info['id'])
                     fbp.save()
                     request.session['fb_at'] = fb.access_token
                     messages.success(request, "Your account is now connected "
                             "to your Facebook account!")
                     return redirect('bookswap.views.my_account')
-        return render(request, "fbconnect/register.html", 
+        template = {True:"register.html", False:"register_verify.html"}
+        return render(request, "fbconnect/%s"%template[k], 
                 {'createform':createform, "loginform":loginform})
     except ValueError:
         return render(request, "fbconnect/code_error.html")

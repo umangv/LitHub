@@ -28,3 +28,22 @@ class FBRegisterForm(forms.Form):
             raise forms.ValidationError("This username has already been "+\
                     "taken. Please try again")
         return self.cleaned_data['username']
+
+class FBRegisterVerifyForm(forms.Form):
+    username = forms.CharField(max_length=30)
+    email = forms.EmailField(max_length=75)
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).count():
+            raise forms.ValidationError("This username has already been "
+                    "taken. Please try again")
+        return self.cleaned_data['username']
+
+    def clean_email(self):
+        """Ensures a valid K student email id is used. """
+        email_parts = self.cleaned_data['email'].split('@')
+        if email_parts[1].lower () != "kzoo.edu":
+            raise forms.ValidationError("Only kzoo.edu addresses are "
+                    "allowed!")
+        return self.cleaned_data['email']
