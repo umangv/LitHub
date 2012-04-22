@@ -316,6 +316,25 @@ ul#account_sidelinks li a, ul#account_sidelinks li a:hover
 {
 	border-bottom:0;
 }
+div.blurb
+{
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size:1.1em;
+	font-style:italic;
+}
+div.blurb p
+{
+	margin:0;
+	padding:0;
+}
+div.blurb p.cite
+{
+	text-align:right;
+}
+div.blurb p.quote:first-letter
+{
+	font-size:2em;
+}
 ul.features
 {
 	list-style:square inside none;
