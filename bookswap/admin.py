@@ -45,6 +45,7 @@ class BookAdmin(admin.ModelAdmin):
 
 class CustomUserAdmin(UserAdmin):
     actions = ['send_email']
+    list_per_page = 50 # Server can crash if too many emails are sent
 
     def send_email(self, request, queryset):
         """Sends email to selected users using templates on server.
