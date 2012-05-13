@@ -104,6 +104,6 @@ class PaginatorN(Paginator):
         except KeyError:
             pass
         if opts:
-            return "?%s&%s="%(urlencode(opts), self.GET_PAGE_VAR)
+            return "?%s&%s="%(opts.urlencode(), self.GET_PAGE_VAR)
         else:
             return "?%s="%self.GET_PAGE_VAR
