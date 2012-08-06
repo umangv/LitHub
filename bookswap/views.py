@@ -469,3 +469,32 @@ def dissoc_fb(request):
     form = ConfirmPasswordForm()
     return render(request, "registration/dissoc_fb.html",
             {'form':form})
+
+@login_required
+def maintenance(request):
+    if not request.user.is_superuser:
+        return render(request, "bookswap/maint_goaway.html")
+    if request.method == "POST":
+        results = {}
+        gbook_info = utils.get_book_details("9780099572831")
+        results["gbook"] = gbook_info.has_key("title")
+        gbook_img = gbook_info.get("thumbnail_url", " ")
+        try:
+            email = EmailMessage(subject="LitHub Maintenance", body="Yup, you"
+                    " got it", to=[request.user.email])
+            email.send()
+            results["email"] = True
+        except:
+            results["email"] = False
+        results["fb_at"] = request.session.has_key("fb_at")
+        copy = request.user.copy_set.filter(soldTime=None)[0]
+        results["fb_og"] = utils.opengraph_list_book(request, copy)
+        # Count number of successes
+        successes = results.values().count(True)
+        # Convert True/False to "success"/"failure"
+        results_class = dict([(k,("success" if v else "failure"))
+            for k,v in results.items()])
+        return render(request, "bookswap/maint_results.html",
+                {"results":results_class, "gbook_img": gbook_img, "successes":
+                    successes})
+    return render(request, "bookswap/maint_confirm.html")

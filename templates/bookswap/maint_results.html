@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+<!--
+    Copyright © 2012 Kalamazoo College Computer Science Club
+    <kzoo-cs-board@googlegroups.com>
+
+    This file is part of LitHub.
+
+    LitHub is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    LitHub is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
+-->
+{% block nav_profile %}selected{% endblock %}
+{% block title %}Maintenance results{% endblock %}
+{% block headextra %}
+    <style>
+    .success { color: green; font-weight: bold; }
+    .failure { color: red; font-weight: bold; }
+    </style>
+{% endblock %}
+{% block content %}
+<h1>Maintenance</h1>
+<ul>
+    <li><img src="{{ gbook_img }}" alt="The Curious Incident of the Dog in the Night-time." style="max-height: 250px; max-width: 150px; float:right;"><p class="{{ results.gbook }}">Google Books API.<br/> Get book details: The Curious Incident of the Dog in the Night-time. There should be a book cover to the right.</p></li>
+    <li><p class="{{ results.email }}">Send email using SMTP (please verify)</p></li>
+    <li><p class="{{ results.fb_at }}">Get Facebook access token.</p></li>
+    <li><p class="{{ results.fb_og }}">Send OpenGraph to Facebook (please verify).</p></li>
+</ul>
+<b>Total: {{ successes }} of {{ results|length }} passed.</b>
+{% endblock %}
