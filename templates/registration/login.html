@@ -29,6 +29,9 @@
   <form action="" method="post">
     {% csrf_token %}
     {{ form }}
+    {% if form.errors %}
+    <tr><td colspan="2"><ul><li>Enter your Kzoo LitHub username and password. Remember that this may not be the same as your portal login.</li></ul></td></tr>
+    {% endif %}
     <tr><td></td><td><input type="submit" value="Login" />
             <input type="hidden" name="next" value="{{ next|escape }}" /><a style="font-size:12px;" href="{% url password_reset %}">Forgot your password?</a></td></tr>
   </form>
