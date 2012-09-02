@@ -18,376 +18,440 @@
     along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-html, body, div { margin:0; padding:0; } /* Reset */
-html, body /* Image background is in wrapper */
+/* Some code below is adapted from Eric Meyer's "Reset CSS"
+   http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video
 {
-	background: #ff7200;
-	height:100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
-img
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body
 {
-	border:0;
+    line-height: 1;
 }
-a
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#content a:link, #content a:visited
 {
-	color:#ff7200;
-	text-decoration:none;
+    color:#ff7200;
 }
-html, body, h1, h2, h3, h4, input
+#content a:hover
 {
-	font-family: 'Droid Sans', arial, sans-serif;
+    text-shadow: 0 0 0.05em #ff7200;
 }
-#wrapper
+
+html, body
 {
-	width:1000px;
-	background: #ff7200 url('../images/bg.png') repeat-y scroll center top;
-	min-height:100%;
-	margin:0 auto;
+    min-width: 760px;
 }
-#topbar
+
+html, body, input
 {
-	z-index:100;
-	position:fixed;
-	width:960px;
-	margin-left:20px; /* wrapper is 1000px wide. This centers topbar */
-	top:0;
-	clear:both;
+    font-family: 'PT Sans', arial, sans-serif;
+    font-size: 15px;
+    color: #000;
+    line-height: 130%;
 }
-#navbar a
+h1, h2, h3, h4, th
 {
-	color:#fff;
+    font-family: 'Gentium Book Basic', serif;
+    margin-top: 0.5em;
 }
-#navbar ul li a:hover, #navbar ul li.selected a
+h1 { font-size: 2em; } 
+h2 { font-size: 1.7em; } 
+h3 { font-size: 1.4em; } 
+h4, th { font-size: 1.2em; } 
+
+::selection { background: #333; color: #ff7200; }
+::-moz-selection { background: #333; color: #ff7200; }
+::-webkit-selection { background: #333; color: #ff7200; }
+
+::-webkit-input-placeholder {color: #ccc;}
+:-moz-placeholder {color: #ccc;}
+:-ms-input-placeholder {color: #ccc;}
+
+.centerwrapper
 {
-	color:#ff7200;
+    width: 100%;
+    /* background-color: #fff; /* */
+    max-width: 960px;
+    min-width: 760px;
+    margin:0 auto;
 }
-#navbar ul li.selected a
-{
-	border-bottom:2px solid #ff7200;
-}
+
 #navbar
 {
-	background: url('../images/topbar.png') repeat-x;
-	height:50px;
-	color:#fff;
+    border-top: 6px solid #ff7200;
+    background-color: #333;
+    height: 56px;
 }
 #kzoolithub 
 {
-	margin-left:30px;
-	float:left;
-	margin-top:7px;
+    margin-left:1.041666667%; /* 10 / 960 */
+    float:left;
+    margin-top:7px;
 }
 div.navlinks
 {
-	text-align:right;
-	height:50px;
+    width: 64.583333333%; /* 620 / 960 */ 
+    margin-left: 34.375%; /* 330 / 960 */
 }
 ul.navlinks
 {
-	margin:0;
-	padding:0;
-	list-style: none outside none;
-	font-size:17px;
-	letter-spacing:1px;
-	line-height:1em;
-	text-align:right;
-	padding-top:16px;
+    display: table;
+    height: 56px;
+    width: 100%;
+    line-height: 56px;
+    font-family: 'Gentium Book Basic', serif;
+    font-size:1.2em;
+    letter-spacing:1px;
 }
 ul.navlinks li
 {
-	display:inline;
-	margin-right:30px;
+    display:table-cell;
+    padding: 0 10px; 
 }
+ul.navlinks li a:link, ul.navlinks li a:visited
+{
+    color: #ccc; 
+    text-decoration: none;
+}
+ul.navlinks li a:hover
+{
+    color: #ff7200; 
+    text-shadow: 0 0 0.2em #ff7200;
+}
+
+ul.navlinks li.selected a
+{
+    color: #ff7200; 
+}
+
 #searchbox
 {
-	height:70px;
-	background:#ffbb66;
+    height:36px;
+    background:#ffbb66;
+    clear: both;
+    line-height: 36px;
 }
-#searchbox .sform_field, #searchbox .sform_field_submit
+#textsearch
 {
-	margin-left:20px;
-	margin-right:0;
-	padding:0;
-	float:left;
-	margin-top:10px;
-	width:220px;
+    margin-left: 1.041666667%; /* 10 / 960 */
+    width: 64.583333333%; /* 620 / 960 */
+    height: 36px;
+    float:left;
 }
-#searchbox .sform_field_submit
+#isbnsearch
 {
-	margin-left:20px;
-	width:70px;
+    margin-left: 67.708333333% ; /* 650 / 960 */
+    width: 31.25%; /* 300 / 960 */
+    height: 36px;
 }
 #searchbox input[type=text]
 {
-	border:0;
-	height:18px;
-	width:210px;
+    border: 0;
+    background: #fff;
+    height:18px;
+    padding: 2px;
+    width: 170px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
 }
-#searchbox label
+#searchbox input[type=image]
 {
-	font-size:13px;
-	line-height:20px;
+    vertical-align: middle;
+    margin-top: -3px;
 }
-#fixedboxgradient
-{
-	height:20px;
-	background:transparent url('../images/fixedboxgradient.png') left top repeat-x;
-}
+
 #content
 {
-	width:940px;
-	margin:0 auto;
-	clear:both;
-	padding-top:150px;
+    width:100%;
+    max-width: 960px;
+    min-width: 760px;
+    padding-top: 10px;
+    margin:0 auto;
+    clear:both;
 }
+#content p
+{
+    padding: 5px 0;
+}
+
 #twocol_main
 {
-	width:700px;
-	float:left;
-	border-top:0px solid #ff7200; 
+    width: 64.583333333%; /* 620 / 960 */
+    margin-left:1.041666667%; /* 10 / 960 */
+    float:left;
+    border-top:0px solid #ff7200; 
 }
 #twocol_side
 {
-	width:200px;
-	margin-left:720px;
+    width:31.25%;
+    margin-left:67.708333333%; /* 650 / 960 */
 }
 #twocol_side .sidebar_item
 {
-	border-top:2px solid #ff7200;
+    border-top:2px solid #ff7200;
 }
 
-div#content a
-{
-	border-bottom:1px dashed #ff7200;
-}
-div#content a:hover
-{
-	border-bottom:1px solid #ff7200;
-}
-div#content a.imagelink, div#content a.imagelink:hover
-{
-	border:0;
-}
 div#form label
 {
-	float:left;
-	display:block;
-	width:200px;
+    float:left;
+    display:block;
+    width:200px;
 }
 div#form input
 {
 }
 div#form input[type="submit"]
 {
-	margin-left:200px;
+    margin-left:200px;
 }
 div#form ul.errorlist
 {
-	color:red;
-	list-style:none;
-	padding:0;
-	margin-left:200px;
-	font-size:14px;
+    color:red;
+    list-style:none;
+    padding:0;
+    margin-left:200px;
+    font-size:14px;
 }
 div#form ul.errorlist li
 {
-	padding:0;
+    padding:0;
 }
 span.bookinfo
 {
-	font-size:11px;
+    font-size:11px;
 }
 span.isbn
 {
-	font-size:13px;
+    font-size:13px;
 }
 
 ul.messages
 {
-	list-style:none outside none;
-	font-size:12px;
-	padding:0;
-	margin:0;
+    list-style:none outside none;
+    font-size:12px;
+    padding:0;
+    margin:0;
 }
 ul.messages li
 {
-	padding:5px;
-	margin-bottom:3px;
+    padding:5px;
+    margin-bottom:3px;
 }
 ul.messages li.success
 {
-	background-color:#7f7;
+    background-color:#7f7;
 }
 ul.messages li.error
 {
-	background-color:#f77;
+    background-color:#f77;
 }
 ul.messages li.info
 {
-	background-color:#7cf;
+    background-color:#7cf;
 }
 table.booklist tr td
 {
-	padding:7px 3px;
+    padding:7px 3px;
 }
 table tr td.actions
 {
-	min-width:150px;
+    min-width:150px;
 }
 table.bookgrid
 {
-	width:900px;
-	table-layout:fixed;
+    width:900px;
+    table-layout:fixed;
 }
 table.bookgrid tr td
 {
-	text-align:center;
-	padding: 15px 10px;
+    text-align:center;
+    padding: 15px 10px;
 }
 div#content table.bookgrid tr td a
 {
-	color:inherit;
-	border-bottom:0;
-	text-decoration:none;
+    color:inherit;
+    border-bottom:0;
+    text-decoration:none;
 }
 table.bookgrid tr td img
 {
-	max-width:150px;
-	max-height:250px;
+    max-width:150px;
+    max-height:250px;
 }
 table.copylist
 {
-	border-collapse:collapse;
+    border-collapse:collapse;
 }
 table.copylist tr td
 {
-	border-top: 1px solid #ff7200;
-	border-bottom: 1px solid #ff7200;
+    border-top: 1px solid #ff7200;
+    border-bottom: 1px solid #ff7200;
 }
 table.copylist tr td
 {
-	padding:15px 5px;
-	vertical-align:center;
+    padding:15px 5px;
+    vertical-align: middle;
 }
 table.copylist tr td.price
 {
-	color:#ff7200;
-	font-size:32px;
-	line-height:1em;
-	max-width:120px;
+    color:#ff7200;
+    font-size:32px;
+    line-height:1em;
+    max-width:120px;
 }
 table.copylist tr td.copycomments
 {
-	min-width:400px;
+    min-width:400px;
 }
 table.copylist tr td.requestcopy
 {
-	min-width:150px;
+    min-width:150px;
 }
 table.copylist tr td.price p
 {
-	margin:0;
-	font-weight:bold;
-	padding:0;
+    margin:0;
+    font-weight:bold;
+    padding:0;
 }
 table.copylist tr td.price p.condition
 {
-	font-size:14px;
-	margin-top:-0.5em;
+    font-size:14px;
+    margin-top:-0.5em;
 }
 ul#account_sidelinks
 {
-	list-style:none outside none;
-	margin:0;
-	padding:0;
-	font-size:14px;
+    list-style:none outside none;
+    margin:0;
+    padding:0;
+    font-size:14px;
 }
 ul#account_sidelinks li
 {
-	padding: 7px 0 7px 5px;
-	border-left:2px solid transparent;
-	padding-left
+    padding: 7px 0 7px 5px;
+    border-left:2px solid transparent;
 }
 ul#account_sidelinks li:hover
 {
-	border-left:2px solid #ff7200;
+    border-left:2px solid #ff7200;
 }
 ul#account_sidelinks li a, ul#account_sidelinks li a:hover 
 {
-	border-bottom:0;
+    border-bottom:0;
 }
 div.blurb
 {
-	font-family: Georgia, 'Times New Roman', serif;
-	font-size:1.1em;
-	font-style:italic;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size:1.1em;
+    font-style:italic;
 }
 div.blurb p
 {
-	margin:0;
-	padding:0;
+    margin:0;
+    padding:0;
 }
 div.blurb p.cite
 {
-	text-align:right;
+    text-align:right;
 }
 div.blurb p.quote:first-letter
 {
-	font-size:2em;
+    font-size:2em;
 }
 ul.features
 {
-	list-style:square inside none;
-	margin:0;
-	padding-left:0px;
-	font-size:14px;
-	line-height:1.5em;
+    list-style:square inside none;
+    margin:0;
+    padding-left:0px;
+    line-height:1.3em;
 }
 ul.features li
 {
-	margin-bottom:1em;
-	color:#000;
+    margin-bottom:1em;
+    color:#000;
 }
 ul.features li span.new
 {
-	font-size:10px;
-	color:red;
+    font-size:10px;
+    color:red;
 }
 div.bookthumbnail
 {
-	float:left;
-	padding:0 20px;
-	max-width:150px;
-	overflow-x:hidden;
+    float:left;
+    padding:0 20px;
+    max-width:150px;
+    overflow-x:hidden;
 }
 div.bookthumbnail img
 {
-	border:0;
+    border:0;
 }
 div.bookinfo
 {
-	margin-left:190px;
-	line-height:2em;
+    margin-left:190px;
+    line-height:2em;
 }
 div.bookinfo h2
 {
-	color:#ff7200;
-	padding:0;
-	margin:0;
-	font-size:36px;
-	line-height:1.0em;
+    color:#ff7200;
+    padding:0;
+    margin:0;
+    font-size:36px;
+    line-height:1.0em;
 }
 table.contactseller tr td
 {
-	padding:10px 5px;
-	vertical-align:center;
+    padding:10px 5px;
+    vertical-align: middle;
 }
 div.pagination table
 {
-	margin:0 auto;
+    margin:0 auto;
 }
 div.pagination table tr td
 {
-	text-align:center;
-	font-size:.8em;
+    text-align:center;
+    font-size:.8em;
 }

@@ -23,22 +23,22 @@
         <title>{% block title %}{% endblock %} &raquo; Kzoo LitHub</title>
         <meta name="keywords" content="{% block metakeywords %}books, Kalamazoo, college, bookswap{% endblock %}"/>
         <meta name="description" content="{% block metadescription %}Kzoo LitHub: buy and sell books with Kalamazoo College students at fair prices{% endblock %}" />
-        <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700|Gentium+Book+Basic' rel='stylesheet' type='text/css'>
         <link href='{{STATIC_URL}}css/style.css' rel='stylesheet' type='text/css'>
         <link rel="icon" href="/favicon.ico"/>
         {% block headextra %}{% endblock %}
     </head>
     <body>
-        <div id="wrapper">
-            <div id="topbar">
-                <div id="navbar">
+        <div id="topbar">
+            <div id="navbar">
+                <div class="centerwrapper">
                     <a href="{% url home %}"><img id="kzoolithub" src="{{STATIC_URL}}images/kzoolithub.png" alt="Kzoo LitHub" style="" /></a>
                     <div class="navlinks">
                         <ul class="navlinks">
-                            <li class="{% block nav_allbooks %}{% endblock %}"><a href="{% url bookswap.views.all_books %}">All books</a></li>
-                            <li class="{% block nav_sell %}{% endblock %}"><a href="{% url bookswap.views.sell_step_search %}">Sell a book</a></li>
-                            <li class="{% block nav_profile %}{% endblock %}"><a href="{% url bookswap.views.my_account %}">My account</a></li>
+                            <li class="{% block nav_allbooks %}{% endblock %}"><a href="{% url bookswap.views.all_books %}">Books</a></li>
+                            <li class="{% block nav_sell %}{% endblock %}"><a href="{% url bookswap.views.sell_step_search %}">Sell</a></li>
                             <li class="{% block nav_contact %}{% endblock %}"><a href="{% url bookswap.views.contact_us %}">Contact</a></li>
+                            <li class="{% block nav_profile %}{% endblock %}"><a href="{% url bookswap.views.my_account %}">Account</a></li>
                             {% if user.is_authenticated %}
                             <li><a href="{% url django.contrib.auth.views.logout %}">Logout</a></li>
                             {% else %}
@@ -46,50 +46,43 @@
                             {% endif %}
                         </ul>
                     </div>
-                </div> <!-- end navbar -->
-                <div id="searchbox" style="clear:both;">
-                    <form action="{% url bookswap.views.search_books %}" method="get">
-                    <div class="sform_field">
-                        <label for="search_title">Title:</label><br/>
+                </div> <!-- end .centerwrapper -->
+            </div> <!-- end navbar -->
+            <div id="searchbox">
+                <div class="centerwrapper">
+                    <div id="textsearch">
+                        <form action="{% url bookswap.views.search_books %}" method="get">
+                        <label for="search_title">Title:</label>
                         <input type="text" id="search_title" name="title" placeholder="Title" {% if search_title%}value="{{search_title}}" {%endif%}x-webkit-speech/>
-                    </div>
-                    <div class="sform_field">
-                        <label for="search_title">Author:</label><br/>
+                        <label for="search_title">Author:</label>
                         <input type="text" id="search_author" name="author" placeholder="Author" {% if search_author%}value="{{search_author}}" {%endif%}x-webkit-speech/>
+                        <input type="image" value="Search" src="{{STATIC_URL}}images/mag.png"/>
+                        </form>
                     </div>
-                    <div class="sform_field_submit">
-                        <br/>
-                        <input type="submit" value="Search"/>
-                    </div>
-                    </form>
-                    <form action="{% url bookswap.views.search_books %}" method="post">
-                    <div class="sform_field">
+                    <div id="isbnsearch">
+                        <form action="{% url bookswap.views.search_books %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" id="action" name="action" value="isbn_search"/>
-                        <label for="search_isbn">ISBN:</label><br/>
+                        <label for="search_isbn">ISBN:</label>
                         <input type="text" id="search_isbn" name="isbn" placeholder="ISBN" {% if search_isbn%}value="{{search_isbn}}" {%endif%}x-webkit-speech/>
+                        <input type="image" value="Search" src="{{STATIC_URL}}images/mag.png"/>
+                        </form>
                     </div>
-                    <div class="sform_field_submit">
-                        <br/>
-                        <input type="submit" value="Search"/>
-                    </div>
-                    </form>
-                </div><!-- end searchbox -->
-                <div id="fixedboxgradient"></div>
-            </div><!-- end topbar -->
-            <div id="content">
-           	    <div id="messages">
-                {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-                </div><!-- end messages-->
-                {% block content %}{% endblock %}
-                <div style="clear:both;">&nbsp;</div><!-- Wrapper class needs to be streched down so that the background extend's to the page bottom -->
-            </div><!-- end content -->
-        </div><!-- end wrapper -->
+                </div> <!-- end .centerwrapper -->
+            </div><!-- end searchbox -->
+        </div><!-- end topbar -->
+        <div id="content">
+            <div id="messages">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            </div><!-- end messages-->
+            {% block content %}{% endblock %}
+            <div style="clear:both;">&nbsp;</div><!-- Wrapper class needs to be streched down so that the background extend's to the page bottom -->
+        </div><!-- end content -->
     </body>
 </html>
