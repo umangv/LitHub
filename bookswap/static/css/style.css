@@ -76,7 +76,7 @@ table {
 }
 #content a:hover
 {
-    text-shadow: 0 0 0.05em #ff7200;
+    text-shadow: 0 0 0.1em #ff7200;
 }
 
 html, body
@@ -84,7 +84,7 @@ html, body
     min-width: 760px;
 }
 
-html, body, input
+html, body, input, button
 {
     font-family: 'PT Sans', arial, sans-serif;
     font-size: 15px;
@@ -301,23 +301,46 @@ table tr td.actions
 {
     min-width:150px;
 }
-table.bookgrid
+.bookfilters
 {
-    width:900px;
-    table-layout:fixed;
+	text-align: center;
+	margin-bottom: 10px;
 }
-table.bookgrid tr td
+.bookfilters button
+{
+	background: transparent;
+	border: 0;
+	padding: 0;
+	color: #ff7200;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.bookfilters button:hover
+{
+    text-shadow: 0 0 0.1em #ff7200;
+}
+.bookfilters button.selected
+{
+	text-decoration: none;
+	font-weight: bold;
+}
+.bookgrid
 {
     text-align:center;
+}
+.bookgrid .bookitem
+{
+	width: 230px;
+	display: inline-block;
     padding: 15px 10px;
 }
-div#content table.bookgrid tr td a
+div#content .bookgrid div.bookitem a
 {
     color:inherit;
     border-bottom:0;
     text-decoration:none;
 }
-table.bookgrid tr td img
+.bookitem img
 {
     max-width:150px;
     max-height:250px;
@@ -455,4 +478,9 @@ div.pagination table tr td
 {
     text-align:center;
     font-size:.8em;
+}
+table.contactform tr td
+{
+	vertical-align: top;
+	padding-right: 20px;
 }

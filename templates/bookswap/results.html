@@ -24,10 +24,9 @@
 {% block content %}{% block message %}<p>We found {{results.paginator.count }} matching books.</p>{% endblock %}
 {% if results.object_list %}
 {% include "bookswap/pagination.html" %}
-<table class="bookgrid">
-<tr>
+<div class="bookgrid">
 {% for book in results.object_list %}
-    <td>
+    <div class="bookitem">
     <a href="{% url bookswap.views.book_details book.id %}">
     {% if book.thumbnail_url %}    
     <img src="{{book.thumbnail_url}}" alt="{{book.title}}" />
@@ -39,11 +38,9 @@
     <span class="bookinfo">{% if book.num_copies == 1 %}1 copy{% else%}{{book.num_copies}} copies{% endif %} on sale, {%if book.num_sub %}{{book.num_sub}}{% else %}no{% endif %} subscriber{% if not book.num_sub == 1 %}s{% endif %}.</span><br/>
     <span class="isbn">{{book.isbn}}</span>
     </a>
-    </td>
-    {% if forloop.counter0|mod:3 == 2 and forloop.revcounter0 != 0%}</tr><tr>{% endif %}
+    </div>
 {% endfor %}
-    </tr>
-</table>
+</div>
 {% include "bookswap/pagination.html" %}
 {% endif %}
 {% block subscribe_new %}<div style="text-align:center;"><p><b>Subscribe to books you can't find:</b></p>

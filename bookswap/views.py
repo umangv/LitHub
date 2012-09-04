@@ -124,7 +124,8 @@ def all_books(request):
     books = filters.get(booksfilter, filters['default'])(books)
     results = utils.PaginatorN(books, request)
     return render(request, "bookswap/all_books.html",
-            {"results":results.page_auto(), 'filterform':filterform})
+            {"results":results.page_auto(), 'filterform':filterform,
+                'booksfilter': booksfilter})
 
 def contact_us(request):
     if request.method == "POST":
