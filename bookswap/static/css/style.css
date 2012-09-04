@@ -100,6 +100,7 @@ h1 { font-size: 2em; }
 h2 { font-size: 1.7em; } 
 h3 { font-size: 1.4em; } 
 h4, th { font-size: 1.2em; } 
+b { font-weight: bold; }
 
 ::selection { background: #333; color: #ff7200; }
 ::-moz-selection { background: #333; color: #ff7200; }
@@ -208,11 +209,11 @@ ul.navlinks li.selected a
     width:100%;
     max-width: 960px;
     min-width: 760px;
-    padding-top: 10px;
+    padding-top: 30px;
     margin:0 auto;
     clear:both;
 }
-#content p
+#content p, #content ul
 {
     padding: 5px 0;
 }
@@ -383,9 +384,8 @@ ul#account_sidelinks li a, ul#account_sidelinks li a:hover
 }
 div.blurb
 {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: 'Gentium Book Basic', 'Times New Roman', serif;
     font-size:1.1em;
-    font-style:italic;
 }
 div.blurb p
 {
@@ -414,8 +414,9 @@ ul.features li
 }
 ul.features li span.new
 {
-    font-size:10px;
-    color:red;
+	font-weight: bold;
+    font-size: 0.8em;
+    color: #ff7200;
 }
 div.bookthumbnail
 {
