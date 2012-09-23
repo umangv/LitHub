@@ -79,11 +79,6 @@ table {
     text-shadow: 0 0 0.1em #ff7200;
 }
 
-html, body
-{
-    min-width: 760px;
-}
-
 html, body, input, button
 {
     font-family: 'PT Sans', arial, sans-serif;
@@ -110,46 +105,16 @@ b { font-weight: bold; }
 :-moz-placeholder {color: #ccc;}
 :-ms-input-placeholder {color: #ccc;}
 
-.centerwrapper
-{
-    width: 100%;
-    max-width: 960px;
-    min-width: 760px;
-    margin:0 auto;
-}
 
-/* Nav Bar */
+/* Nav bar */
 #navbar
 {
     border-top: 6px solid #ff7200;
     background-color: #333;
-    height: 56px;
-}
-#kzoolithub 
-{
-    margin-left:1.041666667%; /* 10 / 960 */
-    float:left;
-    margin-top:7px;
-}
-div.navlinks
-{
-    width: 64.583333333%; /* 620 / 960 */ 
-    margin-left: 34.375%; /* 330 / 960 */
 }
 ul.navlinks
 {
-    display: table;
-    height: 56px;
-    width: 100%;
-    line-height: 56px;
     font-family: 'Gentium Book Basic', serif;
-    font-size:1.2em;
-    letter-spacing:1px;
-}
-ul.navlinks li
-{
-    display:table-cell;
-    padding: 0 10px; 
 }
 ul.navlinks li a:link, ul.navlinks li a:visited
 {
@@ -170,23 +135,7 @@ ul.navlinks li.selected a
 /* Search box */
 #searchbox
 {
-    height:36px;
     background:#ffbb66;
-    clear: both;
-    line-height: 36px;
-}
-#textsearch
-{
-    margin-left: 1.041666667%; /* 10 / 960 */
-    width: 64.583333333%; /* 620 / 960 */
-    height: 36px;
-    float:left;
-}
-#isbnsearch
-{
-    margin-left: 67.708333333% ; /* 650 / 960 */
-    width: 31.25%; /* 300 / 960 */
-    height: 36px;
 }
 #searchbox input[type=text]
 {
@@ -194,47 +143,247 @@ ul.navlinks li.selected a
     background: #fff;
     height:18px;
     padding: 2px;
-    width: 170px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
-#searchbox input[type=image]
+
+
+/* Large display */
+@media all and (min-width: 760px) 
 {
-    vertical-align: middle;
-    margin-top: -3px;
+    html, body
+    {
+        min-width: 760px;
+    }
+
+    .centerwrapper
+    {
+        width: 100%;
+        max-width: 960px;
+        min-width: 760px;
+        margin:0 auto;
+    }
+
+    /* Nav Bar */
+    #navbar
+    {
+        height: 56px;
+    }
+    #kzoolithub 
+    {
+        margin-left:1.041666667%; /* 10 / 960 */
+        float:left;
+        margin-top:7px;
+    }
+    div.navlinks
+    {
+        width: 64.583333333%; /* 620 / 960 */ 
+        margin-left: 34.375%; /* 330 / 960 */
+    }
+    ul.navlinks
+    {
+        display: table;
+        height: 56px;
+        width: 100%;
+        line-height: 56px;
+        font-size:1.2em;
+        letter-spacing:1px;
+    }
+    ul.navlinks li
+    {
+        display:table-cell;
+        padding: 0 10px; 
+    }
+
+    /* Search box */
+    #searchbox
+    {
+        height:36px;
+        clear: both;
+        line-height: 36px;
+    }
+    #searchbox p
+    {
+        display: inline-block;
+    }
+    #textsearch
+    {
+        margin-left: 1.041666667%; /* 10 / 960 */
+        width: 64.583333333%; /* 620 / 960 */
+        height: 36px;
+        float:left;
+    }
+    #isbnsearch
+    {
+        margin-left: 67.708333333% ; /* 650 / 960 */
+        width: 31.25%; /* 300 / 960 */
+        height: 36px;
+    }
+    #searchbox input[type=text]
+    {
+        width: 170px;
+    }
+    #searchbox input[type=image]
+    {
+        vertical-align: middle;
+        margin-top: -3px;
+    }
+
+    /* Content */
+    #content
+    {
+        width:100%;
+        max-width: 960px;
+        min-width: 760px;
+        padding-top: 30px;
+        margin:0 auto;
+        clear:both;
+    }
+    #content p, #content ul
+    {
+        padding: 5px 0;
+    }
+
+    #twocol_main
+    {
+        width: 64.583333333%; /* 620 / 960 */
+        margin-left:1.041666667%; /* 10 / 960 */
+        float:left;
+        border-top:0px solid #ff7200; 
+    }
+    #twocol_side
+    {
+        width:31.25%;
+        margin-left:67.708333333%; /* 650 / 960 */
+    }
+    #twocol_side .sidebar_item
+    {
+        border-top:2px solid #ff7200;
+    }
 }
 
-/* Content */
-#content
+/* Small display */
+@media all and (max-width: 759px) 
 {
-    width:100%;
-    max-width: 960px;
-    min-width: 760px;
-    padding-top: 30px;
-    margin:0 auto;
-    clear:both;
-}
-#content p, #content ul
-{
-    padding: 5px 0;
-}
+    html, body
+    {
+        min-width: 300px;
+    }
 
-#twocol_main
-{
-    width: 64.583333333%; /* 620 / 960 */
-    margin-left:1.041666667%; /* 10 / 960 */
-    float:left;
-    border-top:0px solid #ff7200; 
-}
-#twocol_side
-{
-    width:31.25%;
-    margin-left:67.708333333%; /* 650 / 960 */
-}
-#twocol_side .sidebar_item
-{
-    border-top:2px solid #ff7200;
+    .centerwrapper
+    {
+        width: 100%;
+        min-width: 300px;
+        margin:0 auto;
+    }
+
+    /* Nav Bar */
+    #navbar
+    {
+        height: auto;
+    }
+    #kzoolithub 
+    {
+        margin-left:1.041666667%; /* 10 / 960 */
+        margin-top:7px;
+    }
+    div.navlinks
+    {
+        width: auto;
+        margin-left:1.041666667%; /* 10 / 960 */
+    }
+    ul.navlinks
+    {
+        display: table;
+        width: 100%;
+        padding: 5px 0;
+        font-size:1em;
+        letter-spacing:1px;
+    }
+    ul.navlinks li
+    {
+        display: table-cell;
+        padding-right: 5px; 
+    }
+
+    /* Search box */
+    #searchbox
+    {
+        clear: both;
+    }
+    #searchbox label
+    {
+        font-size: 0.9em;
+    }
+    #textsearch, #isbnsearch
+    {
+        margin-left: 1.041666667%; /* 10 / 960 */
+    }
+    @media all and (max-width: 474px)
+    {
+        #searchbox p
+        {
+            display: block;
+            padding: 5px 0; 
+        }
+        #searchbox label
+        {
+            float: left;
+            width: 60px;
+        }
+    }
+    @media all and (min-width: 475px)
+    {
+        #searchbox p
+        {
+            display: inline-block;
+        }
+        #textsearch, #isbnsearch
+        {
+            padding: 5px 0; 
+        }
+    }
+    #searchbox input[type=text]
+    {
+        width: 170px;
+    }
+    #searchbox input[type=image]
+    {
+        vertical-align: middle;
+        margin-top: -3px;
+    }
+
+    /* Content */
+    #content
+    {
+        width:100%;
+        min-width: 300px;
+        padding-top: 30px;
+        margin:0 auto;
+        clear:both;
+    }
+    #content p, #content ul
+    {
+        padding: 5px 0;
+    }
+
+    #twocol_main
+    {
+        margin: 0 1.041666667%; /* 10 / 960 */
+        border-bottom: 2px #ff7200 solid;
+        padding-bottom: 10px;
+    }
+    #twocol_side
+    {
+        margin: 0 1.041666667%; /* 10 / 960 */
+        border-top: 2px #333 solid;
+        padding-top: 10px; 
+    }
+    #twocol_side .sidebar_item
+    {
+        border-top:2px solid #ff7200;
+    }
 }
 
 /* Form */
@@ -328,7 +477,7 @@ ul.messages li.info
 }
 .bookgrid .bookitem
 {
-	width: 230px;
+	width: 200px;
 	display: inline-block;
     padding: 15px 10px;
 }

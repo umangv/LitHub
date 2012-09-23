@@ -52,20 +52,26 @@
                 <div class="centerwrapper">
                     <div id="textsearch">
                         <form action="{% url bookswap.views.search_books %}" method="get">
+                        <p>
                         <label for="search_title">Title:</label>
                         <input type="text" id="search_title" name="title" placeholder="Title" {% if search_title%}value="{{search_title}}" {%endif%}x-webkit-speech/>
+                        </p>
+                        <p>
                         <label for="search_title">Author:</label>
                         <input type="text" id="search_author" name="author" placeholder="Author" {% if search_author%}value="{{search_author}}" {%endif%}x-webkit-speech/>
                         <input type="image" value="Search" src="{{STATIC_URL}}images/mag.png"/>
+                        </p>
                         </form>
                     </div>
                     <div id="isbnsearch">
                         <form action="{% url bookswap.views.search_books %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" id="action" name="action" value="isbn_search"/>
+                        <p>
                         <label for="search_isbn">ISBN:</label>
                         <input type="text" id="search_isbn" name="isbn" placeholder="ISBN" {% if search_isbn%}value="{{search_isbn}}" {%endif%}x-webkit-speech/>
                         <input type="image" value="Search" src="{{STATIC_URL}}images/mag.png"/>
+                        </p>
                         </form>
                     </div>
                 </div> <!-- end .centerwrapper -->

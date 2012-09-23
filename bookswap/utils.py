@@ -76,7 +76,7 @@ def opengraph_list_book(request, copy):
 
 class PaginatorN(Paginator):
     GET_PAGE_VAR = 'p'
-    def __init__(self, object_list, request, per_page=15, *args, **kwargs):
+    def __init__(self, object_list, request, per_page=12, *args, **kwargs):
         self.request = request
         Paginator.__init__(self, object_list, per_page, \
                 *args, **kwargs)
