@@ -320,30 +320,6 @@ ul.navlinks li.selected a
     {
         margin-left: 1.041666667%; /* 10 / 960 */
     }
-    @media all and (max-width: 474px)
-    {
-        #searchbox p
-        {
-            display: block;
-            padding: 5px 0; 
-        }
-        #searchbox label
-        {
-            float: left;
-            width: 60px;
-        }
-    }
-    @media all and (min-width: 475px)
-    {
-        #searchbox p
-        {
-            display: inline-block;
-        }
-        #textsearch, #isbnsearch
-        {
-            padding: 5px 0; 
-        }
-    }
     #searchbox input[type=text]
     {
         width: 170px;
@@ -383,6 +359,30 @@ ul.navlinks li.selected a
     #twocol_side .sidebar_item
     {
         border-top:2px solid #ff7200;
+    }
+}
+@media all and (max-width: 474px)
+{
+    #searchbox p
+    {
+        display: block;
+        padding: 5px 0; 
+    }
+    #searchbox label
+    {
+        float: left;
+        width: 60px;
+    }
+}
+@media all and (min-width: 475px) and (max-width: 759px)
+{
+    #searchbox p
+    {
+        display: inline-block;
+    }
+    #textsearch, #isbnsearch
+    {
+        padding: 5px 0; 
     }
 }
 
