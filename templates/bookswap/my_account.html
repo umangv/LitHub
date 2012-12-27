@@ -24,10 +24,7 @@
 <p>Welcome, <b>{{user.username}}</b>!</p>
 <div id="twocol_main">
 <h2>Your subscriptions</h2>
-<table>
-    <thead>
-        <th style="width:450px;">Title</th><th>Author</th>
-    </thead>
+<table class="booklist">
     {% for book in request.user.subscriptions.all %}
     <tr>
         <td><a href="{% url bookswap.views.book_details book.id %}">{{book.title}}</a></td>
@@ -37,15 +34,10 @@
 </table>
 <h2>Books you've listed</h2>
 <table class="booklist">
-    <thead>
-        <th style="width:450px;">Book</th><th>Price</th><th>Condition</th><th>Actions</th>
-    </thead>
     {% for copy in copies %}
     <tr>
-        <td><a href="{% url bookswap.views.book_details copy.book.id %}"><i>{{copy.book.title}}</i> by <i>{{copy.book.author}}</i></a></td>
-        <td>${{copy.price|floatformat:2}}</td>
-        <td>{{copy.condition}}</td>
-        <td class="actions">{% if fb %}<a class="imagelink" href="{% url bookswap.views.fb_og_publish copy.id %}" title="Posts an activity (not wall post) to your activity log on facebook so that your friends can see books that you've listed on Kzoo LitHub. To hide from your friends, change your privacy settings in Account Settings >> Apps."><img src="{{ STATIC_URL }}images/f_logo_small.png" alt="f"/></a> {% endif %}<a href="{% url bookswap.views.mark_sold copy.id %}">Mark sold</a> <a href="{% url bookswap.views.edit_copy copy.id %}">Edit</a></td>
+        <td><a href="{% url bookswap.views.book_details copy.book.id %}"><i>{{copy.book.title}}</i></a> by <i>{{copy.book.author}}</i>.<br/> <span class="copyinfo">{{copy.condition}}, ${{copy.price|floatformat:2}}</span></td>
+        <td class="actions">{% if fb %}<a class="imagelink" href="{% url bookswap.views.fb_og_publish copy.id %}" title="Post an activity to Facebook telling your friends that you've listed on Kzoo LitHub. You can control your Privacy Settings on Facebook by clicking Account Settings &raquo; Apps."><img src="{{ STATIC_URL }}images/f_logo_small.png" alt="f"/></a> {% endif %}<a href="{% url bookswap.views.mark_sold copy.id %}">Hide</a> <a href="{% url bookswap.views.edit_copy copy.id %}">Edit</a></td>
     </tr>
     {% endfor %}
 </table>

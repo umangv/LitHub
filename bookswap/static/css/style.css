@@ -580,11 +580,37 @@ ul.features li span.new
     color: #ff7200;
 }
 
-/* TABLES NEED TO BE FIXED. */
-table tr td.actions
+/* Booklist table */
+table.booklist
 {
-    min-width:150px;
+	border-collapse: collapse;
+	width: 100%;
+	border-top: 1px solid #ff7200;
+	padding-top: 5px;
 }
+
+table.booklist thead tr th
+{
+	text-align: left;
+}
+table.booklist tr td, table.booklist thead tr th
+{
+	padding: 0 2px;
+}
+table.booklist tr td span.copyinfo
+{
+	font-size: 1.1em;
+}
+table.booklist tr td.actions
+{
+    min-width:100px;
+}
+table.booklist tr td.actions img
+{
+    vertical-align: middle;
+}
+
+/* TABLES NEED TO BE FIXED. */
 table.copylist
 {
     border-collapse:collapse;
