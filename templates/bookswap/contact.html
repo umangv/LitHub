@@ -21,6 +21,7 @@
 {% block nav_contact %}selected{% endblock %}
 {% block title %}Contact us{% endblock %}
 {% block content %}
+<div id="onecol_main">
 <h2>Contact us</h2>
 <p>We would love to hear your comments, feedback and suggestions! </p>
 
@@ -29,11 +30,12 @@
 <form action="" method="post">
 <table class="contactform">
 {% csrf_token %}
-<tr><td><label for="id_name">Name</label></td><td><input id="id_name" type="text" name="name" maxlength="30" placeholder="Your name"/></td></tr>
-<tr><td><label for="id_subject">Subject</label></td><td><input id="id_subject" type="text" name="subject" maxlength="100" placeholder="Subject"/></td></tr>
-<tr><td><label for="id_comment">Comment</label></td><td><textarea id="id_comment" rows="10" cols="40" name="comment" placeholder="Please enter your comments here..."></textarea></td></tr>
+<tr><td><label for="id_name">Name</label></td><td><input id="id_name" type="text" name="name" maxlength="30" placeholder="Your name" style="width: 100%; max-width: 300px"/></td></tr>
+<tr><td><label for="id_subject">Subject</label></td><td><input id="id_subject" type="text" name="subject" maxlength="100" placeholder="Subject" style="width: 100%; max-width: 500px"/></td></tr>
+<tr><td><label for="id_comment">Comment</label></td><td><textarea id="id_comment" rows="10" cols="40" name="comment" placeholder="Please enter your comments here..." style="width: 100%; max-width: 500px;"></textarea></td></tr>
 <tr><td></td><td style="font-size:0.8em;">If you would like us to get back to you, please leave your email address in the comments section.</td></tr>
 <tr><td></td><td><input type="submit" value="Send feedback"/></td></tr>
 </table>
 </form>
+</div>
 {% endblock %}

@@ -96,6 +96,7 @@ h2 { font-size: 1.7em; }
 h3 { font-size: 1.4em; } 
 h4, th { font-size: 1.2em; } 
 b { font-weight: bold; }
+.underline { border-bottom: 1px solid #ff7200; margin-bottom: 5px; }
 
 ::selection { background: #333; color: #ff7200; }
 ::-moz-selection { background: #333; color: #ff7200; }
@@ -146,6 +147,11 @@ ul.navlinks li.selected a
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
+}
+
+#onecol_main
+{
+    margin: 0 1.041666667%; /* 10 / 960 */
 }
 
 
@@ -387,6 +393,18 @@ ul.navlinks li.selected a
 }
 
 /* Form */
+ul.errorlist
+{
+    list-style:none;
+    padding:0;
+    margin:0;
+    font-size:14px;
+    color:red;
+}
+ul.errorlist li
+{
+    padding:0;
+}
 div#form label
 {
     float:left;
@@ -399,18 +417,6 @@ div#form input
 div#form input[type="submit"]
 {
     margin-left:200px;
-}
-div#form ul.errorlist
-{
-    color:red;
-    list-style:none;
-    padding:0;
-    margin-left:200px;
-    font-size:14px;
-}
-div#form ul.errorlist li
-{
-    padding:0;
 }
 span.bookinfo
 {
@@ -450,17 +456,17 @@ ul.messages li.info
 /* Results list and details pages */
 .bookfilters
 {
-	text-align: center;
-	margin-bottom: 10px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 .bookfilters button
 {
-	background: transparent;
-	border: 0;
-	padding: 0;
-	color: #ff7200;
-	text-decoration: underline;
-	cursor: pointer;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: #ff7200;
+    text-decoration: underline;
+    cursor: pointer;
 }
 .bookfilters button:hover
 {
@@ -468,8 +474,8 @@ ul.messages li.info
 }
 .bookfilters button.selected
 {
-	text-decoration: none;
-	font-weight: bold;
+    text-decoration: none;
+    font-weight: bold;
 }
 .bookgrid
 {
@@ -477,8 +483,8 @@ ul.messages li.info
 }
 .bookgrid .bookitem
 {
-	width: 200px;
-	display: inline-block;
+    width: 200px;
+    display: inline-block;
     padding: 15px 10px;
 }
 div#content .bookgrid div.bookitem a
@@ -575,31 +581,30 @@ ul.features li
 }
 ul.features li span.new
 {
-	font-weight: bold;
+    font-weight: bold;
     font-size: 0.8em;
     color: #ff7200;
 }
 
 /* Booklist table */
-table.booklist
+table.booklist, table.generic_table
 {
-	border-collapse: collapse;
-	width: 100%;
-	border-top: 1px solid #ff7200;
-	padding-top: 5px;
+    border-collapse: collapse;
+    width: 100%;
+    padding-top: 5px;
 }
 
-table.booklist thead tr th
+table.booklist thead tr th, table.generic_table tr th
 {
-	text-align: left;
+    text-align: left;
 }
-table.booklist tr td, table.booklist thead tr th
+table.booklist tr td, table.booklist thead tr th, table.generic_table tr td, table.generic_table thead tr th
 {
-	padding: 0 2px;
+    padding: 2px 2px;
 }
 table.booklist tr td span.copyinfo
 {
-	font-size: 1.1em;
+    font-size: 1.1em;
 }
 table.booklist tr td.actions
 {
@@ -608,6 +613,12 @@ table.booklist tr td.actions
 table.booklist tr td.actions img
 {
     vertical-align: middle;
+}
+
+table.sellform input[type=text], table.pwdchangeform input[type=password]
+{
+    width: 95%;
+    max-width: 350px;
 }
 
 /* TABLES NEED TO BE FIXED. */
@@ -669,6 +680,6 @@ div.pagination table tr td
 }
 table.contactform tr td
 {
-	vertical-align: top;
-	padding-right: 20px;
+    vertical-align: top;
+    padding-right: 20px;
 }

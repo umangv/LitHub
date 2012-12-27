@@ -21,15 +21,18 @@
 {% block nav_sell %}selected{% endblock %}
 {% block title %}Sell book{% endblock %}
 {% block content %}
-<div id="form">
-<form method="post" action="">
-    <p>Please enter the following details of the book:</p>
+<div id="onecol_main">
+    <h2>Sell a book on Kzoo LitHub</h2>
+    <p>Enter the details below to list your book on Kzoo LitHub.</p>
+    <form method="post" action="">
     {% csrf_token %}
-    <p><label>ISBN:</label>{{isbn_no}}</p>
-    {{ book_form.as_p }}
-    <p>Please enter details of the copy of the above book that you are trying to sell:</p>
-    {{ copy_form.as_p }}
-    <input type="submit" value="Sell!"/>
-</form>
+        <table class="generic_table sellform">
+            <tr><th><label>ISBN:</label></th><td>{{isbn_no}}</td></tr>
+            {{ book_form }}
+            <tr><td colspan="2"><p>Enter the details of the copy you are listing below.</p></td></tr>
+            {{ copy_form }}
+            <tr><td></td><td><input type="submit" value="List for sale"/></td></tr>
+        </table>
+    </form>
 </div>
 {% endblock %}

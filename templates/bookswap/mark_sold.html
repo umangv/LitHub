@@ -19,26 +19,32 @@
     along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 -->
 {% block nav_profile %}selected{% endblock %}
-{% block title %}Mark a book as sold{% endblock %}
+{% block title %}Unlist a book{% endblock %}
 {% block content %}
-<p>Click submit to mark the following copy as sold:</p>
-<table>
-    <tr>
-        <td>Title </td><td>{{copy.book.title}}</td>
-    </tr>
-    <tr>
-        <td>Author </td><td>{{copy.book.author}}</td>
-    </tr>
-    <tr>
-        <td>Price </td><td>${{copy.price|floatformat:2}}</td>
-    </tr>
-    <tr>
-        <td>Condition </td><td>{{copy.condition}}</td>
-    </tr>
-</table>
-<div id="form">
+<div id="onecol_main">
+<h2>Unlist a book</h2>
+<p>Are you sure you want to unlist this book?</p>
 <form action="" method="post">
     {% csrf_token %}
-    <input type="submit" value="Mark as sold"/>
+<table class="generic_table">
+    <tr>
+        <th>Title </th><td>{{copy.book.title}}</td>
+    </tr>
+    <tr>
+        <th>Author </th><td>{{copy.book.author}}</td>
+    </tr>
+    <tr>
+        <th>Price </th><td>${{copy.price|floatformat:2}}</td>
+    </tr>
+    <tr>
+        <th>Condition </th><td>{{copy.condition}}</td>
+    </tr>
+    <tr>
+        <th>Comments </th><td>{{copy.comments}}</td>
+    </tr>
+    <tr>
+        <td></td><td><input type="submit" value="Delete"/></td></tr>
+</table>
 </form>
+</div>
 {% endblock %}

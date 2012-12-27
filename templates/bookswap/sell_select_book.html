@@ -21,20 +21,25 @@
 {% block nav_sell %}selected{% endblock %}
 {% block title %}Sell a book{% endblock %}
 {% block content %}
+<div id="onecol_main">
+    <h2>Sell a book on Kzoo LitHub</h2>
 <p>Please select a book from the following list of books. If none of the following books match your book, you may sell a new book.</p>
-<table>
+<table class="booklist">
     <thead>
-        <th>Title</th><th>Author</th><th>Publisher</th><th>ISBN</th>
+        <th>Book</th><th>Publisher</th>
     </thead>
 {% for book in results %}
 <tr>
-    <td><a href="{% url bookswap.views.sell_existing book.id %}">{{book.title}}</a>  <br/><span class="bookinfo">{{book.num_copies}} copies on sale.</span><br/><span class="bookinfo">{%if book.num_sub %}{{book.num_sub}}{% else %}no{% endif %} subscriber{% if not book.num_sub == 1 %}s{% endif %}.</span></td> 
-    <td>{{book.author}}  </td>
+    <td><a href="{% url bookswap.views.sell_existing book.id %}" target="_blank">{{book.title}}</a> by {{book.author}} <br/><span class="bookinfo">{{book.num_copies}} copies on sale. {%if book.num_sub %}{{book.num_sub}}{% else %}no{% endif %} subscriber{% if not book.num_sub == 1 %}s{% endif %}.</span> <br/>
+    <span class="isbn">{{book.isbn}}</span>
+    </td> 
+    
     <td>{{book.publisher}}<br/><span class="bookinfo">{% if book.copyrightYear %}(&copy; {{book.copyrightYear}}){% endif %}</span></td>
-    <td><span class="isbn">{{book.isbn}}</span></td>
+    
 </tr>
 {% endfor %}
 </table>
 <p>
-Or <a href="{% url bookswap.views.sell_new isbn_no %}">add a new book to the list.</a></p>
+Or, if the book you want to list is not in the list above, <a href="{% url bookswap.views.sell_new isbn_no %}">add a new book to the list.</a></p>
+</div>
 {% endblock %}

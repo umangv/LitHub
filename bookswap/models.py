@@ -26,7 +26,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length=20)
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
-    copyrightYear=models.IntegerField()
+    copyrightYear=models.IntegerField(verbose_name="Copyright Year")
     publisher=models.CharField(max_length=100)
     thumbnail_url = models.CharField(max_length=500, blank=True)
     subscribers = models.ManyToManyField(User, related_name='subscriptions')

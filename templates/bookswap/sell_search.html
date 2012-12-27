@@ -21,13 +21,16 @@
 {% block nav_sell %}selected{% endblock %}
 {% block title %}Sell a book{% endblock %}
 {% block content %}
-<div id="form">
-    <p>By listing your book on the Kzoo LitHub, you can find other 'K' students who might be interested in buying your book from you.</p>
-    <p>Enter the ISBN number of the book you are trying to sell. We need the ISBN to find information about the book.</p>
-    <form method="post" action="">
-        {% csrf_token %}
-        <p><label for="isbn">ISBN:</label><input type="text" id="isbn" name="isbn" placeholder="978-0-123-45678-9" x-webkit-speech/></p>
-        <input type="submit" value="Find information"/>
-    </form>
+<div id="onecol_main">
+<h2>Sell a book on Kzoo LitHub</h2>
+<p>By listing your book on the Kzoo LitHub, you can find other students who might be interested in buying your book from you.</p>
+<p>Enter the ISBN number of the book you want to sell. </p>
+<form method="post" action="">
+    {% csrf_token %}
+    <table>
+        <tr><td><label for="isbn" style="padding-right: 20px;">ISBN:</label></td><td><input type="text" id="isbn" name="isbn" placeholder="978-0-123-45678-9" x-webkit-speech/></td></tr>
+        <tr><td></td><td><input type="submit" value="Get book information"/></td></tr>
+    </table>
+</form>
 </div>
 {% endblock %}

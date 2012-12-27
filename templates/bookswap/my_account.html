@@ -23,7 +23,7 @@
 {% block content %}
 <p>Welcome, <b>{{user.username}}</b>!</p>
 <div id="twocol_main">
-<h2>Your subscriptions</h2>
+<h2 class="underline">Your subscriptions</h2>
 <table class="booklist">
     {% for book in request.user.subscriptions.all %}
     <tr>
@@ -32,7 +32,7 @@
     </tr>
     {% endfor %}
 </table>
-<h2>Books you've listed</h2>
+<h2 class="underline">Books you've listed</h2>
 <table class="booklist">
     {% for copy in copies %}
     <tr>
