@@ -21,8 +21,8 @@
 {% block nav_profile %}selected{% endblock %}
 {% block title %}My Account{% endblock %}
 {% block content %}
-<p>Welcome, <b>{{user.username}}</b>!</p>
 <div id="twocol_main">
+<p>Welcome, <b>{{user.username}}</b>!</p>
 <h2 class="underline">Your subscriptions</h2>
 <table class="booklist">
     {% for book in request.user.subscriptions.all %}
@@ -43,7 +43,7 @@
 </table>
 </div>
 <div id="twocol_side">
-<p>Manage your account:</p>
+<h3 class="underline">Manage your account:</h3>
 <ul id="account_sidelinks">
     <li><a href="{% url password_change %}">Change your password</a></li>
     {% if not fb %}
