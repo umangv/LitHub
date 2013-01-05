@@ -25,6 +25,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 
 import urlparse
+from uuid import uuid4
 
 from fbconnect.models import FBProfile
 import fbconnect.utils as fb_utils
@@ -61,15 +62,15 @@ def receive_code(request):
                 "please contact us.")
             return redirect('bookswap.views.my_account')
         else:
-            return redirect('fbconnect.views.register', code=code)
+            return redirect(register, access_token=fb.access_token)
     except ValueError:
         messages.error(request, "There was an error getting your " +\
             "information from facebook.")
     return redirect('django.contrib.auth.views.login')
 
-def register(request, code):
+def register(request, access_token):
     try:
-        fb = fb_utils.FBConnect(code)
+        fb = fb_utils.FBConnect(access_token=access_token)
         user = authenticate(fb_uid=fb.userid)
         if user:
             return redirect("bookswap.views.my_account")
@@ -189,21 +190,26 @@ def assoc_with_curr_user_redir(request):
 
 def change_pass(request):
     try:
-        fb = fb_utils.FBConnect(request.GET.get('code', ''), change_pass)
-        if fb.userid != request.user.fbprofile.fb_userid:
-            messages.error(request, "Your facebook account did not" +\
-                " match the one registered with LitHub.")
-            return redirect('bookswap.views.my_account')
+        if request.method == "GET":
+            fb = fb_utils.FBConnect(request.GET.get('code', ''), change_pass)
+            if fb.userid != request.user.fbprofile.fb_userid:
+                messages.error(request, "Your facebook account did not" +\
+                    " match the one registered with LitHub.")
+                return redirect('bookswap.views.my_account')
+            request.session['fb_password_uuid'] = str(uuid4())
         form = SetPasswordForm(user=request.user)
-        if request.method=="POST":
+        post_uuid = request.POST.get('uuid', '')
+        if request.method=="POST" and  post_uuid and \
+                post_uuid == request.session["fb_password_uuid"]:
             form = SetPasswordForm(request.user, request.POST)
             if form.is_valid():
                 form.save()
+                request.session['fb_password_uuid'] = ""
                 messages.success(request, "Your password was "+\
                     "successfully changed.")
                 return redirect("bookswap.views.my_account")
         return render(request, "fbconnect/password_change.html",
-                {'form':form},)
+                {'form':form, 'uuid':request.session["fb_password_uuid"]},)
     except ObjectDoesNotExist:
         messages.error(request, "Your facebook account was not recognized.")
     except ValueError:
