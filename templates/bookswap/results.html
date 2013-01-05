@@ -21,7 +21,9 @@
 {% load lh_math %}
 {% block nav_allbooks %}selected{% endblock %}
 {% block title %}Search Results{% endblock %}
-{% block content %}{% block message %}<p>We found {{results.paginator.count }} matching books.</p>{% endblock %}
+{% block content %}
+<div id="onecol_main">
+{% block message %}<p>We found {{results.paginator.count }} matching books.</p>{% endblock %}
 {% if results.object_list %}
 {% include "bookswap/pagination.html" %}
 <div class="bookgrid">
@@ -45,5 +47,7 @@
 {% endif %}
 {% block subscribe_new %}<div style="text-align:center;"><p><b>Subscribe to books you can't find:</b></p>
 <p><form action="{% url bookswap.views.search_books %}" method="post">{% csrf_token %}<input type="hidden" id="action" name="action" value="isbn_search"/><label for="subscribe_new_isbn" style="padding-right:10px;">ISBN:</label><input type="text" id="subscribe_new_isbn" name="isbn" placeholder="ISBN" title="ISBN number of the book you are looking for" {% if search_isbn%}value="{{search_isbn}}" {%endif%}x-webkit-speech/><input type="submit" value="Subscribe" /></form></p>
-</div> {% endblock %}
+</div>
+</div>
+{% endblock %}
 {% endblock %}

@@ -22,6 +22,6 @@
 {% block nav_allbooks %}selected{% endblock %}
 {% block message %}<div class="bookfilters"><form action="" method="get">
     <button type="submit" name="filter" title="All books on Kzoo LitHub" value="" {% if not booksfilter %} class="selected"{% endif %}>All Books</button>
-    <button type="submit" name="filter" value="available" title="Books that are currently available for sale" {% if booksfilter == "available" %} class="selected"{% endif %}>Available Books</button>
-    <button type="submit" name="filter" value="wanted" title="Books that are 'in demand'" {% if booksfilter == "wanted" %} class="selected"{% endif %}>Wanted Books</button>
+    <button type="submit" name="filter" value="available" title="Books that are currently available for sale" {% if booksfilter == "available" %} class="selected"{% endif %}>Books Available</button>
+    <button type="submit" name="filter" value="wanted" title="Books that are 'in demand'" {% if booksfilter == "wanted" %} class="selected"{% endif %}>Books Wanted</button>
 </form>{{bf}}</div>{% endblock %}
