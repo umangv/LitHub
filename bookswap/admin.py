@@ -57,10 +57,10 @@ class CustomUserAdmin(UserAdmin):
         from django.template.loader import render_to_string
         from django.core.mail import EmailMultiAlternatives
         from django.core import mail
-        sub = render_to_string('bookswap/mass_email_sub.html', {'user':
-            user}).split("\n")[0]
         emails = []
         for user in queryset:
+            sub = render_to_string('bookswap/mass_email_sub.html', {'user':
+                user}).split("\n")[0]
             e = EmailMultiAlternatives()
             e.subject = sub
             e.to = [user.email,]
