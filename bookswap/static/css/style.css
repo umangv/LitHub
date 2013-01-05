@@ -499,29 +499,30 @@ div#content .bookgrid div.bookitem a
     max-height:250px;
 }
 
-div.bookthumbnail
-{
-    float:left;
-    padding:0 20px;
-    max-width:150px;
-    overflow-x:hidden;
-}
-div.bookthumbnail img
-{
-    border:0;
-}
-div.bookinfo
-{
-    margin-left:190px;
-    line-height:2em;
-}
-div.bookinfo h2
+h2.bookinfo_title
 {
     color:#ff7200;
-    padding:0;
+    padding:2px 0;
     margin:0;
     font-size:36px;
     line-height:1.0em;
+}
+div.bookthumbnail
+{
+	float:right;
+	padding:0 20px;
+	max-width:150px;
+	overflow-x:hidden;
+}
+div.bookinfo
+{
+	line-height:1.5em;
+/*	margin-right: 155px; */
+}
+#content div.bookinfo p
+{
+	margin: 0;
+	padding: 0.2em 0;
 }
 
 /* Account sidebar */
@@ -621,10 +622,9 @@ table.sellform input[type=text], table.pwdchangeform input[type=password]
     max-width: 350px;
 }
 
-/* TABLES NEED TO BE FIXED. */
 table.copylist
 {
-    border-collapse:collapse;
+	width: 100%;
 }
 table.copylist tr td
 {
@@ -641,15 +641,12 @@ table.copylist tr td.price
     color:#ff7200;
     font-size:32px;
     line-height:1em;
-    max-width:120px;
 }
 table.copylist tr td.copycomments
 {
-    min-width:400px;
 }
 table.copylist tr td.requestcopy
 {
-    min-width:150px;
 }
 table.copylist tr td.price p
 {
@@ -663,11 +660,19 @@ table.copylist tr td.price p.condition
     margin-top:-0.5em;
 }
 
-
+table.contactseller
+{
+	width: 100%;
+}
 table.contactseller tr td
 {
-    padding:10px 5px;
+    padding:7px 2px;
     vertical-align: middle;
+}
+#content table.contactseller textarea
+{
+	width: 100%;
+	max-width: 500px;
 }
 div.pagination table
 {
