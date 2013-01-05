@@ -43,7 +43,7 @@
                             {% if user.is_authenticated %}
                             <li><a href="{% url django.contrib.auth.views.logout %}">Logout</a></li>
                             {% else %}
-                            <li><a href="{% url django.contrib.auth.views.login %}">Login</a></li>
+                            <li><a href="{% url django.contrib.auth.views.login %}?next={{request.get_full_path|urlencode:""}}">Login</a></li>
                             {% endif %}
                         </ul>
                     </div>
