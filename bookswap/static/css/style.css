@@ -688,3 +688,9 @@ table.contactform tr td
     vertical-align: top;
     padding-right: 20px;
 }
+div.footer
+{
+	font-size: 14px;
+	text-align: center;
+	padding-bottom: 10px;
+}

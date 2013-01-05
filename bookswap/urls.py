@@ -40,6 +40,8 @@ urlpatterns = patterns('bookswap.views',
     (r'^bookswap/subscribe/new/(?P<isbn_no>\w+)/$', 'subscribe_to_new'),
     (r'^bookswap/publish/fb_list/(?P<copy_id>\d+)/$', 'fb_og_publish'),
     (r'^bookswap/maint/$', 'maintenance'),
+    url(r'^accounts/privacy/$', TemplateView.as_view(
+        template_name="privacy.html"), name="privacyterms"), 
     url(r'^accounts/logout/$', logout, {"next_page":"/accounts/login"}, name="logout"),
     url(r'^accounts/login/$', login, name="login"),
     url(r'^accounts/password/reset/$', 'password_reset_wrapper',
