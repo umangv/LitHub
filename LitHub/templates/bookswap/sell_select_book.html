@@ -30,7 +30,7 @@
     </thead>
 {% for book in results %}
 <tr>
-    <td><a href="{% url bookswap.views.sell_existing book.id %}" target="_blank">{{book.title}}</a> by {{book.author}} <br/><span class="bookinfo">{{book.num_copies}} copies on sale. {%if book.num_sub %}{{book.num_sub}}{% else %}no{% endif %} subscriber{% if not book.num_sub == 1 %}s{% endif %}.</span> <br/>
+    <td><a href="{% url 'bookswap.views.sell_existing' book.id %}" target="_blank">{{book.title}}</a> by {{book.author}} <br/><span class="bookinfo">{{book.num_copies}} copies on sale. {%if book.num_sub %}{{book.num_sub}}{% else %}no{% endif %} subscriber{% if not book.num_sub == 1 %}s{% endif %}.</span> <br/>
     <span class="isbn">{{book.isbn}}</span>
     </td> 
     
@@ -40,6 +40,6 @@
 {% endfor %}
 </table>
 <p>
-Or, if the book you want to list is not in the list above, <a href="{% url bookswap.views.sell_new isbn_no %}">add a new book to the list.</a></p>
+Or, if the book you want to list is not in the list above, <a href="{% url 'bookswap.views.sell_new' isbn_no %}">add a new book to the list.</a></p>
 </div>
 {% endblock %}

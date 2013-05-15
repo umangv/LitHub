@@ -22,7 +22,7 @@
 {% block title %}Buy{% endblock %}
 {% block content %}
 <div id="onecol_main">
-<h2 class="bookinfo_title"><a href="{% url bookswap.views.book_details copy.book.id %}">{{copy.book.title}}</a></h2>
+<h2 class="bookinfo_title"><a href="{% url 'bookswap.views.book_details' copy.book.id %}">{{copy.book.title}}</a></h2>
 <div class="bookthumbnail">
 {% if copy.book.thumbnail_url %}    
 <img src="{{copy.book.thumbnail_url}}" alt="{{copy.book.title}}" />

@@ -24,7 +24,7 @@
 {% block headextra %}
         <meta property="fb:app_id"      content="{{settings.FB_APP_ID}}" /> 
         <meta property="og:type"        content="book" /> 
-        <meta property="og:url"         content="{{settings.FB_REDIRECT_URL}}{% url bookswap.views.book_details book.id %}" /> 
+        <meta property="og:url"         content="{{settings.FB_REDIRECT_URL}}{% url 'bookswap.views.book_details' book.id %}" /> 
         <meta property="og:title"       content="{{book.title}}" /> 
         <meta property="book:isbn"       content="{{book.isbn}}" /> 
         <meta property="og:description" content="{{book.title}} by {{book.author}}" /> 
@@ -50,7 +50,7 @@ GBS_insertPreviewButtonPopup('ISBN:{{book.isbn}}');
     <p>Publisher: {{book.publisher}}{% if book.copyrightYear %} (&copy; {{book.copyrightYear}}) {% endif %}</p>
     <p>ISBN-13: {{book.isbn}}</p>
     <p style="color:#ff7200;">{% if book.subscribers.count == 1 and subscribed %}You are subscribed to this book.{% else %}{% if book.subscribers.count %}{{book.subscribers.count }} {% if book.subscribers.count == 1 %}person{% else %}people{% endif %} {% if subscribed %}(including you) {% endif %}{% if book.subscribers.count == 1 %}is{% else %}are{% endif %} subscribed to this book. {% endif %}{% endif %}</p>
-<a class="imagelink" href="{% url bookswap.views.sell_existing book.id %}"><img src="{{STATIC_URL}}images/sellbook.png" alt="Sell this book"/></a> {% if subscribed %}<a class="imagelink" href="{% url bookswap.views.unsubscribe book.id %}"><img  src="{{STATIC_URL}}images/unsubscribe.png" alt="Unsubscribe" /></a>{% else %}<a class="imagelink" href="{% url bookswap.views.subscribe book.id %}"><img  src="{{STATIC_URL}}images/subscribe.png" alt="Subscribe" /></a>{% endif %}
+<a class="imagelink" href="{% url 'bookswap.views.sell_existing' book.id %}"><img src="{{STATIC_URL}}images/sellbook.png" alt="Sell this book"/></a> {% if subscribed %}<a class="imagelink" href="{% url 'bookswap.views.unsubscribe' book.id %}"><img  src="{{STATIC_URL}}images/unsubscribe.png" alt="Unsubscribe" /></a>{% else %}<a class="imagelink" href="{% url 'bookswap.views.subscribe' book.id %}"><img  src="{{STATIC_URL}}images/subscribe.png" alt="Subscribe" /></a>{% endif %}
 </div>
 <p style="clear:both;">Copies on sale:</p>
 <table class="copylist">
@@ -58,7 +58,7 @@ GBS_insertPreviewButtonPopup('ISBN:{{book.isbn}}');
 <tr>
     <td class="price"><p><sup>$</sup>{{copy.price|floatformat:2}}</p><p class="condition">{{copy.condition}}</p></td>
     <td class="copycomments">{% if copy.comments %}{{copy.comments}}{% else %}<i>(No comment provided)</i>{% endif %}</td>
-    <td class="requestcopy">{% if copy.owner.id == request.user.id %}<a href="{% url bookswap.views.mark_sold copy.id %}">Mark sold</a> &nbsp;<a href="{% url bookswap.views.edit_copy copy.id %}">Edit</a>{% else %}<b><a href="{% url bookswap.views.buy_copy copy.id %}">Contact Seller&nbsp;&raquo; </a></b>{% endif %}</td> 
+    <td class="requestcopy">{% if copy.owner.id == request.user.id %}<a href="{% url 'bookswap.views.mark_sold' copy.id %}">Mark sold</a> &nbsp;<a href="{% url 'bookswap.views.edit_copy' copy.id %}">Edit</a>{% else %}<b><a href="{% url 'bookswap.views.buy_copy' copy.id %}">Contact Seller&nbsp;&raquo; </a></b>{% endif %}</td> 
 </tr>
 {% endfor %}
 </table>

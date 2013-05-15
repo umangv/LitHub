@@ -27,7 +27,7 @@
 <table class="booklist">
     {% for book in request.user.subscriptions.all %}
     <tr>
-        <td><a href="{% url bookswap.views.book_details book.id %}">{{book.title}}</a></td>
+        <td><a href="{% url 'bookswap.views.book_details' book.id %}">{{book.title}}</a></td>
         <td>{{book.author}}</td>
     </tr>
     {% endfor %}
@@ -36,8 +36,8 @@
 <table class="booklist">
     {% for copy in copies %}
     <tr>
-        <td><a href="{% url bookswap.views.book_details copy.book.id %}"><i>{{copy.book.title}}</i></a> by <i>{{copy.book.author}}</i>.<br/> <span class="copyinfo">{{copy.condition}}, ${{copy.price|floatformat:2}}</span></td>
-        <td class="actions">{% if fb %}<a class="imagelink" href="{% url bookswap.views.fb_og_publish copy.id %}" title="Post an activity to Facebook telling your friends that you've listed on Kzoo LitHub. You can control your Privacy Settings on Facebook by clicking Account Settings &raquo; Apps."><img src="{{ STATIC_URL }}images/f_logo_small.png" alt="f"/></a> {% endif %}<a href="{% url bookswap.views.mark_sold copy.id %}">Hide</a> <a href="{% url bookswap.views.edit_copy copy.id %}">Edit</a></td>
+        <td><a href="{% url 'bookswap.views.book_details' copy.book.id %}"><i>{{copy.book.title}}</i></a> by <i>{{copy.book.author}}</i>.<br/> <span class="copyinfo">{{copy.condition}}, ${{copy.price|floatformat:2}}</span></td>
+        <td class="actions">{% if fb %}<a class="imagelink" href="{% url 'bookswap.views.fb_og_publish' copy.id %}" title="Post an activity to Facebook telling your friends that you've listed on Kzoo LitHub. You can control your Privacy Settings on Facebook by clicking Account Settings &raquo; Apps."><img src="{{ STATIC_URL }}images/f_logo_small.png" alt="f"/></a> {% endif %}<a href="{% url 'bookswap.views.mark_sold' copy.id %}">Hide</a> <a href="{% url 'bookswap.views.edit_copy' copy.id %}">Edit</a></td>
     </tr>
     {% endfor %}
 </table>
@@ -45,13 +45,13 @@
 <div id="twocol_side">
 <h3 class="underline">Manage your account:</h3>
 <ul id="account_sidelinks">
-    <li><a href="{% url password_change %}">Change your password</a></li>
+    <li><a href="{% url 'password_change' %}">Change your password</a></li>
     {% if not fb %}
-    <li><a href="{% url fbconnect.views.assoc_with_curr_user_redir %}">Associate LitHub and facebook accounts</a></li>
+    <li><a href="{% url 'fbconnect.views.assoc_with_curr_user_redir' %}">Associate LitHub and facebook accounts</a></li>
     {% else %}
-    <li><a href="{% url bookswap.views.dissoc_fb %}">Dissociate LitHub and facebook accounts</a></li>
+    <li><a href="{% url 'bookswap.views.dissoc_fb' %}">Dissociate LitHub and facebook accounts</a></li>
     {% endif %}
-    <li><a href="{% url bookswap.views.delete_account %}">Delete your account</a></li>
+    <li><a href="{% url 'bookswap.views.delete_account' %}">Delete your account</a></li>
 </ul>
 </div>
 {% endblock %}

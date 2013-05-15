@@ -22,5 +22,5 @@
 {% block nav_profile %}selected{% endblock %}
 {% block content %}
 <h2>Yay!</h2>
-<p>You're all set! You can now <a href="{% url django.contrib.auth.views.login %}">login</a>. Hope you enjoy using the Kzoo LitHub.</p>
+<p>You're all set! You can now <a href="{% url 'django.contrib.auth.views.login' %}">login</a>. Hope you enjoy using the Kzoo LitHub.</p>
 {% endblock %}
