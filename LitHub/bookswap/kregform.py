@@ -17,7 +17,7 @@
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
 from registration.forms import RegistrationFormUniqueEmail
-from registration.backends.default import DefaultBackend
+from registration.backends.default.views import RegistrationView
 from django import forms
 
 class KzooRegistrationForm(RegistrationFormUniqueEmail):
@@ -36,11 +36,14 @@ class KzooRegistrationForm(RegistrationFormUniqueEmail):
                     "are allowed!")
         return super(KzooRegistrationForm, self).clean_email()
 
-class KzooRegistrationBackend(DefaultBackend):
+class KRegistrationView(RegistrationView):
+    form_class = KzooRegistrationForm
+
     """Registration backend that adds first and last name to the user"""
-    def register(self, request, **kwargs):
-        user = super(KzooRegistrationBackend, self).register(request, **kwargs)
-        user.first_name = kwargs['first_name']
-        user.last_name = kwargs['last_name']
+    def register(self, request, **cleaned_data):
+        user = super(KRegistrationView, self).register(request,
+                **cleaned_data)
+        user.first_name = cleaned_data['first_name']
+        user.last_name = cleaned_data['last_name']
         user.save()
         return user

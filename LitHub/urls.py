@@ -17,9 +17,9 @@
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf import settings
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
-from bookswap.kregform import KzooRegistrationForm
+from LitHub.bookswap.kregform import KRegistrationView
 from render_template import render_template
 
 from django.contrib import admin
@@ -28,10 +28,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('bookswap.urls')),
-    url(r'^accounts/register/$', 'registration.views.register', 
-        {'backend': 'bookswap.kregform.KzooRegistrationBackend',
-            'form_class': KzooRegistrationForm},
-        name='registration_register'),
+    url(r'^accounts/register/$', KRegistrationView.as_view(),
+       name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url(r'^accounts/fb/', include('fbconnect.urls')),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

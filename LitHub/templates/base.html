@@ -33,17 +33,17 @@
         <div id="topbar">
             <div id="navbar">
                 <div class="centerwrapper">
-                    <a href="{% url home %}"><img id="kzoolithub" src="{{STATIC_URL}}images/kzoolithub.png" alt="Kzoo LitHub" style="" /></a>
+                    <a href="{% url 'home' %}"><img id="kzoolithub" src="{{STATIC_URL}}images/kzoolithub.png" alt="Kzoo LitHub" style="" /></a>
                     <div class="navlinks">
                         <ul class="navlinks">
-                            <li class="{% block nav_allbooks %}{% endblock %}"><a href="{% url bookswap.views.all_books %}">Books</a></li>
-                            <li class="{% block nav_sell %}{% endblock %}"><a href="{% url bookswap.views.sell_step_search %}">Sell</a></li>
-                            <li class="{% block nav_contact %}{% endblock %}"><a href="{% url bookswap.views.contact_us %}">Contact</a></li>
-                            <li class="{% block nav_profile %}{% endblock %}"><a href="{% url bookswap.views.my_account %}">Account</a></li>
+                            <li class="{% block nav_allbooks %}{% endblock %}"><a href="{% url 'bookswap.views.all_books' %}">Books</a></li>
+                            <li class="{% block nav_sell %}{% endblock %}"><a href="{% url 'bookswap.views.sell_step_search' %}">Sell</a></li>
+                            <li class="{% block nav_contact %}{% endblock %}"><a href="{% url 'bookswap.views.contact_us' %}">Contact</a></li>
+                            <li class="{% block nav_profile %}{% endblock %}"><a href="{% url 'bookswap.views.my_account' %}">Account</a></li>
                             {% if user.is_authenticated %}
                             <li><a href="{% url django.contrib.auth.views.logout %}">Logout</a></li>
                             {% else %}
-                            <li><a href="{% url django.contrib.auth.views.login %}{% block login_parameters %}?next={{request.get_full_path|urlencode:""}}{% endblock %}">Login</a></li>
+                            <li><a href="{% url 'django.contrib.auth.views.login' %}{% block login_parameters %}?next={{request.get_full_path|urlencode:""}}{% endblock %}">Login</a></li>
                             {% endif %}
                         </ul>
                     </div>
@@ -52,7 +52,7 @@
             <div id="searchbox">
                 <div class="centerwrapper">
                     <div id="textsearch">
-                        <form action="{% url bookswap.views.search_books %}" method="get">
+                        <form action="{% url 'bookswap.views.search_books' %}" method="get">
                         <p>
                         <label for="search_title">Title:</label>
                         <input type="text" id="search_title" name="title" placeholder="Title" {% if search_title%}value="{{search_title}}" {%endif%}x-webkit-speech/>
@@ -65,7 +65,7 @@
                         </form>
                     </div>
                     <div id="isbnsearch">
-                        <form action="{% url bookswap.views.search_books %}" method="post">
+                        <form action="{% url 'bookswap.views.search_books' %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" id="action" name="action" value="isbn_search"/>
                         <p>
@@ -90,7 +90,7 @@
             </div><!-- end messages-->
             {% block content %}{% endblock %}
             <div style="clear:both;">&nbsp;</div><!-- Wrapper class needs to be streched down so that the background extend's to the page bottom -->
-            <div class="footer"><a href="{% url privacyterms %}">Privacy and Terms</a></div>
+            <div class="footer"><a href="{% url 'privacyterms' %}">Privacy and Terms</a></div>
         </div><!-- end content -->
     </body>
 </html>
