@@ -32,3 +32,18 @@ AUTHENTICATION_BACKENDS = (
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '6(994t_e+5ektmh+6b&ki0y7_%$-aj6n-lbojmxm3h-551pdvk'
+
+# Configure the database (see Django documentation for more details)
+# For testing environments, leave as is.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': LITHUB_ROOT+'database.sqlite3',   # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',                      # Set to empty string for default.
+    }
+}
+
