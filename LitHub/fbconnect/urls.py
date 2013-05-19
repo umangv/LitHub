@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
 
 urlpatterns = patterns('fbconnect.views',

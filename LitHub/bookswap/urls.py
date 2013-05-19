@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with LitHub.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import login, logout, password_change, \
         password_change_done, password_reset, password_reset_confirm, \
         password_reset_done, password_reset_complete
