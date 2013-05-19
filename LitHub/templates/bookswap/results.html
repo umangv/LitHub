@@ -29,7 +29,7 @@
 <div class="bookgrid">
 {% for book in results.object_list %}
     <div class="bookitem">
-    <a href="{% url 'bookswap.views.book_details book.id' %}">
+    <a href="{% url 'bookswap.views.book_details' book.id %}">
     {% if book.thumbnail_url %}    
     <img src="{{book.thumbnail_url}}" alt="{{book.title}}" />
     {% else %}

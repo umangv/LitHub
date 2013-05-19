@@ -1,5 +1,6 @@
 # Django settings for LitHub project.
 from lithub_config import *
+import os.path
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -63,7 +64,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = LITHUB_ROOT + "static/"
+STATIC_ROOT = os.path.realpath(LITHUB_ROOT + "../static/")
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -85,7 +86,8 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '6(994t_e+5ektmh+6b&ki0y7_%$-aj6n-lbojmxm3h-551pdvk'
+# SECRET_KEY = ''
+# Modify in lithub_config.py
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

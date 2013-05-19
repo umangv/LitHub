@@ -29,3 +29,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'fbconnect.auth_backends.FBAuthentication',
 )
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = '6(994t_e+5ektmh+6b&ki0y7_%$-aj6n-lbojmxm3h-551pdvk'
